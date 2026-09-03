@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manideep's Crafty Apps</title>
+<meta name="description" content="Small, considered software, built one app at a time.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #211d19;
+    --ink-raised: #2b2521;
+    --ink-raised-hover: #332c26;
+    --paper: #ede6d9;
+    --paper-soft: #a69a87;
+    --paper-faint: #766b5c;
+    --brass: #c08a3e;
+    --brass-bright: #d9a557;
+    --line: #453a30;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(192, 138, 62, 0.08), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(192, 138, 62, 0.05), transparent);
+    color: var(--paper);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--brass-bright); outline-offset: 3px; }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---- Header ---- */
+  header.hero {
+    padding: 96px 0 72px;
+  }
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    margin-bottom: 28px;
+  }
+  .mark .stamp {
+    width: 7px;
+    height: 7px;
+    background: var(--brass);
+    transform: rotate(45deg);
+    flex: none;
+  }
+  h1 {
+    font-family: "Bricolage Grotesque", -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 22px;
+    text-wrap: balance;
+    color: var(--paper);
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--brass-bright);
+  }
+  .lede {
+    font-size: 1.18rem;
+    color: var(--paper-soft);
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  /* ---- Section scaffolding ---- */
+  section { padding: 8px 0 64px; }
+  .section-label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ---- App entries ---- */
+  .apps { display: flex; flex-direction: column; gap: 20px; }
+
+  .app-card {
+    background: var(--ink-raised);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 30px 32px;
+    position: relative;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .app-card.live:hover { background: var(--ink-raised-hover); border-color: #55483a; }
+
+  .app-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .app-name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 11px;
+    flex-wrap: wrap;
+  }
+  .app-name {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    margin: 0;
+    color: var(--paper);
+    letter-spacing: -0.005em;
+  }
+  .platform-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .app-tagline {
+    color: var(--paper-soft);
+    margin: 6px 0 0;
+    font-size: 1.02rem;
+  }
+
+  .price-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.95rem;
+    color: var(--brass-bright);
+    border: 1px solid var(--brass);
+    padding: 5px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex: none;
+  }
+
+  .feature-list {
+    list-style: none;
+    margin: 22px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 8px 24px;
+  }
+  .feature-list li {
+    font-size: 0.96rem;
+    color: var(--paper-soft);
+    padding-left: 16px;
+    position: relative;
+  }
+  .feature-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 1.5px;
+    background: var(--brass);
+  }
+
+  .app-actions {
+    margin-top: 26px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: var(--brass);
+    color: #211d19;
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: var(--brass-bright); }
+  .btn-quiet {
+    color: var(--paper-soft);
+    border: 1px solid var(--line);
+  }
+  .btn-quiet:hover { border-color: var(--paper-faint); color: var(--paper); }
+  .status-note {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    color: var(--paper-faint);
+  }
+
+  /* ---- Workbench / upcoming ---- */
+  .bench-note {
+    border: 1px dashed var(--line);
+    border-radius: 3px;
+    padding: 24px 28px;
+    color: var(--paper-faint);
+    font-size: 0.98rem;
+  }
+  .bench-note strong { color: var(--paper-soft); font-weight: 500; }
+
+  /* ---- Footer ---- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.82rem;
+    color: var(--paper-faint);
+  }
+  footer a { color: var(--paper-soft); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer a:hover { color: var(--brass-bright); border-color: var(--brass); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="mark"><span class="stamp"></span>Manideep's Crafty Apps</div>
+    <h1>Small, considered software,<br>made <em>one piece at a time.</em></h1>
+    <p class="lede">No bloat, no growth-hacking, no dark patterns — software built carefully by one person, on whatever platform actually fits the idea. Pricing is whatever's honest for that app, not a house rule.</p>
+  </header>
+
+  <section>
+    <div class="section-label">On the bench</div>
+    <div class="apps">
+      <div class="app-card live">
+        <div class="app-top">
+          <div>
+            <div class="app-name-row">
+              <h2 class="app-name">Reko</h2>
+              <span class="platform-tag">macOS</span>
+            </div>
+            <p class="app-tagline">The clipboard manager macOS should have shipped with.</p>
+          </div>
+          <div class="price-tag">$14.99 · one time</div>
+        </div>
+        <ul class="feature-list">
+          <li>Full-fidelity history — every format, not just plain text</li>
+          <li>On-device OCR &amp; barcode/QR detection</li>
+          <li>Private items, gated behind Touch ID</li>
+          <li>Merge selections into one item or a real .docx</li>
+          <li>Sequential paste for filling in a whole list at once</li>
+          <li>Encrypted manual export/import — your data, portable</li>
+        </ul>
+        <div class="app-actions">
+          <span class="btn btn-primary" aria-disabled="true">Get Reko — coming soon</span>
+          <span class="status-note">launching shortly</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Upcoming</div>
+    <div class="bench-note">
+      More tools are taking shape. <strong>This spot fills in as each one is actually ready</strong> — not before.
+    </div>
+  </section>
+
+  <footer>
+    <span>Manideep's Crafty Apps</span>
+    <a href="https://github.com/ManideepsCraftyApps">GitHub</a>
+  </footer>
+</div>
+
+</body>
+</html>
