@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reko FAQs</title>
+<meta name="description" content="Answers to common questions about Reko.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --ink: #17130f;
+    --ink-raised: #1f1a15;
+    --ink-line: #332a22;
+    --paper: #f1ece4;
+    --paper-soft: #b3a898;
+    --paper-faint: #857a6c;
+    --accent: #e2795f;
+    --accent-deep: #c4432e;
+    --shadow: rgba(0, 0, 0, 0.45);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 20% -8%, rgba(226, 121, 95, 0.09), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(226, 121, 95, 0.05), transparent);
+    color: var(--paper);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 72px 28px 100px; }
+
+  header { text-align: center; margin-bottom: 44px; }
+  .app-icon { width: 64px; height: 64px; display: block; margin: 0 auto 20px; filter: drop-shadow(0 8px 20px var(--shadow)); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 18px;
+  }
+  .eyebrow .stamp { width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); flex: none; }
+  h1 {
+    font-family: "Bricolage Grotesque", -apple-system, sans-serif;
+    font-weight: 700; font-size: clamp(2rem, 5vw, 2.7rem); line-height: 1.1;
+    letter-spacing: -0.01em; margin: 0 0 12px; color: var(--paper);
+  }
+  .subtitle { font-size: 1.08rem; color: var(--paper-soft); margin: 0 auto; max-width: 48ch; }
+
+  h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700; font-size: 1.3rem; margin: 44px 0 16px;
+    letter-spacing: -0.01em; color: var(--accent);
+  }
+  h2:first-of-type { margin-top: 0; }
+
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+  a:hover { opacity: 0.82; }
+
+  .search-section { position: sticky; top: 0; background: var(--ink); z-index: 20; padding: 12px 0 4px; margin-bottom: 8px; }
+  .search-wrap { position: relative; padding-bottom: 10px; }
+  .search-box {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--ink-raised); border: 1.5px solid var(--ink-line);
+    border-radius: 12px; padding: 13px 16px;
+  }
+  .search-box:focus-within { border-color: var(--accent); }
+  .search-box svg { flex-shrink: 0; opacity: 0.6; color: var(--paper-soft); }
+  #faqSearch {
+    border: none; background: transparent; outline: none;
+    font-size: 16px; font-family: "Newsreader", serif; color: var(--paper); width: 100%;
+  }
+  #faqSearch::placeholder { color: var(--paper-faint); }
+  .search-clear { display: none; border: none; background: none; color: var(--paper-soft); cursor: pointer; padding: 2px; flex-shrink: 0; }
+  .search-clear.visible { display: flex; }
+  .search-clear:hover { color: var(--paper); }
+
+  .search-footer-row { display: flex; justify-content: flex-end; padding-top: 8px; }
+  .show-all-btn { border: none; background: none; color: var(--accent); font-family: "IBM Plex Mono", monospace; font-size: 12px; cursor: pointer; padding: 4px 2px; text-decoration: none; }
+  .show-all-btn:hover { opacity: 0.75; }
+
+  .search-dropdown {
+    display: none; position: absolute; top: calc(100% - 2px); left: 0; right: 0;
+    background: var(--ink-raised); border: 1px solid var(--ink-line); border-radius: 12px;
+    box-shadow: 0 16px 32px var(--shadow); max-height: 360px; overflow-y: auto; z-index: 30; padding: 6px;
+  }
+  .search-dropdown.open { display: block; }
+  .dropdown-item {
+    display: block; width: 100%; text-align: left; border: none; background: none;
+    color: var(--paper); font-size: 15px; font-family: "Newsreader", serif; padding: 11px 12px;
+    border-radius: 8px; cursor: pointer;
+  }
+  .dropdown-item:hover, .dropdown-item.active { background: rgba(226, 121, 95, 0.14); }
+  .dropdown-item mark { background: rgba(226, 121, 95, 0.4); color: inherit; border-radius: 3px; padding: 0 1px; }
+  .dropdown-empty { padding: 14px 12px; color: var(--paper-soft); font-size: 14px; }
+  .dropdown-more { padding: 8px 12px 4px; color: var(--paper-faint); font-size: 12px; font-family: "IBM Plex Mono", monospace; }
+
+  .answer-panel {
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin-top 0.45s ease;
+    margin-top: 0;
+  }
+  .answer-panel.open { max-height: 2000px; opacity: 1; margin-top: 22px; }
+  .answer-card { background: var(--ink-raised); border: 1px solid var(--ink-line); border-radius: 14px; padding: 24px 26px; }
+  .answer-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 4px; }
+  .answer-q { font-family: "Bricolage Grotesque", sans-serif; font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.4; color: var(--paper); }
+  .answer-close { flex-shrink: 0; border: none; background: none; color: var(--paper-soft); font-family: "IBM Plex Mono", monospace; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+  .answer-close:hover { background: rgba(255,255,255,0.06); color: var(--paper); }
+  .answer-a { color: var(--paper-soft); font-size: 16px; line-height: 1.7; margin-top: 12px; }
+  .answer-a p { font-size: 16px; margin: 0 0 14px; }
+  .answer-a p:last-child { margin-bottom: 0; }
+  .answer-a ol, .answer-a ul { margin: 0 0 14px; padding-left: 22px; }
+  .answer-a li { margin-bottom: 8px; }
+  .answer-a li:last-child { margin-bottom: 0; }
+  .answer-a code, .answer-a kbd {
+    background: rgba(255,255,255,0.07); border-radius: 4px; padding: 1px 6px; font-size: 0.9em;
+    font-family: "IBM Plex Mono", monospace; color: var(--paper);
+  }
+  .answer-jump {
+    color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-weight: 600;
+    background: none; border: none; cursor: pointer; font-size: inherit; font-family: inherit; padding: 0;
+  }
+
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+  .toc-pill {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.02em;
+    color: var(--paper-soft); border: 1px solid var(--ink-line); border-radius: 20px;
+    padding: 6px 12px; background: var(--ink-raised); cursor: pointer;
+  }
+  .toc-pill:hover { border-color: var(--accent); color: var(--paper); }
+  .toc-pill.active { border-color: var(--accent); color: var(--paper); background: rgba(226, 121, 95, 0.14); }
+
+  /* Animates open/closed to fit content of any height, fluidly — a plain max-height transition
+     snaps almost instantly for a tall list like "show all questions" (the animated property races
+     to a fixed ceiling far above the real content height, so the box reaches full size in a
+     fraction of the transition and then just sits there for the rest of it). Animating the grid
+     row itself from 0fr to 1fr instead tracks the real content height at every frame, so it looks
+     equally smooth whether it's revealing 5 questions or 50. */
+  .faq-list-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 8px;
+  }
+  .faq-list-wrap.open { grid-template-rows: 1fr; }
+  .faq-list-inner { overflow: hidden; min-height: 0; }
+  .faq-group-heading {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--paper-faint); margin: 28px 0 4px;
+  }
+  .faq-group-heading:first-child { margin-top: 0; }
+  .faq-item { border-bottom: 1px solid var(--ink-line); }
+  .faq-item-question {
+    display: block; width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+    font-family: "Newsreader", serif; font-size: 17px; color: var(--paper); padding: 13px 2px;
+  }
+  .faq-item-question:hover { color: var(--accent); }
+  .faq-item-answer {
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  }
+  .faq-item.open .faq-item-answer { max-height: 1200px; opacity: 1; }
+  .faq-item-answer-inner { color: var(--paper-soft); font-size: 16px; line-height: 1.7; padding: 0 2px 18px; }
+  .faq-item-answer-inner p { margin: 0 0 14px; }
+  .faq-item-answer-inner p:last-child { margin-bottom: 0; }
+  .faq-item-answer-inner ol, .faq-item-answer-inner ul { margin: 0 0 14px; padding-left: 22px; }
+  .faq-item-answer-inner li { margin-bottom: 8px; }
+  .faq-item-answer-inner code, .faq-item-answer-inner kbd {
+    background: rgba(255,255,255,0.07); border-radius: 4px; padding: 1px 6px; font-size: 0.9em;
+    font-family: "IBM Plex Mono", monospace; color: var(--paper);
+  }
+  .faq-empty-hint { color: var(--paper-faint); font-size: 15px; padding: 4px 2px 8px; }
+
+  .contact-card { background: var(--ink-raised); border: 1px solid var(--ink-line); border-radius: 14px; padding: 24px 26px; margin-top: 12px; text-align: center; }
+  .contact-card p { margin: 0 0 12px; font-size: 17px; color: var(--paper-soft); }
+  .contact-email { font-family: "IBM Plex Mono", monospace; font-size: 1.05rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+
+  footer {
+    margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--ink-line);
+    color: var(--paper-faint); font-size: 13px; font-family: "IBM Plex Mono", monospace;
+    display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img class="app-icon" src="assets/icon.svg" alt="Reko app icon" width="64" height="64">
+    <div class="eyebrow"><span class="stamp"></span>Reko FAQs</div>
+    <h1>Questions, answered</h1>
+    <p class="subtitle">Search below, or browse by topic — and if you don't find what you need, we're one email away.</p>
+  </header>
+
+  <div class="search-section">
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="faqSearch" placeholder="Search — e.g. &quot;private&quot;, &quot;hotkey&quot;, &quot;license&quot;, &quot;merge&quot;…" autocomplete="off">
+        <button class="search-clear" id="searchClear" type="button" aria-label="Clear search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="search-dropdown" id="searchDropdown"></div>
+      <div class="search-footer-row">
+        <button class="show-all-btn" id="showAllBtn" type="button">Show all questions</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="answer-panel" id="answerPanel">
+    <div class="answer-card">
+      <div class="answer-card-top">
+        <p class="answer-q" id="answerQ"></p>
+        <button class="answer-close" id="answerClose" type="button">✕ Close</button>
+      </div>
+      <div class="answer-a" id="answerA"></div>
+    </div>
+  </div>
+
+  <div class="toc" id="tocRow">
+    <button class="toc-pill" data-topic="Basics" type="button">Basics</button>
+    <button class="toc-pill" data-topic="Hotkey & pasting" type="button">Hotkey &amp; pasting</button>
+    <button class="toc-pill" data-topic="Categories & search" type="button">Categories &amp; search</button>
+    <button class="toc-pill" data-topic="Privacy" type="button">Privacy</button>
+    <button class="toc-pill" data-topic="Merge" type="button">Merge</button>
+    <button class="toc-pill" data-topic="OCR & barcodes" type="button">OCR &amp; barcodes</button>
+    <button class="toc-pill" data-topic="Backup" type="button">Backup</button>
+    <button class="toc-pill" data-topic="Trial & license" type="button">Trial &amp; license</button>
+    <button class="toc-pill" data-topic="Troubleshooting" type="button">Troubleshooting</button>
+  </div>
+
+  <div class="faq-list-wrap" id="faqListWrap">
+    <div class="faq-list-inner">
+      <div id="faqList" class="faq-list"></div>
+    </div>
+  </div>
+
+  <h2>Still stuck?</h2>
+  <div class="contact-card">
+    <p>If you have a bug to report, a feature you'd like to see, or a question this page didn't answer, we'd genuinely like to hear from you:</p>
+    <a class="contact-email" id="emailSupportLink" href="#"></a>
+  </div>
+
+  <footer>
+    <a href="https://manideepscraftyapps.github.io/reko/features.html">Features</a>
+    <a href="mailto:manideepscraftyapps+reko@gmail.com">Email Support</a>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var address = ["manideepscraftyapps", "+reko", "@", "gmail.com"].join("");
+  var link = document.getElementById("emailSupportLink");
+  if (link) { link.textContent = address; link.href = "mailto:" + address; }
+})();
+
+// Each entry's `a` is authored HTML (not user input) so answers can use real lists/kbd tags.
+// `keywords` adds extra search terms beyond what's naturally in the question/answer text.
+const FAQS = [
+  {
+    id: 'what-is-reko', topic: 'Basics', q: 'What does Reko actually do?', keywords: 'overview about',
+    a: '<p>Reko sits quietly in your menu bar and keeps a running history of everything you copy on your Mac — text, rich formatting, images, and files — so nothing you copy is gone the moment you copy something else. Press a shortcut from anywhere to bring up your history, click what you want, and it\'s pasted.</p>'
+  },
+  {
+    id: 'how-much-history', topic: 'Basics', q: 'How much clipboard history does Reko keep?', keywords: 'limit storage how many items',
+    a: '<p>By default, indefinitely — Reko doesn\'t cap the number of items or silently delete old ones. If you want a category to clean itself up automatically (a "scratch" category for short-lived copies, say), you can set a retention period per category in <strong>Settings → Categories</strong>; anything without a custom retention set is kept forever.</p>'
+  },
+  {
+    id: 'what-content-types', topic: 'Basics', q: 'What kinds of things can Reko capture?', keywords: 'file types supported formats images pdf',
+    a: '<p>Plain text, richly formatted text (fonts, colors, bold/italic/underline/strikethrough), images, and files/folders copied from Finder (including PDFs, apps, and aliases) — each shown with an appropriate preview and icon in your history.</p>'
+  },
+  {
+    id: 'does-reko-run-startup', topic: 'Basics', q: 'Does Reko start automatically when I log in?', keywords: 'launch at login startup',
+    a: '<p>Only if you turn it on — <strong>Settings → General → Launch at Login</strong>. It\'s off by default.</p>'
+  },
+  {
+    id: 'macos-version', topic: 'Basics', q: 'What macOS versions does Reko support?', keywords: 'compatibility requirements ventura',
+    a: '<p>macOS 13 (Ventura) or later.</p>'
+  },
+  {
+    id: 'change-hotkey', topic: 'Hotkey & pasting', q: 'What\'s the default shortcut, and can I change it?', keywords: 'keyboard shortcut default customize',
+    a: '<p>The default is <kbd>⌘</kbd><kbd>⇧</kbd><kbd>1</kbd>, chosen specifically to avoid colliding with common system and app shortcuts. To change it, open <strong>Settings → General</strong> and click the shortcut field, then press your new combination — it\'s recorded and takes effect immediately. If you pick a combination another Reko shortcut already uses (like Sequential Paste\'s <kbd>⌥</kbd><kbd>⌘</kbd><kbd>V</kbd>), Reko warns you before you save it.</p>'
+  },
+  {
+    id: 'menu-bar-shows-hotkey', topic: 'Hotkey & pasting', q: 'Where can I see my current shortcut without opening Settings?', keywords: 'menu bar reminder',
+    a: '<p>Click Reko\'s menu bar icon — the top item reads "Open Reko (⌘⇧1)" (or whatever you\'ve customized it to), so it\'s always visible at a glance without digging into Settings.</p>'
+  },
+  {
+    id: 'clean-vs-exact-paste', topic: 'Hotkey & pasting', q: 'What\'s the difference between a clean paste and a normal paste?', keywords: 'plain text formatting option click',
+    a: '<p>A normal click pastes an item exactly as it was copied — formatting, fonts, colors and all. Option-click the same item for a <strong>clean paste</strong> instead: plain text only, with no formatting that might clash with whatever you\'re pasting into.</p>'
+  },
+  {
+    id: 'auto-paste', topic: 'Hotkey & pasting', q: 'Does clicking an item paste it immediately, or just copy it?', keywords: 'auto paste manual cmd v',
+    a: '<p>By default, clicking an item pastes it immediately into whatever you were typing in — no extra <kbd>⌘</kbd><kbd>V</kbd> needed. This uses macOS Accessibility permission to synthesize the paste keystroke; if that permission is ever denied, Reko falls back gracefully to just copying the item, so you\'d press <kbd>⌘</kbd><kbd>V</kbd> yourself.</p>'
+  },
+  {
+    id: 'sequential-paste', topic: 'Hotkey & pasting', q: 'How does Sequential Paste work?', keywords: 'multi paste form fields fill in order',
+    a: '<p>Select several items in your history (⌘-click each one, or use Select mode), then press <kbd>⌥</kbd><kbd>⌘</kbd><kbd>V</kbd> once per field you\'re filling in — each press pastes the next item in your selection, in order. It\'s built for filling out a form or spreadsheet row where you\'ve already copied everything you need ahead of time.</p>'
+  },
+  {
+    id: 'sequential-paste-repeat', topic: 'Hotkey & pasting', q: 'What happens if I press the Sequential Paste shortcut after I\'ve pasted everything in my selection?', keywords: 'stop repeat last item end',
+    a: '<p>It repeats the last item in your selection rather than doing nothing — this is intentional, not a bug, since it\'s rarely useful for the shortcut to silently stop responding mid-flow.</p>'
+  },
+  {
+    id: 'categories-retention', topic: 'Categories & search', q: 'How do categories and retention work together?', keywords: 'organize folders tags expire delete automatically',
+    a: '<p>Categories are tags you assign to items — an item can belong to more than one. Each category can have its own retention period (in <strong>Settings → Categories</strong>): items in a category with a 7-day retention are automatically cleared once they\'re older than that, while a category left on "Never delete" keeps its items indefinitely. An item that belongs to more than one category is only removed once <em>every</em> category it\'s in would have expired it.</p>'
+  },
+  {
+    id: 'delete-category', topic: 'Categories & search', q: 'What happens to items if I delete a category?', keywords: 'remove category items detached',
+    a: '<p>The items themselves aren\'t deleted — they\'re just detached from that category and fall back to being uncategorized (or keep whatever other categories they were also tagged with).</p>'
+  },
+  {
+    id: 'search-filters', topic: 'Categories & search', q: 'What can I filter or search by?', keywords: 'find item source app content type date',
+    a: '<p>Free-text search matches an item\'s visible text (and any OCR\'d text pulled from an image). On top of that you can filter by category, which app the item was copied from, content type (URL, email, hex color, code, phone number, file path), item kind (text, image, file, etc.), date range, and — if you\'ve turned it on — private items only.</p>'
+  },
+  {
+    id: 'ocr-text-searchable', topic: 'Categories & search', q: 'If I search for a word, does it also check text inside images?', keywords: 'ocr search screenshot',
+    a: '<p>Yes — a screenshot\'s visible history row just says "[Image]," but whatever text Reko\'s on-device OCR found inside it is fully searchable, exactly like any other text.</p>'
+  },
+  {
+    id: 'what-is-private', topic: 'Privacy', q: 'What does marking an item Private actually do?', keywords: 'lock encrypt sensitive password',
+    a: '<p>A private item is encrypted at rest on disk (AES-GCM, with the key held in your Mac\'s Keychain) and its content is hidden from view — shown as "🔒 Private Item" — until you unlock it with Face ID, Touch ID, or your Mac password. This is a real encryption boundary, not just a UI toggle: without unlocking, the plaintext isn\'t sitting readable in Reko\'s database.</p>'
+  },
+  {
+    id: 'private-unlock-duration', topic: 'Privacy', q: 'Once I unlock, how long do private items stay visible?', keywords: 'reveal timeout relock',
+    a: '<p>Whatever you\'ve set in <strong>Settings → General → Auto-relock</strong> — a fixed duration (a few common presets, or a custom number of minutes), or "until I quit Reko" if you\'d rather unlock once per session. After that window, everything marked private masks itself again automatically.</p>'
+  },
+  {
+    id: 'private-item-not-real', topic: 'Privacy', q: 'I unlocked a private item but it still just says "Private Item" — is that a bug?', keywords: 'not revealing stale broken',
+    a: '<p>This can happen if you\'re looking at an item that was captured before your most recent unlock, or before certain fixes to older Reko versions — it typically resolves itself on the next copy/unlock cycle. If a specific item consistently won\'t reveal after a successful unlock, that\'s worth reporting — see the contact section below.</p>'
+  },
+  {
+    id: 'delete-private-items', topic: 'Privacy', q: 'Can I bulk-delete a mix of private and regular items?', keywords: 'multi select delete authentication',
+    a: '<p>Yes — select several items and delete. Regular items are removed immediately; if any private items are included, Reko asks you to authenticate first for just those. If authentication fails or you cancel, you\'ll get a message telling you the regular items were deleted but the private ones weren\'t — nothing is silently skipped or silently deleted.</p>'
+  },
+  {
+    id: 'private-search-hidden', topic: 'Privacy', q: 'Do private items show up when I search for something unrelated?', keywords: 'leak search masked locked',
+    a: '<p>No — while locked, a private item\'s only visible text is the "🔒 Private Item" placeholder, and that placeholder is deliberately excluded from text search matching (so typing an unrelated word can\'t accidentally surface it). It still appears with an empty search, same as always, and the "Private only" filter is the intentional way to browse them.</p>'
+  },
+  {
+    id: 'merge-vs-merge-document', topic: 'Merge', q: 'What\'s the difference between Merge and Merge as Document?', keywords: 'combine items docx word',
+    a: '<ul><li><strong>Merge</strong> combines your selected items into a single new clipboard item, in the order you selected them — ready to paste anywhere, right away.</li><li><strong>Merge as Document</strong> builds an actual <code>.docx</code> file instead, which opens directly in Pages or Word.</li></ul>'
+  },
+  {
+    id: 'merge-formatting', topic: 'Merge', q: 'Does formatting survive a merge?', keywords: 'bold italic color font size retain',
+    a: '<p>Yes, for both Merge and Merge as Document — bold, italic, underline, strikethrough, font, size, and color all carry over from each original piece into the combined result, as long as <strong>Retain formatting</strong> is turned on in <strong>Settings → Merge</strong> (it is by default).</p>'
+  },
+  {
+    id: 'merge-files', topic: 'Merge', q: 'What happens if I include a file in a merge?', keywords: 'embed filename attach document',
+    a: '<p>Files are included by their full path/name rather than embedded as file content — so a merge with a PDF or image file in the selection shows exactly which file it was, without Reko trying to inline arbitrary file formats into a text document.</p>'
+  },
+  {
+    id: 'merge-private-item', topic: 'Merge', q: 'What happens if a private item is part of my merge selection?', keywords: 'locked authentication merge',
+    a: '<p>Reko asks you to authenticate, same as any action touching a private item. Once authenticated, the item\'s real content is used in the merge — not the "Private Item" placeholder.</p>'
+  },
+  {
+    id: 'merge-new-item', topic: 'Merge', q: 'Why does a merge show up as a brand-new item in my history, separate from the originals?', keywords: 'duplicate expected behavior',
+    a: '<p>This is intentional — a merge is genuinely new content (a new combination of several pieces), so it gets its own history entry rather than overwriting or replacing any of the originals, which stay exactly as they were.</p>'
+  },
+  {
+    id: 'ocr-how', topic: 'OCR & barcodes', q: 'How does Reko read text out of an image?', keywords: 'recognition on device vision',
+    a: '<p>Using Apple\'s on-device Vision framework — entirely locally, nothing is uploaded anywhere. It runs automatically on genuine image copies (screenshots, images dragged from a webpage, etc.) and on image files copied from Finder.</p>'
+  },
+  {
+    id: 'ocr-audio-file', topic: 'OCR & barcodes', q: 'Why doesn\'t an MP3 or other audio file show an OCR button, even if it has embedded cover art?', keywords: 'album art incidental image false positive',
+    a: '<p>Reko only treats something as a genuine image if that\'s actually what was copied — an audio file\'s embedded artwork is incidental metadata about the file, not the thing you copied, so it\'s correctly classified as an audio file rather than an image.</p>'
+  },
+  {
+    id: 'barcode-detection', topic: 'OCR & barcodes', q: 'Does Reko scan barcodes and QR codes automatically?', keywords: 'qr code scanner decode',
+    a: '<p>Yes — if an image you copy contains a barcode or QR code, Reko detects and decodes it automatically (also on-device), no separate scanning step needed.</p>'
+  },
+  {
+    id: 'export-encryption', topic: 'Backup', q: 'How is my exported backup protected?', keywords: 'password encrypted file security',
+    a: '<p>The export is a single file encrypted with a password you choose at export time — including any private items, which are decrypted just long enough to be re-encrypted into the export under your chosen password, then re-encrypted again with Reko\'s own key once imported elsewhere.</p>'
+  },
+  {
+    id: 'forgot-export-password', topic: 'Backup', q: 'I forgot the password I used for a backup — can it be recovered?', keywords: 'reset lost password recovery',
+    a: '<p>No — there\'s no password recovery by design, since Reko (and its developer) never has access to that password or the underlying encryption key. Keep your export password somewhere safe, the same as you would for any encrypted archive.</p>'
+  },
+  {
+    id: 'import-behavior', topic: 'Backup', q: 'What happens to my existing history when I import a backup?', keywords: 'merge overwrite duplicate replace',
+    a: '<p>Import adds to what\'s already there rather than replacing it — categories are matched by name (not duplicated), and items already present (matched by id and creation date) are skipped rather than creating duplicates.</p>'
+  },
+  {
+    id: 'trial-length', topic: 'Trial & license', q: 'How long is Reko\'s trial, and what happens when it ends?', keywords: '14 days free expire',
+    a: '<p>14 days from first launch, no account or sign-up required to start it. Once the trial ends, the quick window shows a screen to enter a license key or buy one — Settings and your existing history stay fully intact and accessible the whole time, only the quick window itself is gated until you activate a key.</p>'
+  },
+  {
+    id: 'buy-license', topic: 'Trial & license', q: 'Where do I buy a license, and is it a subscription?', keywords: 'purchase price one time pay',
+    a: '<p>Reko is a one-time purchase, not a subscription — buy once, use it for as long as that macOS version keeps working, with no recurring charge. The <strong>Buy Reko</strong> button in Settings (or on the trial-ended screen) takes you to the purchase page.</p>'
+  },
+  {
+    id: 'activate-license', topic: 'Trial & license', q: 'How do I activate a license key I already bought?', keywords: 'enter key unlock',
+    a: '<p>Open <strong>Settings → License</strong>, paste your key into the field, and click <strong>Activate</strong>. It\'s validated against Lemon Squeezy (Reko\'s payment provider) over the network, so an internet connection is needed for this one step — after that, Reko only re-checks quietly in the background roughly once a day, and never punishes you for being briefly offline.</p>'
+  },
+  {
+    id: 'license-multiple-macs', topic: 'Trial & license', q: 'Can I use my license on more than one Mac?', keywords: 'seats multiple computers activation limit',
+    a: '<p>That depends on how many activations your specific purchase includes, shown on the purchase page at checkout. Each Mac you activate on registers as a separate activation against the same key.</p>'
+  },
+  {
+    id: 'menu-bar-icon-missing', topic: 'Troubleshooting', q: 'I don\'t see the Reko icon in my menu bar.', keywords: 'missing not showing',
+    a: '<p>Check that Reko is actually running (Activity Monitor, or relaunch it) — as a menu-bar-only app it has no Dock icon, so it\'s easy to miss if it\'s not running rather than just hidden.</p>'
+  },
+  {
+    id: 'hotkey-not-working', topic: 'Troubleshooting', q: 'My shortcut isn\'t opening the quick window.', keywords: 'not working broken hotkey',
+    a: '<p>Make sure another app on your Mac isn\'t already using the exact same combination — a system-wide conflict outside Reko\'s own shortcuts can\'t be detected automatically. Try setting a different combination in <strong>Settings → General</strong> to confirm.</p>'
+  },
+  {
+    id: 'auto-paste-not-working', topic: 'Troubleshooting', q: 'Clicking an item copies it but doesn\'t paste it automatically.', keywords: 'accessibility permission auto paste broken',
+    a: '<p>This means Accessibility access hasn\'t been granted. Go to <strong>System Settings → Privacy &amp; Security → Accessibility</strong> and make sure Reko is enabled there. Until then, Reko still copies the item to your clipboard — you\'ll just need to press <kbd>⌘</kbd><kbd>V</kbd> yourself.</p>'
+  },
+  {
+    id: 'data-privacy', topic: 'Troubleshooting', q: 'Does Reko send my clipboard data anywhere?', keywords: 'privacy cloud sync internet offline',
+    a: '<p>No — everything (history, OCR, barcode detection, encryption) happens entirely on your Mac. The only network call Reko ever makes is license activation/validation against Lemon Squeezy, which sends just the license key itself, never any clipboard content.</p>'
+  },
+  {
+    id: 'offline-usage', topic: 'Troubleshooting', q: 'Does Reko work without an internet connection?', keywords: 'offline no wifi',
+    a: '<p>Yes, entirely — clipboard capture, OCR, barcode detection, search, Merge, and backup/restore are all fully offline. Only activating or re-validating a license needs a connection, and re-validation is lenient about brief offline stretches.</p>'
+  }
+];
+
+const faqById = Object.fromEntries(FAQS.map(f => [f.id, f]));
+const stripHtml = html => html.replace(/<[^>]+>/g, ' ');
+const haystackOf = f => (f.q + ' ' + f.keywords + ' ' + f.topic + ' ' + stripHtml(f.a)).toLowerCase();
+
+const searchInput = document.getElementById('faqSearch');
+const searchClear = document.getElementById('searchClear');
+const dropdown = document.getElementById('searchDropdown');
+const showAllBtn = document.getElementById('showAllBtn');
+const faqList = document.getElementById('faqList');
+const faqListWrap = document.getElementById('faqListWrap');
+const answerPanel = document.getElementById('answerPanel');
+const answerQ = document.getElementById('answerQ');
+const answerA = document.getElementById('answerA');
+const answerClose = document.getElementById('answerClose');
+
+const RESULT_LIMIT = 8;
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function highlight(text, query) {
+  if (!query) return escapeHtml(text);
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx === -1) return escapeHtml(text);
+  return escapeHtml(text.slice(0, idx)) + '<mark>' + escapeHtml(text.slice(idx, idx + query.length)) + '</mark>' + escapeHtml(text.slice(idx + query.length));
+}
+
+function renderDropdown(matches, query, isShowAll) {
+  if (matches.length === 0) {
+    dropdown.innerHTML = '<div class="dropdown-empty">No matching questions — try a different word, or email us below.</div>';
+    return;
+  }
+  const shown = matches.slice(0, RESULT_LIMIT);
+  let html = shown.map(f =>
+    `<button class="dropdown-item" data-id="${f.id}" type="button">${highlight(f.q, isShowAll ? '' : query)}</button>`
+  ).join('');
+  if (matches.length > RESULT_LIMIT) {
+    html += `<div class="dropdown-more">${matches.length - RESULT_LIMIT} more — keep typing to narrow it down</div>`;
+  }
+  dropdown.innerHTML = html;
+}
+
+function openDropdownWithQuery(query) {
+  const q = query.trim().toLowerCase();
+  const matches = FAQS.filter(f => haystackOf(f).includes(q));
+  renderDropdown(matches, q, false);
+  dropdown.classList.add('open');
+}
+
+function closeDropdown() { dropdown.classList.remove('open'); }
+
+function selectFAQ(id, opts) {
+  const f = faqById[id];
+  if (!f) return;
+  answerQ.textContent = f.q;
+  answerA.innerHTML = f.a;
+  answerPanel.classList.add('open');
+  closeDropdown();
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  if (opts && opts.scroll) {
+    requestAnimationFrame(() => answerPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+}
+
+function closeAnswer() { answerPanel.classList.remove('open'); }
+
+searchInput.addEventListener('input', () => {
+  const val = searchInput.value;
+  searchClear.classList.toggle('visible', val.length > 0);
+  if (val.trim() === '') { closeDropdown(); } else { openDropdownWithQuery(val); }
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim() !== '') openDropdownWithQuery(searchInput.value);
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  closeDropdown();
+  searchInput.focus();
+});
+
+// The list below the pills starts empty — nothing is shown until the user asks for it, either
+// by clicking "Show all questions" or a specific topic pill. Clicking a question then expands
+// its answer inline, right where it already is on screen — no jump to the top, no separate
+// panel, since the question was already in view.
+const TOPIC_ORDER = [
+  'Basics', 'Hotkey & pasting', 'Categories & search', 'Privacy', 'Merge',
+  'OCR & barcodes', 'Backup', 'Trial & license', 'Troubleshooting',
+];
+let currentView = null; // null | 'all' | a topic name
+
+function faqItemHTML(f) {
+  return `<div class="faq-item">
+    <button class="faq-item-question" type="button">${escapeHtml(f.q)}</button>
+    <div class="faq-item-answer"><div class="faq-item-answer-inner">${f.a}</div></div>
+  </div>`;
+}
+
+function faqListContentHTML(view) {
+  if (view === 'all') {
+    return TOPIC_ORDER.map(topic => {
+      const items = FAQS.filter(f => f.topic === topic);
+      return `<div class="faq-group-heading">${escapeHtml(topic)}</div>` + items.map(faqItemHTML).join('');
+    }).join('');
+  }
+  return FAQS.filter(f => f.topic === view).map(faqItemHTML).join('');
+}
+
+function updateChrome(view) {
+  document.querySelectorAll('.toc-pill').forEach(pill => {
+    pill.classList.toggle('active', view !== null && pill.dataset.topic === view);
+  });
+  showAllBtn.textContent = view === 'all' ? 'Hide questions' : 'Show all questions';
+}
+
+// Opening/closing is driven by the `.open` class on the wrapper (see its grid-row transition in
+// CSS) rather than by directly setting content — content has to be in the DOM *before* the class
+// flips for the grid transition to have something to measure, and it has to stay in the DOM until
+// a collapse finishes so the shrink itself is visible instead of an instant blank.
+function openWithView(view) {
+  currentView = view;
+  updateChrome(view);
+  faqList.innerHTML = faqListContentHTML(view);
+  // Two rAFs, not one — the browser needs a full frame to commit the just-inserted content at
+  // the closed (0fr) state before the transition to 1fr is what actually animates, rather than
+  // both happening within the same style recalculation and skipping straight to the end state.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    faqListWrap.classList.add('open');
+  }));
+}
+
+function closeList(onClosed) {
+  faqListWrap.classList.remove('open');
+  const handleEnd = e => {
+    if (e.target !== faqListWrap || e.propertyName !== 'grid-template-rows') return;
+    faqListWrap.removeEventListener('transitionend', handleEnd);
+    onClosed?.();
+  };
+  faqListWrap.addEventListener('transitionend', handleEnd);
+}
+
+// Clicking the already-active view (the same pill again, or "Show all" while it's showing all)
+// closes it back down — the "hide" affordance, without needing a second dedicated button.
+// Switching directly from one open view to another (e.g. the "Merge" pill while "Privacy" is
+// showing) collapses first and reopens with the new content, rather than swapping it out under
+// the reader mid-scroll.
+function setView(view) {
+  const nextView = currentView === view ? null : view;
+  const wasOpen = faqListWrap.classList.contains('open');
+
+  if (!wasOpen) {
+    if (nextView) openWithView(nextView);
+    return;
+  }
+
+  closeList(() => {
+    currentView = null;
+    updateChrome(null);
+    if (nextView) openWithView(nextView);
+    else faqList.innerHTML = '';
+  });
+}
+
+showAllBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  closeDropdown();
+  setView('all');
+});
+
+document.querySelectorAll('.toc-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    searchInput.value = '';
+    searchClear.classList.remove('visible');
+    closeDropdown();
+    setView(pill.dataset.topic);
+  });
+});
+
+faqList.addEventListener('click', e => {
+  const btn = e.target.closest('.faq-item-question');
+  if (btn) btn.closest('.faq-item').classList.toggle('open');
+});
+
+dropdown.addEventListener('click', e => {
+  const btn = e.target.closest('.dropdown-item');
+  if (btn) selectFAQ(btn.dataset.id, { scroll: true });
+});
+
+answerA.addEventListener('click', e => {
+  const jump = e.target.closest('.answer-jump');
+  if (jump) selectFAQ(jump.dataset.jump, { scroll: true });
+});
+
+answerClose.addEventListener('click', closeAnswer);
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) closeDropdown();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDropdown();
+});
+
+// Lets a link like FAQs.html#hotkey-not-working (e.g. from the app's own Settings screen) open
+// straight to that answer instead of just landing on the page.
+if (location.hash) {
+  const id = location.hash.slice(1);
+  if (faqById[id]) selectFAQ(id, { scroll: true });
+}
+</script>
+
+</body>
+</html>
