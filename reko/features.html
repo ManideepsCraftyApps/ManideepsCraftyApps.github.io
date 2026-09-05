@@ -142,6 +142,16 @@
   .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--paper-soft); }
   .row-text li strong { color: var(--paper); }
 
+  kbd {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.88em;
+    background: var(--ink-raised);
+    border: 1px solid var(--ink-line);
+    border-radius: 5px;
+    padding: 2px 7px;
+    color: var(--paper);
+  }
+
   .frame {
     background: var(--ink-raised);
     border: 1px solid var(--ink-line);
@@ -225,8 +235,8 @@
     <div class="row-text">
       <div class="row-bar"></div>
       <h2>One shortcut, from anywhere</h2>
-      <p>Press your shortcut while you're typing in any app, and your clipboard history pops up right there — no switching windows, no hunting through a menu bar icon. Click the item you want and it's pasted.</p>
-      <p>Click away, or hit Escape, and it's gone like it was never there.</p>
+      <p>Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>1</kbd> while you're typing in any app, and your clipboard history pops up right there — no switching windows, no hunting through a menu bar icon. Click the item you want and it's pasted.</p>
+      <p>Click away, or hit Escape, and it's gone like it was never there. Don't like the default? Change it any time in <strong>Settings → General</strong> — Reko checks for collisions with its own other shortcuts as you record a new one.</p>
     </div>
     <div class="row-media">
       <div class="frame"><video src="assets/2.mp4" autoplay loop muted playsinline></video></div>
@@ -240,7 +250,7 @@
     </div>
     <div class="highlight-card">
       <h3>Fill a whole form, hands off the mouse</h3>
-      <p>Copied five things for five fields? Sequential paste steps through your selection in order, one shortcut press per field — no re-opening the window each time.</p>
+      <p>Copied five things for five fields? Select them, then press <kbd>⌥</kbd><kbd>⌘</kbd><kbd>V</kbd> for each field in order — Sequential paste steps through your selection one press at a time, no re-opening the window each field.</p>
     </div>
   </div>
 
@@ -324,13 +334,15 @@
 
   <div class="contact">
     <h2>Still have a question?</h2>
-    <p>If something here isn't clear, or you've run into a bug, we'd like to hear about it.</p>
+    <p>Check the <a href="https://manideepscraftyapps.github.io/reko/FAQs">FAQ page</a> first — if it doesn't cover it, we'd like to hear about it directly.</p>
     <div class="contact-card">
       <a class="contact-email" id="emailSupportLink" href="#"></a>
     </div>
   </div>
 
-  <footer>Reko · Manideep's Crafty Apps</footer>
+  <footer>
+    <a href="https://manideepscraftyapps.github.io/reko/FAQs">FAQs</a> · Reko · Manideep's Crafty Apps
+  </footer>
 
 </div>
 
