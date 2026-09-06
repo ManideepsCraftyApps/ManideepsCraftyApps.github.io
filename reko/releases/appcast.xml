@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Reko Changelog</title>
+        <link>https://manideepscraftyapps.github.io/reko/releases/appcast.xml</link>
+        <description>Updates to Reko, a clipboard history manager for macOS.</description>
+        <language>en</language>
+        <item>
+            <title>Version 1.0.1</title>
+            <description><![CDATA[
+                <h3>1.0.1</h3>
+                <ul>
+                    <li>First public release</li>
+                </ul>
+            ]]></description>
+            <pubDate>Sun, 06 Sep 2026 18:42:41 +0530</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <enclosure
+                url="https://manideepscraftyapps.github.io/reko/releases/Reko-1.0.1.zip"
+                sparkle:edSignature="/EEKDM05l7mftnsmtkgX32VWWn5pmAh00kPe9sJvPrOF1JtScy29xKtQflg4zWwy6BXxUHJasGBkP2DCPiEDDw=="
+                length="1883272"
+                type="application/octet-stream" />
+        </item>
+    </channel>
+</rss>
