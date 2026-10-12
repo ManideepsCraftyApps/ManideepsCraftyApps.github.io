@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Native Creds does</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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8/3dXKJXl4eRK9Fmy4ey6Zagu8ekcUo7d8PfKbVMfe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0o8P8PbnMnG/xfVAAAAABJRU5ErkJggg==">
+<meta name="description" content="Everything Native Creds does: an offline, KeePass-compatible password manager for Android with autofill, 2FA codes, fingerprint unlock and sync through your own cloud folder.">
+<script>document.documentElement.classList.add("js");</script>
+<style>
+  /* Same look and structure as the Reko features page (centred hero, alternating text/media rows
+     with an accent bar, a highlights grid, contact card, mono footer), in the Native Creds palette
+     (deep blue on porcelain, muted blue on black) and with system fonts only: this page is about
+     privacy, so it makes no external requests. Screenshots live in assets/ next to this file;
+     any that do not exist yet show a neutral placeholder (see assets/README.md for the list). */
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f4ef;
+    --raised: #ffffff;
+    --line: #d8d5cd;
+    --text: #17191f;
+    --soft: #4d535d;
+    --faint: #5a606a;
+    --accent: #3d5e8f;
+    --accent-soft: rgba(61, 94, 143, 0.10);
+    --on-accent: #ffffff;
+    --glow: rgba(61, 94, 143, 0.06);
+    --shadow: rgba(23, 25, 31, 0.18);
+    --sans: system-ui, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+    --serif: Georgia, "Noto Serif", "Times New Roman", serif;
+    --mono: "Cascadia Mono", Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --raised: #17191f;
+      --line: #2e323b;
+      --text: #f6f4ef;
+      --soft: #b5bac3;
+      --faint: #9096a1;
+      --accent: #8facd8;
+      --accent-soft: rgba(143, 172, 216, 0.14);
+      --on-accent: #000000;
+      --glow: rgba(143, 172, 216, 0.07);
+      --shadow: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 520px at 20% -8%, var(--glow), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 15%, var(--glow), transparent);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+  a:hover { opacity: 0.82; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 28px 40px; }
+
+  nav.top {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding-bottom: 24px; border-bottom: 1px solid var(--line);
+  }
+  nav.top a { color: var(--soft); text-decoration: none; font-weight: 500; padding: 4px 0; }
+  nav.top a:hover { color: var(--accent); opacity: 1; }
+  nav.top a[aria-current="page"] { color: var(--accent); border-bottom: 1.5px solid var(--accent); }
+
+  /* ---- Hero ---- */
+  header.hero { padding: 64px 0 40px; text-align: center; }
+  .app-icon {
+    width: 84px; height: 84px; display: block; margin: 0 auto 28px;
+    border-radius: 22.5%; filter: drop-shadow(0 10px 24px var(--shadow));
+  }
+  @media (prefers-color-scheme: dark) { .app-icon { outline: 1px solid #2e323b; outline-offset: -1px; } }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 22px;
+  }
+  .eyebrow .stamp { width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); flex: none; }
+  h1 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(2.1rem, 5.2vw, 3.2rem);
+    line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 20px;
+  }
+  .subtitle { font-size: 1.15rem; color: var(--soft); max-width: 54ch; margin: 0 auto; }
+
+  /* ---- Call to action (Google Play: coming soon until PLAY_URL is set in the script below) ---- */
+  .cta { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .btn {
+    font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase;
+    text-decoration: none; font-weight: 600; padding: 12px 22px; border-radius: 4px;
+    display: inline-block; background: var(--accent); color: var(--on-accent);
+  }
+  a.btn:hover { opacity: 0.88; }
+  .btn[aria-disabled="true"] { background: transparent; color: var(--soft); border: 1px dashed var(--faint); cursor: default; }
+  .cta-note { font-family: var(--mono); font-size: 0.78rem; color: var(--faint); margin: 0; }
+
+  /* ---- Trust strip ---- */
+  .trust {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 22px;
+    background: var(--raised); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 14px; padding: 18px 24px; margin: 8px 0 24px;
+  }
+  .trust ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 20px; justify-content: center; }
+  .trust li { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.03em; color: var(--text); }
+  .trust li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); margin-right: 9px; vertical-align: 2px; }
+  .trust p { margin: 0; font-size: 0.95rem; color: var(--soft); }
+
+  /* ---- Feature rows ---- */
+  .row {
+    display: flex; align-items: center; gap: 56px; padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .js .row { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js .row.in-view { opacity: 1; transform: none; }
+  .row:nth-of-type(even) { flex-direction: row-reverse; }
+  .row-text { flex: 1 1 0; min-width: 0; }
+  .row-media { flex: 1 1 0; min-width: 0; }
+  .row-bar { width: 34px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 20px; }
+  .row-text h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 16px;
+  }
+  .row-text p { margin: 0 0 14px; font-size: 1.05rem; color: var(--soft); }
+  .row-text p:last-child { margin-bottom: 0; }
+  .row-text ul { margin: 14px 0 0; padding-left: 20px; }
+  .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--soft); }
+  .row-text li strong, .row-text p strong { color: var(--text); }
+  .note { font-size: 0.95rem !important; color: var(--faint) !important; }
+
+  /* ---- Phone frame (screenshots are portrait 9:16; a placeholder sits behind each image) ---- */
+  .frame {
+    background: var(--raised); border: 1px solid var(--line); border-radius: 16px; padding: 18px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .phone {
+    position: relative; margin: 0; width: 100%; max-width: 240px; aspect-ratio: 9 / 16;
+    border: 1px solid var(--line); border-radius: 26px; overflow: hidden;
+    background: var(--bg); box-shadow: 0 14px 34px var(--shadow);
+  }
+  .phone img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .phone img[hidden] { display: none; }  /* set by onerror when the screenshot file is missing */
+  .phone .ph {
+    position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px; padding: 16px; text-align: center;
+    background: repeating-linear-gradient(135deg, transparent 0 14px, var(--accent-soft) 14px 15px);
+    color: var(--faint); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .phone .ph svg { width: 34px; height: 34px; stroke: var(--accent); fill: none; stroke-width: 1.6; opacity: 0.85; }
+  .phone .ph b { color: var(--soft); font-weight: 600; letter-spacing: 0.04em; }
+  .frame-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; justify-items: center; }
+  .frame-pair .phone { max-width: 200px; }
+
+  /* ---- Highlights ---- */
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 80px 0; border-top: 1px solid var(--line); }
+  .highlights-title { grid-column: 1 / -1; font-family: var(--sans); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 1.9rem); letter-spacing: -0.01em; margin: 0 0 4px; }
+  .highlight-card { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 24px 24px 26px; }
+  .highlight-card h3 { font-family: var(--sans); font-weight: 700; font-size: 1.15rem; margin: 0 0 10px; letter-spacing: -0.005em; }
+  .highlight-card p { margin: 0; font-size: 1rem; color: var(--soft); }
+
+  .not-yet { border-top: 1px solid var(--line); padding: 64px 0 8px; }
+  .not-yet h2 { font-family: var(--sans); font-weight: 700; font-size: 1.4rem; margin: 0 0 12px; }
+  .not-yet p { margin: 0 0 12px; color: var(--soft); }
+  .not-yet ul { margin: 0 0 12px; padding-left: 20px; color: var(--soft); }
+  .not-yet li { margin-bottom: 6px; }
+
+  /* ---- Contact + footer ---- */
+  .contact { padding: 72px 0 24px; text-align: center; }
+  .contact h2 { font-family: var(--sans); font-weight: 700; font-size: 1.6rem; margin: 0 0 14px; }
+  .contact p { color: var(--soft); margin: 0 0 20px; }
+  .contact-card { display: inline-block; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 28px; max-width: 100%; }
+  .contact-email { font-family: var(--mono); font-size: 1.02rem; font-weight: 600; color: var(--accent); text-decoration: none; word-break: break-all; }
+
+  footer {
+    margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line);
+    color: var(--faint); font-family: var(--mono); font-size: 13px; text-align: center;
+  }
+  footer .links { display: flex; gap: 8px 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px; }
+  footer a { text-decoration: none; }
+  footer p { margin: 0; font-family: var(--sans); font-size: 13px; }
+
+  @media (max-width: 720px) {
+    .row, .row:nth-of-type(even) { flex-direction: column; gap: 28px; padding: 56px 0; }
+    .row-media { width: 100%; }
+    .highlights { grid-template-columns: 1fr; padding: 56px 0; }
+  }
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    .wrap { padding: 20px 18px 32px; }
+    header.hero { padding: 44px 0 28px; }
+    .trust { padding: 16px; }
+    .frame { padding: 14px; }
+    .frame-pair { gap: 8px; }
+    .contact-card { padding: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .row { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top" aria-label="Native Creds pages">
+    <a href="privacy-policy.html">Privacy</a>
+    <a href="FAQs.html">FAQs</a>
+    <a href="features.html" aria-current="page">Features</a>
+    <a href="mailto:ManideepsCraftyApps+nativecreds@gmail.com">Support</a>
+  </nav>
+
+  <header class="hero">
+    <img class="app-icon" src="data:image/png;base64,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8/3dXKJXl4eRK9Fmy4ey6Zagu8ekcUo7d8PfKbVMfe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0oYACgHUtNg5xQwADACbVMXe0o8P8PbnMnG/xfVAAAAABJRU5ErkJggg==" alt="Native Creds app icon" width="84" height="84">
+    <div class="eyebrow"><span class="stamp"></span>Android password manager</div>
+    <h1>Your passwords, in a file you own.</h1>
+    <p class="subtitle">Native Creds keeps your logins in one encrypted KeePass vault that lives wherever you put it: on your phone, or in your own cloud drive. No account to make, no server of ours, and no way for the app to reach the internet.</p>
+    <div class="cta">
+      <!-- The only place to change when the app is live: set PLAY_URL in the script at the bottom. -->
+      <a class="btn js-play" href="#" aria-disabled="true">Get it on Google Play &mdash; coming soon</a>
+      <p class="cta-note js-play-note">Android 8.0 and newer &middot; free to install</p>
+    </div>
+  </header>
+
+  <aside class="trust" aria-label="Privacy in short">
+    <ul>
+      <li>No account</li>
+      <li>No server</li>
+      <li>No internet permission</li>
+      <li>No ads or trackers</li>
+    </ul>
+    <p>Read the <a href="privacy-policy.html">privacy policy</a>.</p>
+  </aside>
+
+  <div class="row" id="local-only">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Nothing leaves your phone</h2>
+      <p>Most password managers keep your vault on their servers. Native Creds does not have any. It does not even ask Android for permission to use the internet, so it has no way to send your passwords, or anything else, anywhere.</p>
+      <p>There is no sign-up and no sign-in. Create a vault, pick a master password, and you are in.</p>
+      <p class="note">Because nobody else holds a copy, nobody can reset a forgotten master password. Keep a backup of your vault file.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Home"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Home</b><span>Screenshot coming soon</span></span><img src="assets/01-home.png" alt="Native Creds home screen with a default vault card and a My vaults list" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="keepass">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>A real KeePass vault, not a locked box</h2>
+      <p>Your vault is a standard KeePass file (KDBX 3 or 4), so you are never locked in. Open the same file in KeePassXC, KeePassDX, Strongbox, KeePassium and other KeePass-compatible apps, and move on any time.</p>
+      <ul>
+        <li><strong>Master password, key file, or both</strong> protect each vault</li>
+        <li><strong>Several vaults</strong>, with one set as your default</li>
+        <li><strong>Open a vault from anywhere:</strong> a file manager, Drive or a mail attachment can hand a <code>.kdbx</code> file straight to Native Creds</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Create a vault"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Create a vault</b><span>Screenshot coming soon</span></span><img src="assets/02-create-vault.png" alt="The Create a vault screen with master password and key file options" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="organise">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Keep things sorted, find the one you want</h2>
+      <p>Folders, search across the whole vault, and sorting your way. Select several entries at once to move, copy or delete them, or copy entries and whole folders from one vault to another.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Vault list"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Vault list</b><span>Screenshot coming soon</span></span><img src="assets/03-vault-list.png" alt="A vault with folders and a list of entries" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="entries">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Copy or reveal with one tap</h2>
+      <p>Each entry keeps a title, username, password, website and notes. The password stays hidden until you ask to see it, and copying takes one tap.</p>
+      <p>Copied passwords are cleared from the clipboard after 30 seconds, even if you have already switched to the app you are pasting into.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Entry"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Entry</b><span>Screenshot coming soon</span></span><img src="assets/04-entry.png" alt="An entry with the password hidden and copy buttons next to each field" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="codes">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Two-factor codes, in the same place</h2>
+      <p>Store a two-factor (TOTP) key in an entry and Native Creds shows the current 6-digit code, counting down, so you do not need a separate authenticator app for it. Codes saved by KeePassXC, KeePassDX and KeePass 2 are recognised.</p>
+      <p>After autofill fills a login that has a code, the code can be copied for you to paste on the next page (you can switch that off in Settings).</p>
+      <p class="note">Keeping the password and the code together is a convenience trade-off; the <a href="FAQs.html#codes-same-place">FAQs</a> explain it. Scanning a QR code is not supported yet: paste the key instead.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Two-factor code"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Two-factor code</b><span>Screenshot coming soon</span></span><img src="assets/05-totp.png" alt="An entry showing a six-digit two-factor code with a countdown" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="attachments">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Keep small files with an entry</h2>
+      <p>Attach recovery codes, a key file or a scan to the entry it belongs to. Attachments are encrypted inside your vault file, and you can save one back out whenever you need it.</p>
+      <p class="note">Saving an attachment out creates an ordinary, unencrypted copy wherever you put it; Native Creds asks first.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Attachments"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Attachments</b><span>Screenshot coming soon</span></span><img src="assets/06-attachments.png" alt="An entry with two attached files listed" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="autofill">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Fills logins in apps and browsers</h2>
+      <p>Choose Native Creds as your Android autofill service and it offers your saved login right where you are signing in, in apps and in browsers such as Chrome and Firefox.</p>
+      <ul>
+        <li><strong>Save as you sign in:</strong> new logins can be saved straight from the sign-in screen you just used</li>
+        <li><strong>Two-step sign-ins:</strong> handles sites that ask for the username and the password on separate pages</li>
+        <li><strong>Never silent:</strong> you unlock and tap the suggestion; nothing is filled behind your back</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Autofill"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Autofill</b><span>Screenshot coming soon</span></span><img src="assets/07-autofill.png" alt="A sample sign-in form with a Native Creds autofill suggestion above the keyboard" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="unlock">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Unlock with your fingerprint</h2>
+      <p>Open a vault with your fingerprint or your phone's screen lock instead of typing the master password every time. It is off until you turn it on, separately for each vault, and it is protected by Android's hardware-backed Keystore.</p>
+      <p>The vault locks the moment you leave the app, so a quick unlock matters.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Unlock"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Unlock</b><span>Screenshot coming soon</span></span><img src="assets/08-unlock.png" alt="The unlock screen with a master password field and a fingerprint button" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="sync">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Sync through your own cloud drive</h2>
+      <p>Keep the vault file in Google Drive or another storage app on your phone to use it on more than one device. Native Creds has no cloud of its own; the storage app moves the encrypted file.</p>
+      <p>When the file was changed on another device, Native Creds merges the changes instead of overwriting them, so edits made on two phones are both kept. <strong>Sync now</strong> and pull-to-refresh fetch the latest copy on demand.</p>
+      <p class="note">If two phones edit the very same entry, one whole version wins and the other is kept in the entry's history.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Sync"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Sync</b><span>Screenshot coming soon</span></span><img src="assets/09-sync.png" alt="Sync details showing a vault synced and merged with one change" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="import">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Move in from your browser or another manager</h2>
+      <p>Import passwords from Google Password Manager and Chrome, and from CSV exports of Edge, Firefox, Safari and Apple Passwords, Bitwarden, LastPass, Dashlane, NordPass and Proton Pass.</p>
+      <p>You review duplicates before anything is added, and Native Creds helps you delete the exported file afterwards.</p>
+      <p class="note">Passkeys cannot be imported, and 1Password's own export format is not supported yet.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Import"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Import</b><span>Screenshot coming soon</span></span><img src="assets/10-import.png" alt="The import screen listing the password managers and browsers you can import from" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="generator">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Strong passwords, made on your phone</h2>
+      <p>The built-in generator makes random passwords with the length and character types you choose, right where you are editing an entry. Nothing about them is sent anywhere; there is nowhere to send it.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Generator"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Generator</b><span>Screenshot coming soon</span></span><img src="assets/11-generator.png" alt="The password generator with length and character type options" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="open-with">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Open a vault file from anywhere</h2>
+      <p>Tap a <code>.kdbx</code> file in your file manager, Drive or a mail app and choose Native Creds. It checks what the other app allows and tells you plainly: a normal vault, a vault you can change only until you close it, or a read-only one, with <strong>Save a copy</strong> to get one you can edit.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><figure class="phone" data-label="Open with"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Open with</b><span>Screenshot coming soon</span></span><img src="assets/12-open-with.png" alt="A vault opened from another app, with a banner explaining that it is read-only and offering Save a copy" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure></div>
+    </div>
+  </div>
+
+  <div class="row" id="themes">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Light, dark, or follow your phone</h2>
+      <p>A calm porcelain-and-blue light theme and a true-black dark theme that follows your phone's setting, or stays put if you choose. Change it any time in Settings.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame">
+        <div class="frame-pair">
+          <figure class="phone" data-label="Light"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Light</b><span>Screenshot coming soon</span></span><img src="assets/03-vault-list.png" alt="The vault list in the light theme" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+          <figure class="phone" data-label="Dark"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Dark</b><span>Screenshot coming soon</span></span><img src="assets/13-vault-list-dark.png" alt="The same vault list in the dark theme" width="1080" height="1920" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="highlights" id="careful" aria-labelledby="careful-title">
+    <h2 class="highlights-title" id="careful-title">Careful by default</h2>
+    <div class="highlight-card">
+      <h3>It locks when you leave</h3>
+      <p>Press home, switch apps or turn the screen off and the vault locks straight away. There is no timer to forget about.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>The clipboard cleans up</h3>
+      <p>Copied passwords and codes are marked sensitive and cleared after 30 seconds, even after you switch to another app.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Screens stay private</h3>
+      <p>Screenshots, screen recording and the recent-apps preview are blocked. Native Creds' own data is left out of Android backups.</p>
+    </div>
+  </section>
+
+  <section class="not-yet" id="not-yet">
+    <h2>What it does not do yet</h2>
+    <p>Native Creds is an independent app made by one developer, and it is honest about its limits:</p>
+    <ul>
+      <li>Passkeys are not supported yet (planned for after launch, no date promised).</li>
+      <li>No QR scanning for two-factor setup, and no master-password change inside the app.</li>
+      <li>Android only for now: no iPhone, Mac, Windows or browser extension version.</li>
+    </ul>
+    <p>The full list is in the <a href="FAQs.html#not-yet">FAQs</a>.</p>
+  </section>
+
+  <div class="contact">
+    <h2>Still have a question?</h2>
+    <p>Check the <a href="FAQs.html">FAQs</a> first &mdash; if they do not cover it, I would like to hear about it directly.</p>
+    <div class="contact-card">
+      <a class="contact-email" href="mailto:ManideepsCraftyApps+nativecreds@gmail.com">ManideepsCraftyApps+nativecreds@gmail.com</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="FAQs.html">FAQs</a>
+      <a href="features.html">Features</a>
+      <a href="mailto:ManideepsCraftyApps+nativecreds@gmail.com">Email Support</a>
+    </div>
+    <p>Native Creds &middot; Manideep's Crafty Apps. Not affiliated with the KeePass project. Google Play is a trademark of Google LLC.</p>
+  </footer>
+
+</div>
+
+<script>
+// ---- The one place to change when the app is published ------------------------------------
+// Paste the Google Play listing URL between the quotes (https://play.google.com/store/apps/details?id=com.nativecreds.android).
+// While it is empty, the buttons stay a disabled "coming soon" badge.
+var PLAY_URL = "";
+// ---------------------------------------------------------------------------------------------
+(function () {
+  if (!PLAY_URL) return;
+  document.querySelectorAll(".js-play").forEach(function (a) {
+    a.href = PLAY_URL;
+    a.removeAttribute("aria-disabled");
+    a.textContent = "Get it on Google Play";
+  });
+})();
+
+// Rows fade/slide into place as they cross into view. Purely decorative: with reduced motion
+// (handled in CSS), no IntersectionObserver or no JavaScript, every row simply stays visible.
+(function () {
+  var rows = document.querySelectorAll(".row");
+  if (!("IntersectionObserver" in window)) {
+    rows.forEach(function (r) { r.classList.add("in-view"); });
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in-view"); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  rows.forEach(function (r) { observer.observe(r); });
+})();
+</script>
+
+</body>
+</html>
