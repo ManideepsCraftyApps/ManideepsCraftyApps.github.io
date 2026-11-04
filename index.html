@@ -257,6 +257,14 @@
   footer a { color: var(--paper-soft); text-decoration: none; border-bottom: 1px solid var(--line); }
   footer a:hover { color: var(--brass-bright); border-color: var(--brass); }
 
+  .app-head { display: flex; gap: 18px; align-items: flex-start; }
+  .app-icon { width: 64px; height: 64px; border-radius: 15px; flex: none; box-shadow: 0 6px 16px var(--shadow); }
+  .app-head > div { flex: 1; min-width: 0; }
+  .app-links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; }
+  .app-links a { color: var(--paper-soft); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .app-links a:hover { color: var(--brass-bright); border-color: var(--brass); }
+  .btn[aria-disabled="true"] { background: transparent; color: var(--paper-soft); border: 1px dashed var(--brass); cursor: default; }
+  @media (max-width: 520px) { .app-card { padding: 24px 20px; } .app-head { flex-direction: column; } }
   @media (prefers-reduced-motion: reduce) {
     .app-card { transition: none; }
   }
@@ -272,16 +280,19 @@
   </header>
 
   <section>
-    <div class="section-label">On the bench</div>
+    <div class="section-label">The apps</div>
     <div class="apps">
       <div class="app-card live">
         <div class="app-top">
-          <div>
-            <div class="app-name-row">
-              <h2 class="app-name">Reko</h2>
-              <span class="platform-tag">macOS</span>
+          <div class="app-head">
+            <img class="app-icon" src="assets/icons/reko.svg" alt="" width="64" height="64">
+            <div>
+              <div class="app-name-row">
+                <h2 class="app-name">Reko</h2>
+                <span class="platform-tag">macOS</span>
+              </div>
+              <p class="app-tagline">The clipboard manager macOS should have shipped with.</p>
             </div>
-            <p class="app-tagline">The clipboard manager macOS should have shipped with.</p>
           </div>
           <div class="price-tag">$14.99 · one time</div>
         </div>
@@ -294,9 +305,66 @@
           <li>Encrypted manual export/import — your data, portable</li>
         </ul>
         <div class="app-actions">
-          <span class="btn btn-primary" aria-disabled="true">Get Reko — coming soon</span>
-          <span class="status-note">launching shortly</span>
+          <a class="btn btn-primary" href="reko/features.html">See Reko</a>
+          <span class="status-note">14-day trial · macOS 13+</span>
         </div>
+        <div class="app-links"><a href="reko/features.html">Features</a><a href="reko/FAQs.html">FAQs</a></div>
+      </div>
+      <div class="app-card live">
+        <div class="app-top">
+          <div class="app-head">
+            <img class="app-icon" src="unboxtext/assets/icons/unboxtext.png" alt="" width="64" height="64">
+            <div>
+              <div class="app-name-row">
+                <h2 class="app-name">Unbox Text</h2>
+                <span class="platform-tag">macOS</span>
+              </div>
+              <p class="app-tagline">Screenshot OCR &amp; PDF to text — copied, saved, searchable forever.</p>
+            </div>
+          </div>
+          <div class="price-tag">Free</div>
+        </div>
+        <ul class="feature-list">
+          <li>Drag a box around any text on screen; it’s copied in under a second</li>
+          <li>Drop in PDFs and images, with a page-range picker</li>
+          <li>Searchable history of every capture, with thumbnails</li>
+          <li>Capture Viewer: fix low-confidence words inline</li>
+          <li>Markdown mode, read-aloud, QR &amp; barcode reading</li>
+          <li>Handwriting Expert mode, bring-your-own Azure key (opt-in)</li>
+        </ul>
+        <div class="app-actions">
+          <a class="btn btn-primary" href="https://apps.apple.com/app/id6803853263">Mac App Store</a>
+          <span class="status-note">on-device · no accounts · macOS 13+</span>
+        </div>
+        <div class="app-links"><a href="unboxtext/features.html">Features</a><a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-support.html">Support</a><a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-privacy-policy.html">Privacy policy</a></div>
+      </div>
+      <div class="app-card live">
+        <div class="app-top">
+          <div class="app-head">
+            <img class="app-icon" src="assets/icons/nativecreds.png" alt="" width="64" height="64">
+            <div>
+              <div class="app-name-row">
+                <h2 class="app-name">Native Creds</h2>
+                <span class="platform-tag">Android</span>
+              </div>
+              <p class="app-tagline">A private password manager that keeps your vault in a file you own.</p>
+            </div>
+          </div>
+          <div class="price-tag">Free</div>
+        </div>
+        <ul class="feature-list">
+          <li>KeePass-compatible (KDBX 3/4) — open it in KeePassXC, KeePassDX, Strongbox</li>
+          <li>No account, no server, no INTERNET permission</li>
+          <li>Fingerprint or screen-lock unlock, with Autofill for apps &amp; Chrome</li>
+          <li>TOTP codes, attachments, folders and vault-wide search</li>
+          <li>Merge-safe sync through your own cloud folder</li>
+          <li>Import from Chrome, Bitwarden, Firefox and more</li>
+        </ul>
+        <div class="app-actions">
+          <span class="btn btn-primary" aria-disabled="true">Google Play — coming soon</span>
+          <span class="status-note">in closed testing</span>
+        </div>
+        <div class="app-links"><a href="nativecreds/features.html">Features</a><a href="nativecreds/FAQs.html">FAQs</a><a href="nativecreds/privacy-policy.html">Privacy policy</a></div>
       </div>
     </div>
   </section>
