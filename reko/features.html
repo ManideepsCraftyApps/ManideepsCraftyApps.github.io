@@ -199,28 +199,25 @@
   }
 
   /* ---- Promo video (a <section>, not a <div>, so the .row:nth-of-type(even) alternation below is unchanged) ---- */
-  .promo { padding: 0 0 80px; }
+  .promo { padding: 8px 0 88px; max-width: 680px; margin: 0 auto; }
+  .promo-lead {
+    margin: 0 0 18px;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--paper-soft);
+  }
   .promo-frame {
     position: relative;
     aspect-ratio: 16 / 9;
     background: var(--ink-raised);
     border: 1px solid var(--ink-line);
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 24px 60px var(--shadow);
   }
   .promo-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .promo-caption {
-    margin: 14px 0 0;
-    text-align: center;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    color: var(--paper-faint);
-  }
 
   @media (max-width: 720px) {
-    .promo { padding-bottom: 48px; }
+    .promo { padding-bottom: 56px; }
     .row, .row:nth-of-type(even) { flex-direction: column; gap: 28px; padding: 64px 0; }
     .highlights { grid-template-columns: 1fr; padding-bottom: 64px; }
     .frame-pair { grid-template-columns: 1fr; }
@@ -240,13 +237,6 @@
     <h1>What Reko does</h1>
     <p class="subtitle">You copy things all day — text, screenshots, files, whole paragraphs from three different tabs. Reko remembers every one of them, so you never have to go find where it went.</p>
   </header>
-
-  <section class="promo" aria-label="Reko in 80 seconds">
-    <div class="promo-frame">
-      <iframe src="https://www.youtube-nocookie.com/embed/WMVxx6OEnMM?rel=0" title="Reko: Clipboard History for Mac – Paste Anything You've Copied" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    <p class="promo-caption">Reko in 80 seconds</p>
-  </section>
 
   <div class="row">
     <div class="row-text">
@@ -271,6 +261,13 @@
       <div class="frame"><video src="assets/2.mp4" autoplay loop muted playsinline></video></div>
     </div>
   </div>
+
+  <section class="promo" aria-label="Reko in 80 seconds">
+    <p class="promo-lead">Seen the basics? Here's all of it in 80 seconds.</p>
+    <div class="promo-frame">
+      <iframe src="https://www.youtube-nocookie.com/embed/WMVxx6OEnMM?rel=0" title="Reko: Clipboard History for Mac – Paste Anything You've Copied" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </section>
 
   <div class="highlights">
     <div class="highlight-card">
