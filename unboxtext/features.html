@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Unbox Text does</title>
+<meta name="description" content="Everything Unbox Text does — on-device screen, PDF and image OCR, searchable capture history, Markdown mode, read-aloud, QR/barcode decoding, and the opt-in Handwriting Expert mode.">
+
+<!--
+  ASSETS CHECKLIST — add these files to unboxtext/assets/ (filenames match what features.html references below).
+  Use .mp4 (autoplay/loop/muted/playsinline) for a short interaction/demo, .png for a single static screen —
+  already matched below, just capture the real thing.
+
+    1.mp4   — Core loop: pressing the global hotkey (default ⌘⇧2) in some other app, dragging a selection
+              box over text on screen, and the recognized text landing on the clipboard.
+    2.png   — The import flow: a PDF loaded via drag-in or File → Import, with the page-range picker visible
+              for a multi-page document.
+    3.png   — The capture history list: thumbnails of past captures next to a search field, a few results
+              narrowed down.
+    4.mp4   — The Capture Viewer's three panes (original image / recognized text / confidence-highlighted
+              words), with a low-confidence word being clicked and corrected inline.
+    5-1.png — A capture's recognized text as plain text (Markdown mode off) — e.g. a code snippet with its
+              indentation only loosely preserved.
+    5-2.png — The same capture with Markdown mode on: the code wrapped in a fenced code block, list markers
+              normalized.
+    6.mp4   — The floating "now playing" read-aloud pellet staying on screen while switching between apps,
+              showing play/pause, skip-sentence, and the scrubber.
+    7-1.png — A capture containing a QR code or barcode, with the decoded value shown alongside the
+              recognized text.
+    7-2.png — A capture of non-English text (e.g. French, Japanese) recognized correctly without picking a
+              language first.
+    8-1.png — A messy/cursive handwritten note recognized on-device, with several words flagged
+              low-confidence.
+    8-2.png — The same note re-recognized with Handwriting Expert turned on (Azure Read API), accurately
+              transcribed.
+
+  YOUTUBE EMBED — see the dedicated placeholder comment further down for swapping in the real video ID.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Unbox Text palette ("Lift" — the warm amber of text being lifted off a page/screen), built the same
+     way as Native Creds': CSS custom properties, light by default, overridden under
+     prefers-color-scheme: dark. --accent is for SHAPES in both themes (bars, borders, chip/button fills,
+     dots, focus rings). --accent-ink is for TEXT that needs to read as the accent color (links), tuned
+     separately per theme for contrast. --on-accent is text sitting on a solid --accent fill — kept as dark
+     ink rather than white in both themes, since amber is too light for white text to clear 4.5:1. */
+  :root {
+    color-scheme: light dark;
+    --ink: #201a10;
+    --ink-raised: #ffffff;
+    --ink-line: #e6ddc8;
+    --paper: #201a10;
+    --paper-soft: #5c5245;
+    --paper-faint: #8a7f6e;
+    --bg: #faf7f0;
+    --accent: #d99a2b;
+    --accent-deep: #9a5f0f;
+    --accent-ink: #9a5f0f;
+    --accent-soft: rgba(217, 154, 43, 0.14);
+    --on-accent: #201a10;
+    --shadow: rgba(32, 26, 16, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f6f0e2;
+      --ink-raised: #1c160d;
+      --ink-line: #3a2f1c;
+      --paper: #f6f0e2;
+      --paper-soft: #c7bba3;
+      --paper-faint: #9c9180;
+      --bg: #120f0a;
+      --accent: #e2a93c;
+      --accent-deep: #f0bf63;
+      --accent-ink: #f0bf63;
+      --accent-soft: rgba(226, 169, 60, 0.18);
+      --on-accent: #1c160d;
+      --shadow: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 520px at 20% -8%, var(--accent-soft), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 15%, var(--accent-soft), transparent);
+    color: var(--paper);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+  a:hover { opacity: 0.82; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---- Hero ---- */
+  header.hero { padding: 88px 0 48px; text-align: center; }
+  .app-icon {
+    width: 84px;
+    height: 84px;
+    display: block;
+    margin: 0 auto 28px;
+    border-radius: 22.5%;
+    filter: drop-shadow(0 10px 24px var(--shadow));
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 22px;
+  }
+  .eyebrow .stamp { width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); flex: none; }
+  h1 {
+    font-family: "Bricolage Grotesque", -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+    color: var(--paper);
+  }
+  .subtitle {
+    font-size: 1.15rem;
+    color: var(--paper-soft);
+    max-width: 54ch;
+    margin: 0 auto;
+  }
+  .requirements {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    color: var(--paper-faint);
+    margin: 20px 0 0;
+  }
+
+  /* ---- Highlight grid (no screenshot needed) ---- */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    padding: 8px 0 72px;
+  }
+  .highlight-card {
+    background: var(--ink-raised);
+    border: 1px solid var(--ink-line);
+    border-radius: 14px;
+    padding: 26px 26px 28px;
+  }
+  .highlight-card h3 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+    color: var(--paper);
+    letter-spacing: -0.005em;
+  }
+  .highlight-card p { margin: 0; font-size: 1rem; color: var(--paper-soft); }
+
+  /* ---- Video feature (YouTube demo) ---- */
+  .video-feature { padding: 0 0 72px; text-align: center; }
+  .video-feature h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    color: var(--paper);
+  }
+  .video-feature p { color: var(--paper-soft); margin: 0 auto 24px; max-width: 56ch; }
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-top: 56.25%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--ink-line);
+    background: var(--ink-raised);
+    box-shadow: 0 10px 24px var(--shadow);
+  }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+  /* ---- Feature rows ---- */
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    padding: 96px 0;
+    border-top: 1px solid var(--ink-line);
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .row.in-view { opacity: 1; transform: translateY(0); }
+  .row:nth-of-type(even) { flex-direction: row-reverse; }
+  .row-text { flex: 1 1 0; min-width: 0; }
+  .row-media { flex: 1 1 0; min-width: 0; }
+
+  .row-bar {
+    width: 34px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .row-text h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 16px;
+    color: var(--paper);
+  }
+  .row-text p { margin: 0 0 14px; font-size: 1.05rem; color: var(--paper-soft); }
+  .row-text p:last-of-type { margin-bottom: 0; }
+  .row-text ul { margin: 14px 0 0; padding-left: 20px; }
+  .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--paper-soft); }
+  .row-text li strong { color: var(--paper); }
+  .row-text .note { font-size: 0.95rem; color: var(--paper-faint); }
+
+  kbd {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.88em;
+    background: var(--ink-raised);
+    border: 1px solid var(--ink-line);
+    border-radius: 5px;
+    padding: 2px 7px;
+    color: var(--paper);
+  }
+
+  .frame {
+    background: var(--ink-raised);
+    border: 1px solid var(--ink-line);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 260px;
+  }
+  .frame img, .frame video { display: block; max-width: 100%; max-height: 400px; width: auto; height: auto; border-radius: 8px; }
+  .frame-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+  .frame-pair img { max-height: 340px; }
+
+  /* ---- Footer / contact ---- */
+  .contact {
+    padding: 88px 0 40px;
+    text-align: center;
+  }
+  .contact h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin: 0 0 14px;
+    color: var(--paper);
+  }
+  .contact p { color: var(--paper-soft); margin: 0 0 20px; }
+  .contact-card {
+    display: inline-block;
+    background: var(--ink-raised);
+    border: 1px solid var(--ink-line);
+    border-radius: 12px;
+    padding: 18px 28px;
+  }
+  .contact-email { font-family: "IBM Plex Mono", monospace; font-size: 1.05rem; font-weight: 600; color: var(--accent-ink); text-decoration: none; }
+  .contact-email:hover { opacity: 0.82; }
+
+  footer {
+    border-top: 1px solid var(--ink-line);
+    padding: 28px 0 56px;
+    text-align: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    color: var(--paper-faint);
+  }
+  footer .links { display: flex; gap: 8px 18px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+  footer a { color: var(--paper-faint); }
+
+  @media (max-width: 720px) {
+    .row, .row:nth-of-type(even) { flex-direction: column; gap: 28px; padding: 64px 0; }
+    .highlights { grid-template-columns: 1fr; padding-bottom: 56px; }
+    .frame-pair { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <img class="app-icon" src="../assets/icons/unboxtext.png" alt="Unbox Text app icon" width="84" height="84">
+    <div class="eyebrow"><span class="stamp"></span>macOS menu bar app</div>
+    <h1>What Unbox Text does</h1>
+    <p class="subtitle">Point it at a block of text — on your screen, in a PDF, in a photo of a whiteboard — and it comes out the other side as real, pasteable text in about a second, read right off the page with Apple's own on-device OCR.</p>
+    <p class="requirements">macOS 13+ · Screen Recording permission only — no Accessibility, no Input Monitoring</p>
+  </header>
+
+  <div class="highlights">
+    <div class="highlight-card">
+      <h3>Nothing leaves your Mac by default</h3>
+      <p>The capture loop, history, Capture Viewer, Markdown mode, read-aloud, and QR/barcode detection all run entirely on-device with Apple's Vision framework. No account, no sign-in, no network call — unless you explicitly turn on Handwriting Expert.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>One shortcut, from anywhere</h3>
+      <p>A single customizable hotkey works from inside any app, so you never have to switch to Unbox Text first. Change it any time in Settings — it checks for collisions with the app's own other shortcuts as you record a new one.</p>
+    </div>
+  </div>
+
+  <div class="video-feature">
+    <h2>See it in action</h2>
+    <p>A quick walkthrough of the capture loop, history, and a few of the modes below.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/KIdWqetcDEM" title="Unbox Text demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="row" id="capture">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>One shortcut turns any screen into text</h2>
+      <p>Press your hotkey (<kbd>⌘</kbd><kbd>⇧</kbd><kbd>2</kbd> by default) from inside any app, drag a box around whatever you want — a sentence, a paragraph, a whole screen — and Unbox Text reads it with Apple's on-device Vision OCR and drops it straight onto your clipboard, usually in under a second.</p>
+      <p>Nothing leaves your Mac to make that happen, and there's no account to sign into first. Don't like the default shortcut? Change it any time in <strong>Settings</strong>.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><video src="assets/1.mp4" autoplay loop muted playsinline></video></div>
+    </div>
+  </div>
+
+  <div class="row" id="import">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Not just the screen — PDFs and images too</h2>
+      <p>Drag a PDF or image straight onto Unbox Text, or use <strong>File → Import</strong>, and it runs the same on-device recognition over the whole file instead of just what's visible on screen.</p>
+      <p>Multi-page PDFs get a page-range picker, so you can pull text from page 12 of a 200-page document without waiting on the other 199.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><img src="assets/2.png" alt="The import dialog with a PDF loaded and a page-range picker for choosing which pages to recognize" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="row" id="history">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Every capture, saved and searchable</h2>
+      <p>Unbox Text keeps a history of everything it's ever recognized, each one with a thumbnail of the original image or PDF page right next to the text it found.</p>
+      <p>Search across the whole history, reopen any past capture, and re-copy or re-export it whenever you need it again — nothing you've captured is ever really gone.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><img src="assets/3.png" alt="The capture history list, showing thumbnails of past captures next to a search field" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="row" id="viewer">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Fix the one word it got wrong</h2>
+      <p>Open any capture in the <strong>Capture Viewer</strong> and you get three panes side by side: the original image, the text Unbox Text recognized, and that same text with low-confidence words highlighted.</p>
+      <p>Click a highlighted word to correct it right there, before you copy or export — so a single misread character doesn't ride along into whatever you're pasting into.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><img src="assets/4.png" alt="The Capture Viewer showing the capture history, the original screenshot, and the recognized text with a confidence-highlight slider" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="row" id="markdown">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Captures that paste cleanly into your notes</h2>
+      <p>Turn on <strong>Markdown mode</strong> and Unbox Text does the formatting work for you: it spots code blocks by the geometry of the text itself — consistent monospace character widths, not keyword guessing — and wraps them in fenced code blocks automatically.</p>
+      <ul>
+        <li>List markers get normalized into proper Markdown lists</li>
+        <li>Markdown's special characters are escaped in ordinary prose, so they don't get misread as formatting</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="frame">
+        <div class="frame-pair">
+          <img src="assets/5-1.png" alt="A capture's recognized text with Markdown mode off: plain bullet characters and unescaped underscores, asterisks and hashes" loading="lazy">
+          <img src="assets/5-2.png" alt="The same capture with Markdown mode on: bullets turned into Markdown list items and special characters escaped" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="read-aloud">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Or just listen to it</h2>
+      <p>Every capture can be read aloud. A small "now playing" pellet floats on screen across apps and Spaces, with play/pause, skip forward or back by sentence, a scrubber, and a voice and speed you pick.</p>
+      <p>Turn on auto-speak and Unbox Text starts reading the moment a new capture finishes — handy for a long PDF you'd rather listen to than scroll through.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame"><video src="assets/6.mp4" autoplay loop muted playsinline></video></div>
+    </div>
+  </div>
+
+  <div class="row" id="codes-languages">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Codes and other languages, handled automatically</h2>
+      <p>Catch a QR code or barcode in a capture and Unbox Text decodes it on the spot — no separate scanner app needed for something that was already sitting on your screen.</p>
+      <p>Recognition isn't limited to English either: it uses Vision's own language auto-detection, so text in most of the languages Vision supports gets read correctly without you telling it which one to expect.</p>
+    </div>
+    <div class="row-media">
+      <div class="frame">
+        <div class="frame-pair">
+          <img src="assets/7-1.png" alt="A capture containing a QR code, with the decoded value shown alongside the recognized text" loading="lazy">
+          <img src="assets/7-2.png" alt="A capture of non-English text being recognized correctly without choosing a language first" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="handwriting">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Handwriting Expert, for the messy stuff</h2>
+      <p>On-device Vision is good, but cursive or messy handwriting is still genuinely hard for any on-device model. <strong>Handwriting Expert</strong> is an opt-in mode, off by default, that routes that one capture through Microsoft Azure's cloud Read API instead — which does meaningfully better on handwriting.</p>
+      <p>It's bring-your-own-key: you create your own free Azure account (the free tier covers around 5,000 reads a month) and paste your own endpoint and key into Settings. Unbox Text never sees, stores, or pays for that usage — it's your account, your quota. A one-time disclosure names Azure explicitly before this can ever be turned on.</p>
+      <p class="note">Everything else on this page stays on-device, with or without Handwriting Expert turned on.</p>
+    </div>
+    <!-- Media for this row (8-1.png on-device result, 8-2.png Handwriting Expert result of the same real handwritten note) still needs adding: it needs a genuine handwriting sample and a live Azure key, so it is left text-only until then. -->
+  </div>
+
+  <div class="contact">
+    <h2>Still have a question?</h2>
+    <p>Check the <a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-support.html">support page</a> first — if it doesn't cover it, we'd like to hear about it directly.</p>
+    <div class="contact-card">
+      <a class="contact-email" id="emailSupportLink" href="#"></a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-support.html">Support</a>
+      <a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-privacy-policy.html">Privacy Policy</a>
+    </div>
+    <p>Unbox Text · Manideep's Crafty Apps</p>
+  </footer>
+
+</div>
+
+<script>
+// Not a security boundary — this page has no login, no form, no backend call, and nothing
+// else on it to protect. This only keeps the support address out of the raw page source
+// (view-source / a basic scraper reading static HTML text) so it collects less spam mail;
+// it's assembled here at load time instead of sitting as a literal string in the markup.
+(function () {
+  var address = ["manideepscraftyapps", "+unboxtext", "@", "gmail.com"].join("");
+  var link = document.getElementById("emailSupportLink");
+  if (link) {
+    link.textContent = address;
+    link.href = "mailto:" + address;
+  }
+})();
+
+// Rows fade/slide into place as they cross into view — purely decorative, so a reduced-motion
+// preference (handled in CSS) or a browser without IntersectionObserver just leaves every row
+// visible from the start instead of breaking anything.
+if ("IntersectionObserver" in window) {
+  var rows = document.querySelectorAll(".row");
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  rows.forEach(function (row) { observer.observe(row); });
+} else {
+  document.querySelectorAll(".row").forEach(function (row) { row.classList.add("in-view"); });
+}
+</script>
+
+</body>
+</html>
