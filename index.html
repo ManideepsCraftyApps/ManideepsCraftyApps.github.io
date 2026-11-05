@@ -95,6 +95,9 @@
   a.btn:active { transform: translateY(0) scale(.99); }
   .btn.soon { background: transparent; color: var(--ink); border-style: dashed; cursor: default; }
   .btn .plat { width: 22px; height: 22px; }
+  .badge { display: inline-block; line-height: 0; border-radius: 8px; transition: transform .18s var(--ease), box-shadow .18s var(--ease); }
+  .badge img { display: block; height: 52px; width: auto; }
+  .badge:hover, .badge:focus-visible { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .25); }
   .more { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: .95rem; }
 
   /* Closing + footer */
@@ -130,13 +133,13 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="apple" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1b8cf0"/><path d="M32 13l-3.2 5.5M32 13l15 26M20 46h24M25 36l-8 13M42 43h6" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/></symbol>
+  <symbol id="mac" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#3a3a3f"/><rect x="14" y="16" width="36" height="24" rx="3" fill="none" stroke="#fff" stroke-width="3.5"/><path d="M8 46h48l-3 4a3 3 0 0 1-2.4 1.2H13.4A3 3 0 0 1 11 50z" fill="#fff"/></symbol>
   <symbol id="play" viewBox="0 0 64 64"><path d="M14 8l26 24-26 24c-1.2-.7-2-2-2-3.5v-41c0-1.5.8-2.8 2-3.5z" fill="#00c3ff"/><path d="M14 8c.6-.3 1.2-.5 1.9-.5.8 0 1.6.3 2.3.7L48 25l-8 7z" fill="#00e676"/><path d="M14 56l26-24 8 7-29.8 16.8c-.7.4-1.5.7-2.3.7-.7 0-1.3-.2-1.9-.5z" fill="#ff3d57"/><path d="M48 25l8 4.5c1.6.9 2.5 2.4 2.5 2.5s-.9 1.6-2.5 2.5L48 39l-8-7z" fill="#ffd000"/></symbol>
 </svg>
 
 <div class="wrap">
   <nav>
     <a class="brand" href="#top">Manideep's Crafty Apps<b>.</b></a>
-    <div class="links"><a href="#reko">Reko</a><a href="#unbox-text">Unbox Text</a><a href="#native-creds">Native Creds</a></div>
   </nav>
 
   <header class="hero" id="top">
@@ -153,7 +156,7 @@
     <article class="stage reko" id="reko">
       <div class="stage-grid">
         <div>
-          <p class="status mono"><svg class="plat" role="img" aria-label="macOS"><use href="#apple"/></svg>Mac · Available now</p>
+          <p class="status mono"><svg class="plat" role="img" aria-label="macOS"><use href="#mac"/></svg>Mac · Available now</p>
           <h2>Reko</h2>
           <p class="tagline">The clipboard manager macOS should have shipped with.</p>
           <p class="pricing">$14.99, paid <span class="hl">once</span>. 14-day free trial. Needs macOS 13+.</p>
@@ -178,7 +181,7 @@
     <article class="stage unbox" id="unbox-text">
       <div class="stage-grid">
         <div>
-          <p class="status mono"><svg class="plat" role="img" aria-label="macOS"><use href="#apple"/></svg>Mac · Coming to the Mac App Store</p>
+          <p class="status mono"><svg class="plat" role="img" aria-label="Mac App Store"><use href="#apple"/></svg>Mac · Available now</p>
           <h2>Unbox Text</h2>
           <p class="tagline">Screenshot OCR &amp; PDF to text — copied, saved, searchable forever.</p>
           <p class="pricing"><span class="hl">Free.</span> On-device, no accounts. Needs macOS 13+.</p>
@@ -191,7 +194,7 @@
             <li>Handwriting Expert mode, bring-your-own Azure key (opt-in)</li>
           </ul>
           <div class="actions">
-            <span class="btn soon" aria-disabled="true"><svg class="plat" aria-hidden="true"><use href="#apple"/></svg>Mac App Store · soon</span>
+            <a class="badge" href="https://apps.apple.com/in/app/unbox-text/id6803853263?mt=12" target="_blank" rel="noopener noreferrer" aria-label="Download Unbox Text on the Mac App Store"><img src="unboxtext/assets/badges/mac-app-store-badge.svg" width="156" height="40" alt="Download on the Mac App Store"></a>
             <a class="swipe" href="unboxtext/features.html">See everything it does</a>
           </div>
           <div class="more"><a class="swipe" href="https://youtu.be/KIdWqetcDEM">Watch the demo</a><a class="swipe" href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-support.html">Support</a><a class="swipe" href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-privacy-policy.html">Privacy policy</a></div>
