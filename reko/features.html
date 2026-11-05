@@ -5,243 +5,181 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Reko does</title>
 <meta name="description" content="Everything Reko does, and how it fits into your day.">
+<meta name="theme-color" content="#FAF7F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
 <style>
   :root {
-    --ink: #17130f;
-    --ink-raised: #1f1a15;
-    --ink-line: #332a22;
-    --paper: #f1ece4;
-    --paper-soft: #b3a898;
-    --paper-faint: #83766650;
-    --accent: #e2795f;
-    --accent-deep: #c4432e;
-    --accent-soft: rgba(226, 121, 95, 0.12);
-    --shadow: rgba(0, 0, 0, 0.4);
+    --cream: #faf7f0;
+    --ink: #1b1b1f;
+    --ink-soft: #55555d;
+    --accent: #ff5a36;
+    --hl: #ffe66d;
+    --peach: #ffd9cc;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --shadow: 0 13px 34px rgba(27, 27, 31, .16);
   }
-
   * { box-sizing: border-box; }
-  html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
-
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0;
-    background: var(--ink);
-    background-image:
-      radial-gradient(ellipse 900px 520px at 20% -8%, rgba(226, 121, 95, 0.10), transparent),
-      radial-gradient(ellipse 700px 500px at 100% 15%, rgba(226, 121, 95, 0.05), transparent);
-    color: var(--paper);
-    font-family: "Newsreader", Georgia, "Times New Roman", serif;
-    font-size: 18px;
-    line-height: 1.65;
+    margin: 0; background: var(--cream); color: var(--ink);
+    font: 400 18px/1.6 "Inter", system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
 
-  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
-  a:hover { opacity: 0.82; }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
-
-  /* ---- Hero ---- */
-  header.hero { padding: 88px 0 64px; text-align: center; }
-  .app-icon {
-    width: 84px;
-    height: 84px;
-    display: block;
-    margin: 0 auto 28px;
-    filter: drop-shadow(0 10px 24px var(--shadow));
+  /* Highlighter swipe — the brand signature */
+  .hl {
+    background: linear-gradient(var(--hl), var(--hl)) 0 82% / 100% .55em no-repeat;
+    padding: 0 .08em;
   }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12.5px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 22px;
+  .swipe {
+    text-decoration: none;
+    background: linear-gradient(var(--hl), var(--hl)) 0 100% / 0% 100% no-repeat;
+    border-bottom: 2px solid var(--ink);
+    transition: background-size .25s var(--ease);
   }
-  .eyebrow .stamp { width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); flex: none; }
+  .swipe:hover, .swipe:focus-visible { background-size: 100% 100%; }
+
+  /* Nav */
+  nav { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; text-decoration: none; }
+  .brand b { color: var(--accent); }
+  nav .links { display: flex; gap: 22px; font-size: .95rem; }
+  nav .links a { text-decoration: none; padding-bottom: 2px; }
+  nav .links a:hover { border-bottom: 2px solid var(--accent); }
+
+  /* Hero */
+  header.hero { padding: 48px 0 56px; }
+  .app-icon { width: 112px; height: 112px; display: block; margin: 0 0 28px; border-radius: 26px; box-shadow: var(--shadow); }
+  .eyebrow { display: block; color: var(--ink-soft); margin-bottom: 14px; }
   h1 {
-    font-family: "Bricolage Grotesque", -apple-system, sans-serif;
-    font-weight: 700;
-    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    margin: 0 0 20px;
-    color: var(--paper);
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 8.2vw, 5.6rem); line-height: 1; letter-spacing: -.035em;
+    margin: 0 0 26px; max-width: 15ch; text-wrap: balance;
   }
-  .subtitle {
-    font-size: 1.15rem;
-    color: var(--paper-soft);
-    max-width: 52ch;
-    margin: 0 auto;
-  }
+  .subtitle { font-size: clamp(1.1rem, 2.2vw, 1.35rem); color: var(--ink-soft); max-width: 36em; margin: 0; }
 
-  /* ---- Highlight grid (the two paste-behavior features, no screenshot needed) ---- */
+  /* Highlight cards */
   .highlights {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-    padding: 8px 0 96px;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    padding: 0 0 28px;
   }
-  .highlight-card {
-    background: var(--ink-raised);
-    border: 1px solid var(--ink-line);
-    border-radius: 14px;
-    padding: 26px 26px 28px;
-  }
+  .highlight-card { background: #fff; border-radius: 28px; padding: 30px 30px 32px; box-shadow: 0 6px 20px rgba(27, 27, 31, .07); }
   .highlight-card h3 {
-    font-family: "Bricolage Grotesque", sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin: 0 0 10px;
-    color: var(--paper);
-    letter-spacing: -0.005em;
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: 1.35rem; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 10px;
   }
-  .highlight-card p { margin: 0; font-size: 1rem; color: var(--paper-soft); }
+  .highlight-card p { margin: 0; font-size: 1rem; color: var(--ink-soft); }
 
-  /* ---- Feature rows ---- */
+  /* Feature rows — each sits on a peach stage */
   .row {
-    display: flex;
-    align-items: center;
-    gap: 56px;
-    padding: 96px 0;
-    border-top: 1px solid var(--ink-line);
-    opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    display: flex; align-items: center; gap: 56px;
+    background: var(--peach); border-radius: 32px;
+    padding: clamp(28px, 5vw, 64px); margin: 0 0 28px;
   }
-  .row.in-view { opacity: 1; transform: translateY(0); }
   .row:nth-of-type(even) { flex-direction: row-reverse; }
   .row-text { flex: 1 1 0; min-width: 0; }
   .row-media { flex: 1 1 0; min-width: 0; }
-
-  .row-bar {
-    width: 34px;
-    height: 3px;
-    background: var(--accent);
-    border-radius: 2px;
-    margin-bottom: 20px;
+  .row-bar { width: 40px; height: 6px; background: var(--ink); border-radius: 3px; margin-bottom: 20px; }
+  .row-text h2, .contact h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.06; letter-spacing: -.03em;
+    margin: 0 0 16px; text-wrap: balance;
   }
-  .row-text h2 {
-    font-family: "Bricolage Grotesque", sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin: 0 0 16px;
-    color: var(--paper);
-  }
-  .row-text p { margin: 0 0 14px; font-size: 1.05rem; color: var(--paper-soft); }
+  .row-text p { margin: 0 0 14px; font-size: 1.02rem; color: var(--ink-soft); }
   .row-text p:last-of-type { margin-bottom: 0; }
   .row-text ul { margin: 14px 0 0; padding-left: 20px; }
-  .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--paper-soft); }
-  .row-text li strong { color: var(--paper); }
+  .row-text li { margin-bottom: 8px; font-size: 1rem; color: var(--ink-soft); }
+  .row-text li strong, .row-text p strong { color: var(--ink); font-weight: 600; }
 
   kbd {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 0.88em;
-    background: var(--ink-raised);
-    border: 1px solid var(--ink-line);
-    border-radius: 5px;
-    padding: 2px 7px;
-    color: var(--paper);
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .8em; font-weight: 500;
+    background: #fff; color: var(--ink); border-radius: 6px; padding: 2px 7px; margin: 0 1px;
+    box-shadow: 0 2px 0 rgba(27, 27, 31, .28);
   }
 
   .frame {
-    background: var(--ink-raised);
-    border: 1px solid var(--ink-line);
-    border-radius: 16px;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 260px;
+    background: #fff; border-radius: 24px; padding: 14px; box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: center; min-height: 260px;
   }
-  .frame img, .frame video { display: block; max-width: 100%; max-height: 400px; width: auto; height: auto; border-radius: 8px; }
+  .frame img, .frame video { display: block; max-width: 100%; max-height: 400px; width: auto; height: auto; border-radius: 14px; }
   .frame-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
   .frame-pair img { max-height: 340px; }
 
-  /* ---- Footer / contact ---- */
-  .contact {
-    padding: 88px 0 40px;
-    text-align: center;
-  }
-  .contact h2 {
-    font-family: "Bricolage Grotesque", sans-serif;
-    font-weight: 700;
-    font-size: 1.6rem;
-    margin: 0 0 14px;
-    color: var(--paper);
-  }
-  .contact p { color: var(--paper-soft); margin: 0 0 20px; }
-  .contact-card {
-    display: inline-block;
-    background: var(--ink-raised);
-    border: 1px solid var(--ink-line);
-    border-radius: 12px;
-    padding: 18px 28px;
-  }
-  .contact-email { font-family: "IBM Plex Mono", monospace; font-size: 1.05rem; font-weight: 600; color: var(--accent); text-decoration: none; }
-  .contact-email:hover { opacity: 0.82; }
-
-  footer {
-    border-top: 1px solid var(--ink-line);
-    padding: 28px 0 56px;
-    text-align: center;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.8rem;
-    color: var(--paper-faint);
-  }
-
-  /* ---- Promo video (a <section>, not a <div>, so the .row:nth-of-type(even) alternation below is unchanged) ---- */
-  .promo { padding: 8px 0 88px; max-width: 680px; margin: 0 auto; }
-  .promo-lead {
-    margin: 0 0 18px;
-    text-align: center;
-    font-size: 1.05rem;
-    color: var(--paper-soft);
-  }
+  /* Promo video (a <section>, not a <div>, so the .row:nth-of-type(even) alternation is unchanged) */
+  .promo { padding: 8px 0 40px; max-width: 720px; margin: 0 auto; }
+  .promo-lead { margin: 0 0 18px; text-align: center; font-size: 1.1rem; color: var(--ink-soft); }
   .promo-frame {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    background: var(--ink-raised);
-    border: 1px solid var(--ink-line);
-    border-radius: 14px;
-    overflow: hidden;
+    position: relative; aspect-ratio: 16 / 9; background: var(--ink);
+    border-radius: 24px; overflow: hidden; box-shadow: var(--shadow);
   }
   .promo-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-  @media (max-width: 720px) {
-    .promo { padding-bottom: 56px; }
-    .row, .row:nth-of-type(even) { flex-direction: column; gap: 28px; padding: 64px 0; }
-    .highlights { grid-template-columns: 1fr; padding-bottom: 64px; }
-    .frame-pair { grid-template-columns: 1fr; }
+  /* Contact */
+  .contact { padding: 56px 0 8px; text-align: center; }
+  .contact h2 { font-size: clamp(2rem, 4.4vw, 3rem); margin-bottom: 14px; }
+  .contact p { color: var(--ink-soft); margin: 0 auto 26px; max-width: 32em; }
+  .btn {
+    font: 600 1rem/1 "Inter", sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  a.btn:hover, a.btn:focus-visible { background: var(--accent); border-color: var(--accent); transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .22); }
+  a.btn:active { transform: translateY(0) scale(.99); }
+  .btn:empty { visibility: hidden; }
+
+  footer { padding: 56px 0 72px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; color: var(--ink-soft); font-size: .95rem; }
+  footer strong { color: var(--ink); font-weight: 600; }
+
+  /* Motion: gentle fade-up. Rows are only hidden when scripting is on and motion is welcome. */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes lift { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    header.hero > * { animation: lift .6s var(--ease) backwards; }
+    header.hero > :nth-child(2) { animation-delay: .07s; }
+    header.hero > :nth-child(3) { animation-delay: .14s; }
+    header.hero > :nth-child(4) { animation-delay: .21s; }
+    .js .row { opacity: 0; transform: translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .js .row.in-view { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition-duration: .01ms !important; }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .row { opacity: 1; transform: none; transition: none; }
+  @media (max-width: 760px) {
+    .row, .row:nth-of-type(even) { flex-direction: column; align-items: stretch; gap: 28px; }
+    .highlights { grid-template-columns: 1fr; }
+    .frame-pair { grid-template-columns: 1fr; }
+    .app-icon { width: 96px; height: 96px; border-radius: 22px; }
+    .promo { padding-bottom: 28px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <nav>
+    <a class="brand" href="../index.html">Manideep's Crafty Apps<b>.</b></a>
+    <div class="links"><a href="../index.html#reko">Reko</a></div>
+  </nav>
+
   <header class="hero">
-    <img class="app-icon" src="assets/icon.svg" alt="Reko app icon" width="84" height="84">
-    <div class="eyebrow"><span class="stamp"></span>macOS menu bar app</div>
-    <h1>What Reko does</h1>
+    <img class="app-icon" src="assets/icon.svg" alt="Reko app icon" width="112" height="112">
+    <span class="eyebrow mono">macOS menu bar app</span>
+    <h1>What Reko <span class="hl">does</span></h1>
     <p class="subtitle">You copy things all day — text, screenshots, files, whole paragraphs from three different tabs. Reko remembers every one of them, so you never have to go find where it went.</p>
   </header>
 
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Nothing you copy just disappears</h2>
+      <h2>Nothing you copy just <span class="hl">disappears</span></h2>
       <p>You copy something, then copy something else, and the first thing is gone — that's how the Mac clipboard has always worked. Reko sits quietly in your menu bar and keeps a running history of everything you copy, exactly as you copied it: plain text, rich formatting, images, files, whatever.</p>
       <p>Copy ten things in a row and all ten are still there when you need them.</p>
     </div>
@@ -253,7 +191,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>One shortcut, from anywhere</h2>
+      <h2>One <span class="hl">shortcut</span>, from anywhere</h2>
       <p>Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>1</kbd> while you're typing in any app, and your clipboard history pops up right there — no switching windows, no hunting through a menu bar icon. Click the item you want and it's pasted.</p>
       <p>Click away, or hit Escape, and it's gone like it was never there. Don't like the default? Change it any time in <strong>Settings → General</strong> — Reko checks for collisions with its own other shortcuts as you record a new one.</p>
     </div>
@@ -283,7 +221,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Keep things sorted your way</h2>
+      <h2>Keep things <span class="hl">sorted</span> your way</h2>
       <p>Group items into categories that make sense to you — work, code snippets, addresses, whatever fits how you actually use your clipboard. Each category can keep its history for a different length of time, so a quick scratch category clears itself out while the one you rely on daily sticks around.</p>
     </div>
     <div class="row-media">
@@ -299,7 +237,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Some things deserve to stay private</h2>
+      <h2>Some things deserve to stay <span class="hl">private</span></h2>
       <p>Not everything you copy is meant to sit around in plain view — a password, a private note, something sensitive. Mark an item Private and it's encrypted on disk and hidden behind Face ID, Touch ID, or your Mac password.</p>
       <p>Unlock once and everything marked private stays visible while you're actively working, then locks itself back down.</p>
     </div>
@@ -311,7 +249,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Find the one you're thinking of</h2>
+      <h2>Find the one you're <span class="hl">thinking</span> of</h2>
       <p>A history is only useful if you can actually find what you want in it. Search across everything you've copied, or narrow it down by category, which app it came from, what kind of content it is, when you copied it — even filter down to just your private items.</p>
     </div>
     <div class="row-media">
@@ -322,7 +260,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Turn a handful of copies into one clean result</h2>
+      <h2>Turn a handful of copies into one <span class="hl">clean</span> result</h2>
       <p>Select several items you've copied and merge them into one — either as a single new clipboard item ready to paste, or as a real, properly formatted .docx you can open straight in Pages or Word. Bold, italic, underline, strikethrough, fonts, sizes, colors — all the formatting from each original piece carries over.</p>
       <ul>
         <li><strong>Merge</strong> — combines your selection into one pasteable item, in order</li>
@@ -337,7 +275,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Your clipboard gets a little smarter</h2>
+      <h2>Your clipboard gets a little <span class="hl">smarter</span></h2>
       <p>Copy an image with text in it — a screenshot of an error message, a photo of a whiteboard — and Reko pulls the actual text out on-device, ready to search or paste, without ever sending the image anywhere.</p>
       <p>If that image contains a barcode or QR code, Reko detects and decodes it automatically too — no separate scanner app needed for something already sitting in your clipboard history.</p>
     </div>
@@ -349,7 +287,7 @@
   <div class="row">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Your history, backed up on your terms</h2>
+      <h2>Your history, backed up on your <span class="hl">terms</span></h2>
       <p>Export your entire clipboard history to a single encrypted file, protected by a password only you know, and bring it back on another Mac — or the same one, after a fresh install — whenever you want.</p>
       <p>Nothing leaves your machine unless you explicitly export it.</p>
     </div>
@@ -359,15 +297,13 @@
   </div>
 
   <div class="contact">
-    <h2>Still have a question?</h2>
-    <p>Check the <a href="https://manideepscraftyapps.github.io/reko/FAQs">FAQ page</a> first — if it doesn't cover it, we'd like to hear about it directly.</p>
-    <div class="contact-card">
-      <a class="contact-email" id="emailSupportLink" href="#"></a>
-    </div>
+    <h2>Still have a <span class="hl">question</span>?</h2>
+    <p>Check the <a class="swipe" href="https://manideepscraftyapps.github.io/reko/FAQs">FAQ page</a> first — if it doesn't cover it, we'd like to hear about it directly.</p>
+    <a class="btn" id="emailSupportLink" href="#"></a>
   </div>
 
   <footer>
-    <a href="https://manideepscraftyapps.github.io/reko/FAQs">FAQs</a> · Reko · Manideep's Crafty Apps
+    <span><strong>Made by Manideep.</strong> <a class="swipe" href="https://manideepscraftyapps.github.io/reko/FAQs">FAQs</a> · Reko · Manideep's Crafty Apps</span>
   </footer>
 
 </div>
