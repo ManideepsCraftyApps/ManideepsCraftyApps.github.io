@@ -6,279 +6,247 @@
 <title>What Native Creds does</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
 <meta name="description" content="Native Creds is an offline password manager for Android. Your passwords stay on your phone, it fills in your logins, and it opens with your fingerprint or screen lock.">
+<meta name="theme-color" content="#FAF7F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");</script>
 <style>
-  /* Same look and structure as the Reko features page (centred hero, alternating text/media rows
-     with an accent bar, a highlights grid, contact card, mono footer), in the Native Creds palette
-     and with system fonts only: this page is about privacy, so it makes no external requests.
-     Screenshots live in assets/ next to this file; any that do not exist yet show a neutral
-     placeholder (see assets/README.md for the list).
-     ACCENT (palette P4 "Deep Harbour"): --accent = #0080a1, the icon's "|" panel, for SHAPES in BOTH themes
-     (bars, borders, underlines, dots, step badges, chip and button fills, dashed borders, focus rings; 4.1:1 on
-     porcelain, 3.9:1 on charcoal, so UI use only). --accent-ink = TEXT accent: #006782 on light (5.9:1 on
-     porcelain), #75d3f5 on dark (10:1 or better). --on-accent = white on an accent fill (4.56:1) in both themes.
-     --tertiary = soft indigo, used ONLY for the two-factor row's bar. */
+  /* "Sticky Note" brand theme, matching ../index.html (the single source of truth for the look).
+     Cream page, ink text, tomato accent, highlighter yellow. Native Creds' stage colour is green.
+     Light theme only. Screenshots live in assets/ next to this file; any that do not exist yet
+     show a neutral placeholder. Tomato (#ff5a36) is for shapes and hover states only, never for
+     small text (about 3:1 on cream). Ink on the green stage is about 14:1, soft ink about 6:1. */
   :root {
-    color-scheme: light dark;
-    --bg: #f6f4ef;
-    --raised: #ffffff;
-    --line: #d8d5cd;
-    --text: #17191f;
-    --soft: #4d535d;
-    --faint: #5a606a;
-    --accent: #0080a1;
-    --accent-soft: rgba(0, 128, 161, 0.12);
-    --accent-ink: #006782;
-    --on-accent: #ffffff;
-    --chip-bg: #0080a1;
-    --chip-fg: #ffffff;
-    --chip-pad: 5px 12px;
-    --focus-inner: #17191f;
-    --tertiary: #484d78;
-    --glow: rgba(0, 128, 161, 0.10);
-    --shadow: rgba(23, 25, 31, 0.18);
-    --sans: system-ui, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
-    --serif: Georgia, "Noto Serif", "Times New Roman", serif;
-    --mono: "Cascadia Mono", Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #000000;
-      --raised: #17191f;
-      --line: #2e323b;
-      --text: #f6f4ef;
-      --soft: #b5bac3;
-      --faint: #9096a1;
-      --accent: #0080a1;
-      --accent-soft: rgba(0, 128, 161, 0.20);
-      --accent-ink: #75d3f5;
-      --on-accent: #ffffff;
-      --chip-bg: #0080a1;
-      --chip-fg: #ffffff;
-      --chip-pad: 5px 12px;
-      --focus-inner: transparent;
-      --tertiary: #b8c0f5;
-      --glow: rgba(0, 128, 161, 0.12);
-      --shadow: rgba(0, 0, 0, 0.6);
-    }
+    color-scheme: light;
+    --cream: #faf7f0;
+    --ink: #1b1b1f;
+    --ink-soft: #55555d;
+    --accent: #ff5a36;
+    --hl: #ffe66d;
+    --green: #d4f0dc;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --shadow: 0 13px 34px rgba(27, 27, 31, .16);
+    --stage-pad: clamp(28px, 5vw, 64px);
   }
 
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
-    margin: 0;
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 900px 520px at 20% -8%, var(--glow), transparent),
-      radial-gradient(ellipse 700px 500px at 100% 15%, var(--glow), transparent);
-    color: var(--text);
-    font-family: var(--serif);
-    font-size: 18px;
-    line-height: 1.65;
+    margin: 0; background: var(--cream); color: var(--ink);
+    font: 400 18px/1.6 "Inter", system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-wrap: break-word;
-    overflow-x: clip;  /* belt and braces: the picture bleeds to the viewport edge on phones, never past it */
+    overflow-x: clip;  /* belt and braces: the picture bleeds to the stage edge on phones, never past it */
   }
-  a {
-    color: var(--accent-ink); font-weight: 500;
-    text-decoration: underline var(--accent) 3px; text-underline-offset: 4px;
-  }
-  a:hover { background: var(--accent); color: var(--on-accent); }
-  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; box-shadow: 0 0 0 2px var(--focus-inner); }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-  .wrap { --gutter: 28px; max-width: 1080px; margin: 0 auto; padding: 28px var(--gutter) 40px; }
+  .wrap { --gutter: 28px; max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter) 40px; }
 
-  nav.top {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px;
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
-    padding-bottom: 24px; border-bottom: 1px solid var(--line);
+  /* Highlighter swipe: the brand signature. .hl is the static marker behind one key word;
+     in-text links get the swipe-on-hover underline. */
+  .hl {
+    background: linear-gradient(var(--hl), var(--hl)) 0 82% / 100% .55em no-repeat;
+    padding: 0 .08em;
   }
-  nav.top a { color: var(--soft); text-decoration: none; font-weight: 500; padding: 4px 2px; border-bottom: 3px solid transparent; }
-  nav.top a:hover { color: var(--accent-ink); background: none; border-bottom-color: var(--accent); }
-  nav.top a[aria-current="page"] { color: var(--accent-ink); border-bottom-color: var(--accent); }
+  .trust p a, .setup a, .row-text a, .not-yet a, .contact p a, footer a {
+    text-decoration: none;
+    background: linear-gradient(var(--hl), var(--hl)) 0 100% / 0% 100% no-repeat;
+    border-bottom: 2px solid var(--ink);
+    transition: background-size .25s var(--ease);
+  }
+  .trust p a:hover, .setup a:hover, .row-text a:hover, .not-yet a:hover, .contact p a:hover, footer a:hover,
+  .trust p a:focus-visible, .setup a:focus-visible, .row-text a:focus-visible, .not-yet a:focus-visible, .contact p a:focus-visible, footer a:focus-visible { background-size: 100% 100%; }
+
+  /* ---- Nav ---- */
+  nav.top { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; text-decoration: none; }
+  .brand b { color: var(--accent); }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+  nav.top .label { color: var(--ink-soft); }
 
   /* ---- Hero ---- */
-  header.hero { padding: 64px 0 40px; text-align: center; }
-  .app-icon {
-    width: 84px; height: 84px; display: block; margin: 0 auto 28px;
-    border-radius: 22.5%; filter: drop-shadow(0 10px 24px var(--shadow));
-  }
-  @media (prefers-color-scheme: dark) { .app-icon { outline: 1px solid #2e323b; outline-offset: -1px; } }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-family: var(--mono); font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--chip-fg); background: var(--chip-bg); padding: var(--chip-pad); border-radius: 999px; margin-bottom: 22px;
-  }
-  .eyebrow .stamp { width: 6px; height: 6px; background: currentColor; transform: rotate(45deg); flex: none; }
+  header.hero { padding: 40px 0 56px; }
+  .app-icon { display: block; width: 128px; height: 128px; border-radius: 29px; box-shadow: var(--shadow); margin: 0 0 32px; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 18px; }
+  .eyebrow .stamp { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
   h1 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(2.1rem, 5.2vw, 3.2rem);
-    line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 20px;
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: clamp(2.6rem, 7.4vw, 5rem); line-height: 1; letter-spacing: -.035em;
+    margin: 0 0 26px; max-width: 15ch; text-wrap: balance;
   }
-  .subtitle { font-size: 1.15rem; color: var(--soft); max-width: 54ch; margin: 0 auto; }
+  .subtitle { font-size: clamp(1.1rem, 2.2vw, 1.35rem); color: var(--ink-soft); max-width: 36em; margin: 0 0 36px; }
 
   /* ---- Call to action (Google Play: coming soon until PLAY_URL is set in the script below) ---- */
-  .cta { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
   .btn {
-    font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase;
-    text-decoration: none; font-weight: 600; padding: 12px 22px; border-radius: 4px;
-    display: inline-block; background: var(--accent); color: var(--on-accent);
+    font: 600 1rem/1.25 "Inter", sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
   }
-  a.btn:not([aria-disabled="true"]):hover { background: var(--text); color: var(--bg); }
-  .btn[aria-disabled="true"] { background: transparent; color: var(--soft); border: 2px dashed var(--accent); cursor: default; }
-  .cta-note { font-family: var(--mono); font-size: 0.78rem; color: var(--faint); margin: 0; }
+  a.btn:not([aria-disabled="true"]):hover, a.btn:not([aria-disabled="true"]):focus-visible { background: var(--accent); border-color: var(--accent); transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .22); }
+  a.btn:not([aria-disabled="true"]):active { transform: translateY(0) scale(.99); }
+  .btn[aria-disabled="true"] { background: transparent; color: var(--ink); border-style: dashed; cursor: default; }
+  .cta-note { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0; }
+
+  /* ---- Stages: large rounded pastel panels ---- */
+  .trust, .setup, .row, .highlights {
+    background: var(--green); border-radius: 32px; padding: var(--stage-pad); margin: 0 0 28px; scroll-margin-top: 20px;
+  }
 
   /* ---- Trust strip ---- */
-  .trust {
-    background: var(--raised); border: 1px solid var(--line); border-left: 6px solid var(--accent);
-    border-radius: 14px; padding: 24px 28px 22px; margin: 8px 0 24px; scroll-margin-top: 16px;
+  .trust-title, .setup h2, .highlights-title, .not-yet h2, .contact h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3rem);
+    line-height: 1.04; letter-spacing: -.03em; margin: 0 0 22px; text-wrap: balance;
   }
-  .trust-title {
-    display: table; font-family: var(--mono); font-weight: 600; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--chip-fg); background: var(--chip-bg); padding: var(--chip-pad); border-radius: 999px; margin: 0 0 16px;
-  }
-  .trust ul { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 22px; }
-  .trust li strong { display: block; font-family: var(--sans); font-size: 1rem; line-height: 1.3; color: var(--text); margin-bottom: 4px; }
-  .trust li span { display: block; font-size: 0.9rem; line-height: 1.45; color: var(--soft); }
-  .trust p { margin: 0; font-size: 0.92rem; color: var(--faint); }
+  .trust ul { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 28px; }
+  .trust li strong { display: block; font-size: 1.02rem; line-height: 1.35; color: var(--ink); margin-bottom: 4px; }
+  .trust li span { display: block; font-size: .95rem; line-height: 1.5; color: var(--ink-soft); }
+  .trust p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
 
-  /* ---- Recommended setup: the one combination worth doing (default vault + device unlock + autofill). A card with the
-     same accent bar as the trust strip: headline, one line of benefit, three tiny numbered steps, one footnote. Keep it
-     SHORT (about 60 words): readers should get it at a glance. It is a
-     <section>, not a <div>, on purpose: the feature rows alternate sides by counting <div>s (.row:nth-of-type). ---- */
-  .setup {
-    background: var(--raised); border: 1px solid var(--line); border-left: 6px solid var(--accent);
-    border-radius: 14px; padding: 34px 36px 30px; margin: 8px 0 8px; scroll-margin-top: 16px;
-  }
+  /* ---- Recommended setup: the one combination worth doing (default vault + device unlock + autofill).
+     Headline, one line of benefit, three tiny numbered steps, one footnote. Keep it SHORT (about 60 words).
+     It is a <section>, not a <div>, on purpose: the feature rows alternate sides by counting <div>s (.row:nth-of-type). ---- */
   .setup .eyebrow { margin-bottom: 14px; }
-  .setup h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(1.55rem, 3.4vw, 2.1rem);
-    line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 12px;
-  }
-  .setup-lead { margin: 0 0 22px; font-size: 1.12rem; color: var(--soft); max-width: 64ch; }
-  .setup-steps { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .setup-steps li { background: var(--accent-soft); border-radius: 12px; padding: 18px 18px 20px; }
+  .setup-lead { margin: 0 0 26px; font-size: 1.12rem; color: var(--ink-soft); max-width: 36em; }
+  .setup-steps { list-style: none; margin: 0 0 24px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .setup-steps li { background: var(--cream); border-radius: 24px; padding: 22px 22px 24px; }
   .setup-steps .n {
-    display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%;
-    background: var(--accent); color: var(--on-accent); font-family: var(--mono); font-weight: 700; font-size: 0.9rem; margin-bottom: 10px;
+    display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--ink); color: #fff; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .9rem; margin-bottom: 12px;
   }
-  .setup-steps h3 { font-family: var(--sans); font-weight: 700; font-size: 1.08rem; line-height: 1.3; margin: 0 0 6px; }
-  .setup-steps p { margin: 0; font-size: 0.97rem; line-height: 1.55; color: var(--soft); }
+  .setup-steps h3 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; letter-spacing: -.02em; font-size: 1.2rem; line-height: 1.2; margin: 0 0 6px; }
+  .setup-steps p { margin: 0; font-size: .97rem; line-height: 1.55; color: var(--ink-soft); }
   .setup .note { margin: 0 0 8px; }
   .setup .note:last-child { margin-bottom: 0; }
 
-  /* ---- Feature rows ---- */
-  .row {
-    display: flex; align-items: center; gap: 56px; padding: 64px 0;
-    border-top: 1px solid var(--line);
-  }
-  .js .row { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  /* ---- Feature rows (each one is a green stage) ---- */
+  .row { display: flex; align-items: center; gap: 56px; }
+  .js .row { opacity: 0; transform: translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
   .js .row.in-view { opacity: 1; transform: none; }
   .row:nth-of-type(even) { flex-direction: row-reverse; }
   .row-text { flex: 1 1 0; min-width: 0; }
   .row-media { flex: 1.4 1 0; min-width: 0; }
-  .row-bar { width: 40px; height: 5px; background: var(--accent); border-radius: 3px; margin-bottom: 20px; }
-  #codes .row-bar { background: var(--tertiary); }  /* the two-factor row is the one soft-indigo accent (as in the app) */
+  .row-bar { width: 40px; height: 6px; background: var(--accent); border-radius: 3px; margin-bottom: 20px; }
   .row-text h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 1.9rem);
-    line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 16px;
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    line-height: 1.06; letter-spacing: -.03em; margin: 0 0 16px; text-wrap: balance;
   }
-  .row-text p { margin: 0 0 14px; font-size: 1.05rem; color: var(--soft); }
+  .row-text p { margin: 0 0 14px; font-size: 1.05rem; color: var(--ink-soft); }
   .row-text p:last-child { margin-bottom: 0; }
   .row-text ul { margin: 14px 0 0; padding-left: 20px; }
-  .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--soft); }
-  .row-text li strong, .row-text p strong { color: var(--text); }
-  .note { font-size: 0.95rem !important; color: var(--faint) !important; }
+  .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--ink-soft); }
+  .row-text li::marker { color: var(--ink); }
+  .row-text li strong, .row-text p strong { color: var(--ink); }
+  .note { font-size: .95rem !important; color: var(--ink-soft) !important; }
 
   /* ---- Screenshots: assets/NN-name.png are PRE-FRAMED (phone body + soft shadow baked into a transparent
-     PNG, 940 x 1085 px, made by assets/tools/callout.py): the phone sits in the middle and one or two enlarged
-     "callout" cards of the real UI overlap its edges and bleed out to the left / right (the cards carry the feature
-     the row talks about). No CSS frame here. If a file is missing, a hatched phone-shaped placeholder shows instead
+     PNG, 940 x 1085 px): the phone sits in the middle and one or two enlarged "callout" cards of the real UI
+     overlap its edges. No CSS frame here. If a file is missing, a hatched phone-shaped placeholder shows instead
      (the .ph card sits inside the phone screen area behind the image). On narrow screens the picture runs edge to
-     edge (negative margin = the page gutter) so the callout text stays as large as it can; the picture's own
-     transparent margin keeps the cards off the viewport edge, so nothing ever scrolls sideways. ---- */
+     edge of its stage (negative margin = the stage padding) so the callout text stays as large as it can; the
+     picture's own transparent margin keeps the cards off the stage edge, so nothing scrolls sideways. ---- */
   .shot { position: relative; margin: 0 auto; width: 100%; max-width: 600px; aspect-ratio: 940 / 1085; }
   .shot img { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
   .shot img[hidden] { display: none; }  /* set by onerror when the screenshot file is missing */
   .shot .ph {
     position: absolute; left: 21.9%; right: 21.9%; top: 3.5%; bottom: 10%; z-index: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; text-align: center;
-    border: 1px dashed var(--faint); border-radius: 9% / 5.5%;
-    background: repeating-linear-gradient(135deg, transparent 0 14px, var(--accent-soft) 14px 15px);
-    color: var(--faint); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px dashed var(--ink-soft); border-radius: 9% / 5.5%;
+    background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(27, 27, 31, .08) 14px 15px);
+    color: var(--ink-soft); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
   }
   .shot.ok .ph { display: none; }
-  .shot .ph svg { width: 34px; height: 34px; stroke: var(--accent); fill: none; stroke-width: 2; }
-  .shot .ph b { color: var(--soft); font-weight: 600; letter-spacing: 0.04em; }
+  .shot .ph svg { width: 34px; height: 34px; stroke: var(--ink); fill: none; stroke-width: 2; }
+  .shot .ph b { color: var(--ink); font-weight: 500; letter-spacing: .04em; }
 
   /* ---- Highlights ---- */
-  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 64px 0; border-top: 1px solid var(--line); }
-  .highlights-title { grid-column: 1 / -1; font-family: var(--sans); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 1.9rem); letter-spacing: -0.01em; margin: 0 0 4px; }
-  .highlight-card { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 24px 24px 26px; }
-  .highlight-card h3 { font-family: var(--sans); font-weight: 700; font-size: 1.15rem; margin: 0 0 10px; letter-spacing: -0.005em; }
-  .highlight-card p { margin: 0; font-size: 1rem; color: var(--soft); }
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .highlights-title { grid-column: 1 / -1; margin: 0 0 4px; }
+  .highlight-card { background: var(--cream); border-radius: 24px; padding: 26px 26px 28px; }
+  .highlight-card h3 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 1.3rem; line-height: 1.15; margin: 0 0 10px; letter-spacing: -.02em; }
+  .highlight-card p { margin: 0; font-size: 1rem; color: var(--ink-soft); }
 
-  .not-yet { border-top: 1px solid var(--line); padding: 64px 0 8px; }
-  .not-yet h2 { font-family: var(--sans); font-weight: 700; font-size: 1.4rem; margin: 0 0 12px; }
-  .not-yet p { margin: 0 0 12px; color: var(--soft); }
-  .not-yet ul { margin: 0 0 12px; padding-left: 20px; color: var(--soft); }
-  .not-yet li { margin-bottom: 6px; }
+  .not-yet { padding: 40px 0 8px; }
+  .not-yet h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin: 0 0 14px; }
+  .not-yet p { margin: 0 0 12px; color: var(--ink-soft); }
+  .not-yet ul { margin: 0 0 14px; padding-left: 20px; color: var(--ink-soft); max-width: 36em; }
+  .not-yet li { margin-bottom: 8px; }
 
   /* ---- Contact + footer ---- */
-  .contact { padding: 72px 0 24px; text-align: center; }
-  .contact h2 { font-family: var(--sans); font-weight: 700; font-size: 1.6rem; margin: 0 0 14px; }
-  .contact p { color: var(--soft); margin: 0 0 20px; }
-  .contact-card { display: inline-block; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 28px; max-width: 100%; }
-  .contact-email { font-family: var(--mono); font-size: 1.02rem; font-weight: 600; word-break: break-all; }
-
-  footer {
-    margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line);
-    color: var(--faint); font-family: var(--mono); font-size: 13px; text-align: center;
+  .contact { padding: 40px 0 8px; }
+  .contact h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin: 0 0 14px; }
+  .contact p { color: var(--ink-soft); margin: 0 0 22px; max-width: 36em; }
+  .contact-card { display: block; }
+  .contact-email {
+    display: inline-block; max-width: 100%; text-align: center; text-decoration: none; word-break: break-all;
+    font: 600 1rem/1.3 "Inter", sans-serif; padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
   }
-  footer .links { display: flex; gap: 8px 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px; }
-  footer a { padding: 0 2px; }
-  footer p { margin: 0; font-family: var(--sans); font-size: 13px; }
+  .contact-email:hover, .contact-email:focus-visible { background: var(--accent); border-color: var(--accent); transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .22); }
 
-  @media (max-width: 720px) {
-    .row, .row:nth-of-type(even) { flex-direction: column; gap: 24px; padding: 44px 0; }
-    .row-media { width: 100%; flex: none; }
-    .shot { max-width: none; width: calc(100% + 2 * var(--gutter)); margin-inline: calc(-1 * var(--gutter)); }
+  footer { padding: 48px 0 40px; color: var(--ink-soft); font-size: .95rem; }
+  footer .links { display: flex; gap: 6px 22px; flex-wrap: wrap; margin-bottom: 14px; }
+  footer p { margin: 0 0 8px; }
+  footer strong { color: var(--ink); font-weight: 600; }
+
+  /* Motion: gentle fade-up on load and on scroll, only when the visitor has not asked for less */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes lift { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    header.hero > * { animation: lift .6s var(--ease) backwards; }
+    header.hero > :nth-child(2) { animation-delay: .07s; }
+    header.hero > :nth-child(3) { animation-delay: .14s; }
+    header.hero > :nth-child(4) { animation-delay: .21s; }
+    header.hero > :nth-child(5) { animation-delay: .28s; }
+    @supports (animation-timeline: view()) {
+      .trust, .setup, .highlights { animation: lift linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .row { opacity: 1; transform: none; transition: none; }
+    * { transition-duration: .01ms !important; }
+  }
+
+  @media (max-width: 960px) {
+    .row { gap: 36px; }
     .trust ul { grid-template-columns: 1fr 1fr; }
-    .highlights { grid-template-columns: 1fr; padding: 44px 0; }
-    .setup { padding: 26px 22px 24px; }
+  }
+  @media (max-width: 720px) {
+    :root { --stage-pad: 22px; }
+    .row, .row:nth-of-type(even) { flex-direction: column; align-items: stretch; gap: 24px; }
+    .row-text { flex: none; }
+    .row-media { width: 100%; flex: none; }
+    .shot { max-width: none; width: calc(100% + 2 * var(--stage-pad)); margin-inline: calc(-1 * var(--stage-pad)); }
+    .highlights { grid-template-columns: 1fr; }
     .setup-steps { grid-template-columns: 1fr; gap: 10px; }
-    .setup-steps li { display: grid; grid-template-columns: 30px 1fr; column-gap: 14px; align-items: start; padding: 14px 16px; }
+    .setup-steps li { display: grid; grid-template-columns: 32px 1fr; column-gap: 14px; align-items: start; padding: 16px; border-radius: 20px; }
     .setup-steps .n { grid-row: 1 / span 2; margin: 2px 0 0; }
     .setup-steps h3 { margin: 0 0 2px; }
     .setup-lead { margin-bottom: 16px; }
   }
   @media (max-width: 480px) {
     body { font-size: 17px; }
-    .wrap { --gutter: 18px; padding: 20px var(--gutter) 32px; }
-    header.hero { padding: 44px 0 28px; }
-    .trust { padding: 18px 16px; }
-    .trust ul { grid-template-columns: 1fr; gap: 12px; }
-    .setup { padding: 22px 16px 20px; }
-    .contact-card { padding: 16px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .js .row { opacity: 1; transform: none; transition: none; }
+    .wrap { --gutter: 18px; }
+    header.hero { padding: 28px 0 40px; }
+    .trust ul { grid-template-columns: 1fr; gap: 14px; }
+    .contact-email { font-size: .92rem; padding: 14px 18px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <nav class="top" aria-label="Native Creds pages">
-    <a href="privacy-policy.html">Privacy</a>
-    <a href="FAQs.html">FAQs</a>
-    <a href="features.html" aria-current="page">Features</a>
-    <a href="mailto:ManideepsCraftyApps+nativecreds@gmail.com">Support</a>
+  <nav class="top" aria-label="Site">
+    <a class="brand" href="../index.html">Manideep's Crafty Apps<b>.</b></a>
+    <span class="label mono">Native Creds</span>
   </nav>
 
   <header class="hero">
     <img class="app-icon" src="data:image/png;base64,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" alt="Native Creds app icon" width="84" height="84">
     <div class="eyebrow"><span class="stamp"></span>Android password manager</div>
-    <h1>Your passwords stay on your phone.</h1>
+    <h1>Your passwords stay on <span class="hl">your phone.</span></h1>
     <p class="subtitle">A password manager with no account and no cloud of ours. It fills in your logins and opens with your fingerprint or screen lock.</p>
     <div class="cta">
       <!-- The only place to change when the app is live: set PLAY_URL in the script at the bottom. -->
@@ -288,7 +256,7 @@
   </header>
 
   <aside class="trust" id="local-only" aria-labelledby="trust-title">
-    <h2 class="trust-title" id="trust-title">Why people pick it</h2>
+    <h2 class="trust-title" id="trust-title">Why people <span class="hl">pick it</span></h2>
     <ul>
       <li><strong>Your passwords stay on your phone</strong><span>The app can't go online at all.</span></li>
       <li><strong>No account, no cloud of ours</strong><span>Nothing to sign up for.</span></li>
@@ -300,7 +268,7 @@
 
   <section class="setup" id="recommended-setup" aria-labelledby="setup-title">
     <div class="eyebrow"><span class="stamp"></span>Recommended setup</div>
-    <h2 id="setup-title">Set it up once, then forget the app is there.</h2>
+    <h2 id="setup-title">Set it up <span class="hl">once,</span> then forget the app is there.</h2>
     <p class="setup-lead">Signing in then shows only your phone's unlock prompt, not the app.</p>
     <ol class="setup-steps">
       <li>
@@ -325,7 +293,7 @@
   <div class="row" id="entries">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Add a login. Copy it in one tap.</h2>
+      <h2>Add a login. Copy it in <span class="hl">one tap.</span></h2>
       <p>Save a site's username and password, or let Native Creds invent a strong one for you.</p>
       <ul>
         <li>Password hidden until you tap the eye</li>
@@ -340,7 +308,7 @@
   <div class="row" id="organise">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Find the right one fast</h2>
+      <h2>Find the right one <span class="hl">fast</span></h2>
       <p>Folders, plus search that narrows as you type. Sort by name or date.</p>
       <ul>
         <li>Move or copy several at once</li>
@@ -354,7 +322,7 @@
   <div class="row" id="autofill">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Sign in without typing</h2>
+      <h2>Sign in without <span class="hl">typing</span></h2>
       <p>Native Creds offers your saved login right on the sign-in screen, in apps and in browsers like Chrome.</p>
       <ul>
         <li>Works for two-step sign-ins</li>
@@ -369,7 +337,7 @@
   <div class="row" id="save-login">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Saves new logins as you go</h2>
+      <h2>Saves new logins <span class="hl">as you go</span></h2>
       <p>Sign in somewhere new and your phone asks if you want to save it. Nothing is saved unless you tap Save.</p>
       <ul>
         <li>Goes into your default vault</li>
@@ -384,7 +352,7 @@
   <div class="row" id="unlock">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Open it with your fingerprint or screen lock</h2>
+      <h2>Open it with your <span class="hl">fingerprint</span> or screen lock</h2>
       <p>Skip typing your master password. Turn it on for each vault, when you create it or later from its menu.</p>
       <ul>
         <li>Your master password always works too</li>
@@ -399,7 +367,7 @@
   <div class="row" id="default-vault">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Sign in without seeing the app</h2>
+      <h2>Sign in without <span class="hl">seeing the app</span></h2>
       <p>With a default vault and fingerprint or screen lock, only your phone's unlock prompt appears over the page.</p>
       <ul>
         <li>No vault to pick</li>
@@ -415,7 +383,7 @@
   <div class="row" id="codes">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>2FA codes, no extra app</h2>
+      <h2>2FA codes, <span class="hl">no extra app</span></h2>
       <p>Add the key from a site's two-factor setup and the 6-digit code shows in the same entry, counting down.</p>
       <ul>
         <li>No QR scanning yet: paste the key</li>
@@ -430,7 +398,7 @@
   <div class="row" id="sync">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Use it on two phones</h2>
+      <h2>Use it on <span class="hl">two phones</span></h2>
       <p>Keep your vault file in your own Google Drive and open it on both phones. Changes from each are combined, not overwritten.</p>
       <ul>
         <li>No cloud of ours involved</li>
@@ -445,7 +413,7 @@
   <div class="row" id="import">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Move in from Chrome or another manager</h2>
+      <h2>Move in from Chrome or <span class="hl">another manager</span></h2>
       <p>Bring your passwords from Chrome, Google Password Manager, Bitwarden, LastPass and more. You check duplicates before anything is added.</p>
       <ul>
         <li>Offers to delete the export file</li>
@@ -460,7 +428,7 @@
   <div class="row" id="attachments">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Keep small files with a login</h2>
+      <h2>Keep <span class="hl">small files</span> with a login</h2>
       <p>Attach recovery codes or a scan to the login they belong to. They are encrypted inside your vault.</p>
       <ul>
         <li>Saving one out makes an unprotected copy</li>
@@ -474,7 +442,7 @@
   <div class="row" id="keepass">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Never locked in</h2>
+      <h2>Never <span class="hl">locked in</span></h2>
       <p>Your vault is a standard KeePass file (a common password-file format), so other apps can open it too.</p>
       <ul>
         <li>Works in KeePassXC, KeePassDX, Strongbox</li>
@@ -490,7 +458,7 @@
   <div class="row" id="themes">
     <div class="row-text">
       <div class="row-bar"></div>
-      <h2>Light, dark, or follow your phone</h2>
+      <h2>Light, dark, or <span class="hl">follow your phone</span></h2>
       <p>Pick System, Light or Dark in Settings.</p>
     </div>
     <div class="row-media">
@@ -499,7 +467,7 @@
   </div>
 
   <section class="highlights" id="careful" aria-labelledby="careful-title">
-    <h2 class="highlights-title" id="careful-title">Safe by default</h2>
+    <h2 class="highlights-title" id="careful-title">Safe <span class="hl">by default</span></h2>
     <div class="highlight-card">
       <h3>Locks when you leave</h3>
       <p>Press home, switch apps or turn the screen off and the vault locks.</p>
@@ -515,7 +483,7 @@
   </section>
 
   <section class="not-yet" id="not-yet">
-    <h2>What it does not do yet</h2>
+    <h2>What it does <span class="hl">not do yet</span></h2>
     <ul>
       <li>Passkeys, QR scanning for 2FA, and changing the master password inside the app.</li>
       <li>Versions for iPhone, Mac or Windows. Android only for now.</li>
@@ -525,7 +493,7 @@
   </section>
 
   <div class="contact">
-    <h2>Still have a question?</h2>
+    <h2>Still have a <span class="hl">question?</span></h2>
     <p>Check the <a href="FAQs.html">FAQs</a> first &mdash; if they do not cover it, I would like to hear about it directly.</p>
     <div class="contact-card">
       <a class="contact-email" href="mailto:ManideepsCraftyApps+nativecreds@gmail.com">ManideepsCraftyApps+nativecreds@gmail.com</a>
@@ -538,7 +506,9 @@
       <a href="FAQs.html">FAQs</a>
       <a href="features.html">Features</a>
       <a href="mailto:ManideepsCraftyApps+nativecreds@gmail.com">Email Support</a>
+      <a href="../index.html">All my apps</a>
     </div>
+    <p><strong>Made by Manideep.</strong> Small apps, built carefully, one piece at a time.</p>
     <p>Native Creds &middot; Manideep's Crafty Apps. Not affiliated with the KeePass project. Google Play is a trademark of Google LLC.</p>
   </footer>
 
