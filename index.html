@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..800,50&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #211d19;
@@ -282,21 +282,103 @@
   @media (prefers-reduced-motion: reduce) {
     .app-card { transition: none; }
   }
+
+  /* ================= Workshop Bench — brand signature ================= */
+  :root {
+    --ink: #1c1511;
+    --ink-raised: #261d17;
+    --ink-raised-hover: #2d231b;
+    --paper: #efe3d0;
+    --paper-soft: #b3a089;
+    --paper-faint: #8f7d67;
+    --brass: #c99a4b;
+    --brass-bright: #e4b96a;
+    --line: #4a3a2c;
+  }
+  body {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .75 0 0 0 0 .5 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201, 154, 75, 0.10), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 25%, rgba(201, 154, 75, 0.05), transparent);
+  }
+  .wrap { max-width: 800px; }
+  h1, .app-name { font-family: "Fraunces", Georgia, serif; font-variation-settings: "SOFT" 50; font-weight: 700; }
+  h1 { letter-spacing: -0.02em; }
+  h1 em { font-style: italic; font-weight: 600; }
+
+  /* Maker's mark: hallmark stamp */
+  .mark { gap: 14px; }
+  .hallmark { width: 46px; height: 46px; color: var(--brass-bright); flex: none; }
+  .mark .stamp { display: none; }
+  footer .hallmark { width: 34px; height: 34px; color: var(--brass); }
+
+  /* Ruler hairlines */
+  .section-label::after {
+    height: 7px;
+    background:
+      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 12px) bottom/100% 7px no-repeat,
+      linear-gradient(var(--line), var(--line)) bottom/100% 1px no-repeat;
+  }
+
+  /* Principles strip */
+  .principles {
+    list-style: none; margin: 0; padding: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px 10px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .principles li { color: var(--paper-soft); border: 1px solid var(--line); border-radius: 2px; padding: 5px 10px; }
+  .principles li::before { content: "\25C6"; color: var(--brass); margin-right: 8px; font-size: 0.7em; vertical-align: 1px; }
+
+  /* Specimen-tag cards */
+  .app-card {
+    border-color: var(--line);
+    box-shadow: inset 0 0 0 4px var(--ink-raised), inset 0 0 0 5px var(--line);
+    padding: 34px 36px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+  .app-card.live:hover {
+    transform: translateY(-3px);
+    border-color: var(--brass);
+    box-shadow: inset 0 0 0 4px var(--ink-raised-hover), inset 0 0 0 5px var(--brass), 0 14px 30px rgba(0, 0, 0, 0.4);
+  }
+  .catalogue {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--brass); margin: 0 0 18px;
+  }
+  .app-icon { outline: 2px solid var(--brass); outline-offset: 3px; box-shadow: 0 8px 18px var(--shadow); }
+  .btn-primary { transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; }
+  a.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4); }
+  a.price-tag, a.btn, .app-links a { transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease; }
+
+  .colophon { display: flex; align-items: center; gap: 14px; }
+  .colophon small { display: block; color: var(--paper-faint); font-size: 0.74rem; letter-spacing: 0.06em; }
+
+  /* One-time load reveal; content stays visible without it */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    header.hero > *, .app-card { animation: rise 0.6s ease backwards; }
+    header.hero > :nth-child(2) { animation-delay: 0.08s; }
+    header.hero > :nth-child(3) { animation-delay: 0.16s; }
+    header.hero > :nth-child(4) { animation-delay: 0.24s; }
+  }
+  @media (max-width: 520px) { .app-card { padding: 26px 22px; } }
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <header class="hero">
-    <div class="mark"><span class="stamp"></span>Manideep's Crafty Apps</div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="hallmark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="32" r="24.5" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 3"/><path d="M17 43V22l7.5 11L32 22l7.5 11L47 22v21" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 48.5h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol></svg>
+    <div class="mark"><svg class="hallmark" role="img" aria-label="Maker's mark"><use href="#hallmark"/></svg>Manideep's Crafty Apps</div>
     <h1>Small, considered software,<br>made <em>one piece at a time.</em></h1>
     <p class="lede">No bloat, no growth-hacking, no dark patterns — software built carefully by one person, on whatever platform actually fits the idea. Pricing is whatever's honest for that app, not a house rule.</p>
+    <ul class="principles" aria-label="Principles"><li>No bloat</li><li>No growth-hacking</li><li>No dark patterns</li><li>Honest pricing</li><li>On-device</li></ul>
   </header>
 
   <section>
     <div class="section-label">The apps</div>
     <div class="apps">
       <div class="app-card live">
+        <p class="catalogue">No. 01 · macOS · One-time licence</p>
         <div class="app-top">
           <div class="app-head">
             <img class="app-icon" src="reko/assets/icons/reko.svg" alt="" width="64" height="64">
@@ -331,6 +413,7 @@
     <div class="section-label">Upcoming</div>
     <div class="apps">
       <div class="app-card live">
+        <p class="catalogue">No. 02 · macOS · Free</p>
         <div class="app-top">
           <div class="app-head">
             <img class="app-icon" src="unboxtext/assets/icons/unboxtext.png" alt="" width="64" height="64">
@@ -359,6 +442,7 @@
         <div class="app-links"><a href="unboxtext/features.html">Features</a><a href="https://youtu.be/KIdWqetcDEM">Watch the demo</a><a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-support.html">Support</a><a href="https://gunthamanideep-stack.github.io/AppDocs/unboxtext-privacy-policy.html">Privacy policy</a></div>
       </div>
       <div class="app-card live">
+        <p class="catalogue">No. 03 · Android · Free</p>
         <div class="app-top">
           <div class="app-head">
             <img class="app-icon" src="nativecreds/assets/icons/nativecreds.png" alt="" width="64" height="64">
@@ -393,7 +477,7 @@
   </section>
 
   <footer>
-    <span>Manideep's Crafty Apps</span>
+    <span class="colophon"><svg class="hallmark" aria-hidden="true"><use href="#hallmark"/></svg><span>Manideep's Crafty Apps<small>Made one piece at a time · © 2026</small></span></span>
     <a href="https://github.com/ManideepsCraftyApps">GitHub</a>
   </footer>
 </div>
