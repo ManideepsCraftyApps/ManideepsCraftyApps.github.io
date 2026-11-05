@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reko Privacy Policy</title>
+<link rel="icon" type="image/svg+xml" href="assets/icons/reko.svg">
+<meta name="description" content="Privacy policy for Reko, a clipboard history manager for macOS. Your clipboard never leaves your Mac.">
+<meta name="theme-color" content="#FAF7F0">
+<style>
+  /* Deliberately minimal: same cream page and type as the rest of the site, nothing else.
+     No stages, no animation, no highlighter. Tone only. */
+  :root {
+    --cream: #faf7f0;
+    --ink: #1b1b1f;
+    --ink-soft: #55555d;
+    --accent: #ff5a36;
+    --rule: #e4dfd1;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--cream); color: var(--ink);
+    font: 400 18px/1.6 "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+  .wrap { max-width: calc(68ch + 56px); margin: 0 auto; padding: 0 28px 72px; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+
+  a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  a:hover { text-decoration-color: var(--ink); }
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  nav { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; text-decoration: none; }
+  .brand b { color: var(--accent); }
+  nav .label { color: var(--ink-soft); }
+
+  header { padding: 40px 0 8px; }
+  .app-icon { display: block; width: 72px; height: 72px; border-radius: 16px; box-shadow: 0 13px 34px rgba(27, 27, 31, .16); margin: 0 0 28px; }
+  .eyebrow { color: var(--ink-soft); margin: 0 0 10px; }
+  h1 { font-weight: 800; font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 14px; text-wrap: balance; }
+  .updated { color: var(--ink-soft); margin: 0; }
+
+  h2 { font-weight: 800; font-size: 1.4rem; line-height: 1.2; letter-spacing: -.02em; margin: 44px 0 12px; }
+  p { margin: 0 0 16px; }
+  ul { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+
+  .summary { margin: 32px 0 0; padding-top: 24px; border-top: 1px solid var(--rule); }
+  .summary p { margin: 0; font-size: 1.1rem; }
+  .contact-email { font-weight: 500; word-break: break-all; }
+
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .95rem; }
+  footer p { margin: 0 0 12px; }
+  footer strong { color: var(--ink); font-weight: 600; }
+  footer .links { display: flex; gap: 6px 22px; flex-wrap: wrap; margin-bottom: 14px; }
+
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    .wrap { padding: 0 18px 56px; }
+    h2 { margin-top: 36px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav aria-label="Site">
+    <a class="brand" href="../index.html">Manideep's Crafty Apps<b>.</b></a>
+    <span class="label mono">Reko</span>
+  </nav>
+
+  <header>
+    <img class="app-icon" src="assets/icons/reko.svg" width="72" height="72" alt="Reko app icon">
+    <p class="eyebrow mono">Privacy policy</p>
+    <h1>Reko Privacy Policy</h1>
+    <p class="updated mono">Effective: November 5, 2026</p>
+  </header>
+
+  <section class="summary">
+    <p>Reko is a clipboard history manager for macOS, made by Manideep's Crafty Apps (&ldquo;I&rdquo;, &ldquo;me&rdquo;). <strong>Your clipboard history stays on your Mac. I never receive it, and Reko has no analytics, no accounts and no advertising.</strong> The only things Reko sends over the internet are a license check and a check for updates, described below.</p>
+  </section>
+
+  <h2>Your clipboard history</h2>
+  <p>Reko saves what you copy (text, images, files and other formats) in a database on your Mac so you can search and paste it later. Reading text out of images (OCR) and detecting barcodes and QR codes use Apple's Vision framework, entirely on your Mac. None of this is uploaded, synced or shared. I have no server that could receive it.</p>
+  <p>You control how long items are kept through Reko's retention settings and by deleting items. Quitting or uninstalling Reko does not send anything anywhere; to remove its stored history, delete the items in Reko or remove its data from your Mac.</p>
+
+  <h2>Private items</h2>
+  <p>You can mark an item Private. It is then encrypted on your Mac (AES-GCM) with a key kept in your Mac's Keychain, and hidden until you unlock it with Touch ID or your Mac login password. macOS handles that authentication; Reko never receives your fingerprint or password.</p>
+
+  <h2>Backups you export</h2>
+  <p>Reko can export your history to a single file encrypted with a password you choose, and import it again. I never see that file or that password, and I cannot recover it for you. Where you store the file is up to you.</p>
+
+  <h2>Network connections Reko makes</h2>
+  <ul>
+    <li><strong>License activation and checks (Lemon Squeezy).</strong> When you enter a license key, and about once a day afterwards, Reko contacts Lemon Squeezy's license service to confirm the key is valid. This sends your <strong>license key</strong> and your <strong>Mac's name</strong> (the computer name you set in macOS, used to count activations per Mac), along with the technical information any internet request includes, such as your IP address. It never includes clipboard content. Reko keeps working offline; a failed check never locks you out.</li>
+    <li><strong>Update checks (Sparkle).</strong> Reko checks once a day for new versions by downloading a small file from manideepscraftyapps.github.io, which is hosted by GitHub Pages. As with any web request, GitHub can see your IP address and the request. Reko's updater does not send a system profile or any personal data.</li>
+  </ul>
+  <p>Reko makes no other network connections.</p>
+
+  <h2>Buying Reko</h2>
+  <p>Purchases are handled by <a href="https://www.lemonsqueezy.com/privacy">Lemon Squeezy</a>, which acts as the seller (merchant of record). It collects your payment details and billing information under its own privacy policy. I do not receive your card details. I receive the order information I need to support your license, such as your email address, and I use it only for that.</p>
+
+  <h2>Trial and license data on your Mac</h2>
+  <p>To run the 14-day trial and your license, Reko stores on your Mac the date you first launched it, your license key, and the email address and activation ID returned when you activate. These are kept in your Mac's preferences and Keychain and are not shared except in the license checks described above.</p>
+
+  <h2>macOS permissions</h2>
+  <ul>
+    <li><strong>Accessibility:</strong> used only so Reko can paste an item into the app you are using when you ask it to. Reko does not use it to read other apps' screens or content.</li>
+    <li><strong>Touch ID / authentication:</strong> only to unlock Private items, as described above.</li>
+  </ul>
+
+  <h2>What Reko does not do</h2>
+  <ul>
+    <li>No analytics, tracking, advertising or crash-reporting services.</li>
+    <li>No accounts, no cloud sync, no sharing of your data with anyone.</li>
+    <li>No selling or renting of any information, because I do not have your clipboard data to sell.</li>
+  </ul>
+
+  <h2>Security</h2>
+  <p>Private items and exported backups are encrypted as described above. Everything else in your history is stored on your Mac and protected by your Mac's own security, for example your login password and disk encryption (FileVault). Items you do not mark Private are not hidden from someone who has access to your unlocked Mac, so keep your Mac secured, and mark sensitive items Private.</p>
+
+  <h2>Children</h2>
+  <p>Reko is a general-purpose tool not directed at children, and I collect no personal information from anyone through the app.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If Reko's behaviour changes, I will update this policy and its effective date.</p>
+
+  <h2>Contact</h2>
+  <p>Manideep's Crafty Apps &middot; questions about this policy or how Reko handles data:</p>
+  <p><a class="contact-email" href="mailto:manideepscraftyapps+reko@gmail.com">manideepscraftyapps+reko@gmail.com</a></p>
+
+  <footer>
+    <div class="links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="FAQs.html">FAQs</a>
+      <a href="features.html">Features</a>
+      <a href="mailto:manideepscraftyapps+reko@gmail.com">Email Support</a>
+      <a href="../index.html">All my apps</a>
+    </div>
+    <p><strong>Made by Manideep.</strong> Small apps, built carefully, one piece at a time.</p>
+    <p>Reko &middot; Manideep's Crafty Apps &middot; effective November 5, 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>
