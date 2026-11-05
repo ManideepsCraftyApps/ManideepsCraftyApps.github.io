@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unbox Text Privacy Policy</title>
+<link rel="icon" type="image/png" href="assets/icons/unboxtext.png">
+<meta name="description" content="Privacy policy for Unbox Text, a Mac app that recognizes text on your device. No servers, no accounts, no analytics; the one optional cloud feature uses your own Azure account.">
+<meta name="theme-color" content="#FAF7F0">
+<style>
+  /* Deliberately minimal: same cream page and palette as the rest of the site, nothing else.
+     System fonts only, no external requests, no stages, no animation, no highlighter. Tone only. */
+  :root {
+    --cream: #faf7f0;
+    --ink: #1b1b1f;
+    --ink-soft: #55555d;
+    --accent: #ff5a36;
+    --blue: #d6e4ff;
+    --rule: #e4dfd1;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--cream); color: var(--ink);
+    font: 400 18px/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+  .wrap { max-width: calc(68ch + 56px); margin: 0 auto; padding: 0 28px 72px; }
+  .mono { font-family: var(--mono); font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+
+  a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  a:hover { text-decoration-color: var(--ink); }
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  nav { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; text-decoration: none; }
+  .brand b { color: var(--accent); }
+  nav .label { color: var(--ink-soft); text-decoration: none; }
+  nav .label:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+  header { padding: 40px 0 8px; }
+  .app-icon { display: block; width: 72px; height: 72px; border-radius: 16px; box-shadow: 0 13px 34px rgba(27, 27, 31, .16); margin: 0 0 28px; }
+  .eyebrow { color: var(--ink-soft); margin: 0 0 10px; }
+  h1 {
+    font-weight: 800;
+    font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.05; letter-spacing: -.03em;
+    margin: 0 0 14px; text-wrap: balance;
+  }
+  .updated { color: var(--ink-soft); margin: 0; }
+
+  h2 { font-weight: 800; font-size: 1.4rem; line-height: 1.2; letter-spacing: -.02em; margin: 44px 0 12px; }
+  p { margin: 0 0 16px; }
+  ul { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+  code { font-family: var(--mono); font-size: .88em; background: var(--blue); border-radius: 4px; padding: 1px 6px; overflow-wrap: anywhere; }
+
+  .summary { margin: 32px 0 0; padding-top: 24px; border-top: 1px solid var(--rule); }
+  .summary p { margin: 0; font-size: 1.1rem; }
+  .contact-email { font-weight: 500; word-break: break-all; }
+
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .95rem; }
+  footer p { margin: 0 0 12px; }
+  footer strong { color: var(--ink); font-weight: 600; }
+  footer .links { display: flex; gap: 6px 22px; flex-wrap: wrap; margin-bottom: 14px; }
+
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    .wrap { padding: 0 18px 56px; }
+    h2 { margin-top: 36px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav aria-label="Site">
+    <a class="brand" href="../index.html">Manideep's Crafty Apps<b>.</b></a>
+    <a class="label mono" href="../index.html#unbox-text">Unbox Text</a>
+  </nav>
+
+  <header>
+    <img class="app-icon" src="assets/icons/unboxtext.png" width="72" height="72" alt="Unbox Text app icon">
+    <p class="eyebrow mono">Privacy policy</p>
+    <h1>Unbox Text Privacy Policy</h1>
+    <p class="updated mono">Last updated: August 13, 2026</p>
+  </header>
+
+  <section class="summary">
+    <p>Unbox Text recognizes text from your screen. By default, everything happens on your Mac — nothing is ever sent anywhere. There's one optional feature that sends a capture to a cloud service, and it's off unless you turn it on yourself, with your own account. Unbox Text has no servers, no user accounts, no analytics, and doesn't sell or share data with anyone, because there isn't a "Unbox Text" side to share it with in the first place.</p>
+  </section>
+
+  <h2>What Unbox Text does by default (on‑device, nothing leaves your Mac)</h2>
+  <p>Unbox Text uses Apple's built-in Vision framework to recognize text in a screen region you select, or in a PDF/image file you choose to import. This recognition happens entirely on your device. Unbox Text does not have a server, does not receive your captures, and cannot see what you capture.</p>
+  <p>Recognized text and a small preview image of each capture are saved to a local capture history so you can find and reuse past captures. This history is stored only on your Mac, in a standard per-app data folder (<code>~/Library/Application Support/Unbox Text/</code>), and is never transmitted anywhere. You can delete any single capture, or clear your entire history, at any time from within the app — deleting is immediate and permanent.</p>
+
+  <h2>Permissions Unbox Text requests, and exactly what each is for</h2>
+  <ul>
+    <li><strong>Screen Recording</strong> — used only at the moment you trigger a capture, to read the pixels of the specific region you select. Unbox Text does not record continuously and does not store screen recordings.</li>
+    <li><strong>Accessibility</strong> and <strong>Input Monitoring</strong> — used together for one purpose only: recognizing the single keyboard shortcut you configure in Settings, so a capture can be triggered from any app without switching to Unbox Text first. Unbox Text does not log, store, or transmit any other keystrokes, and does not monitor what you type anywhere.</li>
+    <li><strong>Files you select</strong> — whether you use Import File's own dialog, or open a PDF/image directly from Finder (right-click → Open With → Unbox Text, or a double-click if you've set Unbox Text as the app for a file type), Unbox Text can only read the specific file you chose that way (standard macOS sandboxing); it cannot browse the rest of your files. Unbox Text registers itself as an available "Open With" option for PDFs and images, but never as the default app for opening them — it only ever processes a file when you explicitly choose it for that file, the same as picking it through Import File.</li>
+  </ul>
+
+  <h2>The one feature that leaves your device: Handwriting Expert</h2>
+  <p>Unbox Text includes an optional feature called "Handwriting Expert" for recognizing messy or cursive handwriting better than the on-device engine can. It is <strong>off by default</strong> and works differently from every other part of the app:</p>
+  <ul>
+    <li>It requires <strong>you</strong> to create your own account with Microsoft Azure and enter your own API key and endpoint into Unbox Text's Settings. Unbox Text does not provide, proxy, or have access to this credential beyond storing it securely in your Mac's Keychain (not in plain preferences, and never transmitted to us — Unbox Text has nowhere to send it, having no servers).</li>
+    <li>It cannot be turned on without both entering that credential <strong>and</strong> explicitly confirming a one-time in-app notice that names Microsoft Azure as the destination for your capture's image data.</li>
+    <li>When it's on, the image of the specific capture you take is sent directly from your Mac to Microsoft Azure's cloud OCR service (Azure AI Vision), using your own Azure account. Unbox Text does not see, store, or have access to this data at any point — the request goes from your device to Microsoft's service directly.</li>
+    <li>Your usage of Azure is governed by your own agreement with Microsoft and Microsoft's own privacy commitments; see <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft's Privacy Statement</a> for how they handle data sent to their services.</li>
+    <li>Because this runs through your own Azure resource, the region your data is processed in is whatever you selected when you created that resource — Unbox Text doesn't choose or control this.</li>
+    <li>You can turn this off, or remove your stored Azure key, at any time in Settings. Turning it off (or never turning it on) means no capture is ever sent off your device.</li>
+  </ul>
+
+  <h2>What Unbox Text does not do</h2>
+  <ul>
+    <li>No user accounts, no sign-in, no registration of any kind.</li>
+    <li>No analytics, crash reporting, or usage tracking of any kind.</li>
+    <li>No advertising, and no advertising SDKs.</li>
+    <li>No selling, renting, or sharing of your data with anyone, for any reason — Unbox Text has no mechanism to do this even if it wanted to, since nothing you capture is ever sent to Unbox Text or its developer.</li>
+    <li>No third-party integrations besides the one described above (Microsoft Azure), which only activates with your own account and your explicit opt-in.</li>
+  </ul>
+
+  <h2>Data retention and your control over it</h2>
+  <ul>
+    <li><strong>Capture history and preview images</strong>: stay on your Mac until you delete them. There is no time-based expiration and no automatic upload or sync anywhere.</li>
+    <li><strong>Settings</strong> (including your Azure endpoint): stored locally on your Mac.</li>
+    <li><strong>Azure API key</strong>: stored in your Mac's Keychain, protected by the operating system, and can be removed from Settings at any time.</li>
+    <li><strong>Data sent to Azure</strong>: governed entirely by your own Microsoft Azure account and Microsoft's retention practices — Unbox Text doesn't control or have visibility into this. Removing your Azure key in Unbox Text doesn't delete anything already sent to Azure; that would need to be handled through your Azure account directly.</li>
+  </ul>
+
+  <h2>Data security</h2>
+  <ul>
+    <li>Your Azure API key — the one real credential Unbox Text ever handles — is stored in the macOS Keychain, encrypted at rest by the operating system, never in a plain preferences file.</li>
+    <li>Every network request Unbox Text makes (only ever to Microsoft Azure, only when Handwriting Expert is on) uses standard HTTPS/TLS encryption in transit.</li>
+    <li>Everything else — your capture history, settings, and recognized text — never leaves your Mac in the first place, so there's nothing in transit to secure for the vast majority of what Unbox Text does.</li>
+  </ul>
+
+  <h2>Your rights and choices</h2>
+  <p>Because everything Unbox Text stores lives locally on your own Mac, you already have direct control over it without needing to contact anyone:</p>
+  <ul>
+    <li><strong>Access</strong> — your capture history is visible in the app itself at any time.</li>
+    <li><strong>Delete</strong> — remove any single capture, or clear your entire history, from within the app, immediately and permanently. Uninstalling Unbox Text removes everything else (settings, the Azure key in Keychain).</li>
+    <li><strong>Withdraw consent</strong> — turn off Handwriting Expert, or remove your Azure key, in Settings at any time; no capture is sent anywhere from that point on.</li>
+    <li><strong>Questions or requests</strong> — if you'd rather not handle any of the above yourself, or have a question this policy doesn't answer, contact us using the details below.</li>
+  </ul>
+
+  <h2>Children's privacy</h2>
+  <p>Unbox Text is not directed at children and does not knowingly collect personal information from anyone. Since the app requires no account and stores data only locally on the user's own device, there is no mechanism by which children's data would be collected or transmitted.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes in a way that affects what data is collected or how it's used, the "Last updated" date above will change and, for any meaningful change, the update will be called out in the app's release notes.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or how Unbox Text handles data can be sent to:</p>
+  <p><a class="contact-email" href="mailto:manideepscraftyapps+unboxtext@gmail.com">manideepscraftyapps+unboxtext@gmail.com</a></p>
+
+  <footer>
+    <div class="links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="support.html">Support</a>
+      <a href="features.html">Features</a>
+      <a href="mailto:manideepscraftyapps+unboxtext@gmail.com">Email Support</a>
+      <a href="../index.html">All my apps</a>
+    </div>
+    <p><strong>Made by Manideep.</strong> Small apps, built carefully, one piece at a time.</p>
+    <p>Unbox Text Privacy Policy — effective August 13, 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>
