@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Measure Lines does</title>
+<link rel="icon" type="image/png" href="assets/icons/measurelines.png">
+<meta name="description" content="Measure Lines is an on-screen ruler for Android. Measure anything on your display, or float a ruler over any app. No ads, no internet access, no data collected.">
+<meta name="theme-color" content="#FAF7F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
+<style>
+  /* "Sticky Note" brand theme, copied from /nativecreds/features.html (same site look).
+     Cream page, ink text, tomato accent, highlighter yellow. Measure Lines' stage colour is the amber tint below.
+     Light theme only. Screenshots live in assets/ next to this file; any that do not exist yet
+     show a neutral placeholder. Tomato (#ff5a36) is for shapes and hover states only, never for small text. */
+  :root {
+    color-scheme: light;
+    --cream: #faf7f0;
+    --ink: #1b1b1f;
+    --ink-soft: #55555d;
+    --accent: #ff5a36;
+    --hl: #ffe66d;
+    --stage: #ffe9bf;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --shadow: 0 13px 34px rgba(27, 27, 31, .16);
+    --stage-pad: clamp(28px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--cream); color: var(--ink);
+    font: 400 18px/1.6 "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+    overflow-x: clip;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { --gutter: 28px; max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter) 40px; }
+
+  .hl {
+    background: linear-gradient(var(--hl), var(--hl)) 0 82% / 100% .55em no-repeat;
+    padding: 0 .08em;
+  }
+  .trust p a, .row-text a, .not-yet a, .contact p a, footer a {
+    text-decoration: none;
+    background: linear-gradient(var(--hl), var(--hl)) 0 100% / 0% 100% no-repeat;
+    border-bottom: 2px solid var(--ink);
+    transition: background-size .25s var(--ease);
+  }
+  .trust p a:hover, .row-text a:hover, .not-yet a:hover, .contact p a:hover, footer a:hover,
+  .trust p a:focus-visible, .row-text a:focus-visible, .not-yet a:focus-visible, .contact p a:focus-visible, footer a:focus-visible { background-size: 100% 100%; }
+
+  /* ---- Nav ---- */
+  nav.top { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; text-decoration: none; }
+  .brand b { color: var(--accent); }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+  nav.top .label { color: var(--ink-soft); }
+
+  /* ---- Hero ---- */
+  header.hero { padding: 40px 0 56px; }
+  .app-icon { display: block; width: 128px; height: 128px; border-radius: 29px; box-shadow: var(--shadow); margin: 0 0 32px; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 18px; }
+  .eyebrow .stamp { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  h1 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: clamp(2.6rem, 7.4vw, 5rem); line-height: 1; letter-spacing: -.035em;
+    margin: 0 0 26px; max-width: 15ch; text-wrap: balance;
+  }
+  .subtitle { font-size: clamp(1.1rem, 2.2vw, 1.35rem); color: var(--ink-soft); max-width: 36em; margin: 0 0 36px; }
+
+  /* ---- Call to action (Google Play: coming soon until PLAY_URL is set in the script below) ---- */
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+  .btn {
+    font: 600 1rem/1.25 "Inter", sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  a.btn:not([aria-disabled="true"]):hover, a.btn:not([aria-disabled="true"]):focus-visible { background: var(--accent); border-color: var(--accent); transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .22); }
+  a.btn:not([aria-disabled="true"]):active { transform: translateY(0) scale(.99); }
+  .btn[aria-disabled="true"] { background: transparent; color: var(--ink); border-style: dashed; cursor: default; }
+  .cta-note { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0; }
+
+  /* ---- Stages: large rounded tinted panels ---- */
+  .trust, .row, .highlights {
+    background: var(--stage); border-radius: 32px; padding: var(--stage-pad); margin: 0 0 28px; scroll-margin-top: 20px;
+  }
+
+  /* ---- Trust strip ---- */
+  .trust-title, .highlights-title, .not-yet h2, .contact h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3rem);
+    line-height: 1.04; letter-spacing: -.03em; margin: 0 0 22px; text-wrap: balance;
+  }
+  .trust ul { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 28px; }
+  .trust li strong { display: block; font-size: 1.02rem; line-height: 1.35; color: var(--ink); margin-bottom: 4px; }
+  .trust li span { display: block; font-size: .95rem; line-height: 1.5; color: var(--ink-soft); }
+  .trust p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
+
+  /* ---- Feature rows (each one is a tinted stage) ---- */
+  .row { display: flex; align-items: center; gap: 56px; }
+  .js .row { opacity: 0; transform: translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .js .row.in-view { opacity: 1; transform: none; }
+  .row:nth-of-type(even) { flex-direction: row-reverse; }
+  .row-text { flex: 1 1 0; min-width: 0; }
+  .row-media { flex: 1.4 1 0; min-width: 0; }
+  .row-bar { width: 40px; height: 6px; background: var(--accent); border-radius: 3px; margin-bottom: 20px; }
+  .row-text h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    line-height: 1.06; letter-spacing: -.03em; margin: 0 0 16px; text-wrap: balance;
+  }
+  .row-text p { margin: 0 0 14px; font-size: 1.05rem; color: var(--ink-soft); }
+  .row-text p:last-child { margin-bottom: 0; }
+  .row-text ul { margin: 14px 0 0; padding-left: 20px; }
+  .row-text li { margin-bottom: 8px; font-size: 1.02rem; color: var(--ink-soft); }
+  .row-text li::marker { color: var(--ink); }
+  .row-text li strong, .row-text p strong { color: var(--ink); }
+  .note { font-size: .95rem !important; color: var(--ink-soft) !important; }
+
+  /* ---- Screenshots. DIFFERENCE from the Native Creds page: those PNGs are pre-framed (phone body and
+     callout cards baked in, 940 x 1085). These are plain 1080 x 2160 screenshots, so the phone-style frame is
+     drawn here in CSS (rounded corners, dark bezel, soft shadow). If a file is missing, a hatched placeholder shows. ---- */
+  .shot { position: relative; margin: 0 auto; width: 100%; max-width: 300px; aspect-ratio: 1080 / 2160; border-radius: 34px; box-shadow: var(--shadow); background: var(--cream); }
+  .shot img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 34px; border: 6px solid var(--ink); }
+  .shot img[hidden] { display: none; }
+  .shot .ph {
+    position: absolute; inset: 0; z-index: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; text-align: center;
+    border: 1px dashed var(--ink-soft); border-radius: 34px;
+    background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(27, 27, 31, .08) 14px 15px);
+    color: var(--ink-soft); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  }
+  .shot.ok .ph { display: none; }
+  .shot .ph svg { width: 34px; height: 34px; stroke: var(--ink); fill: none; stroke-width: 2; }
+  .shot .ph b { color: var(--ink); font-weight: 500; letter-spacing: .04em; }
+
+  /* ---- Highlights ---- */
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .highlights-title { grid-column: 1 / -1; margin: 0 0 4px; }
+  .highlight-card { background: var(--cream); border-radius: 24px; padding: 26px 26px 28px; }
+  .highlight-card h3 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 1.3rem; line-height: 1.15; margin: 0 0 10px; letter-spacing: -.02em; }
+  .highlight-card p { margin: 0; font-size: 1rem; color: var(--ink-soft); }
+
+  .not-yet { padding: 40px 0 8px; }
+  .not-yet h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin: 0 0 14px; }
+  .not-yet p { margin: 0 0 12px; color: var(--ink-soft); }
+  .not-yet ul { margin: 0 0 14px; padding-left: 20px; color: var(--ink-soft); max-width: 36em; }
+  .not-yet li { margin-bottom: 8px; }
+
+  /* ---- Contact + footer ---- */
+  .contact { padding: 40px 0 8px; }
+  .contact h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin: 0 0 14px; }
+  .contact p { color: var(--ink-soft); margin: 0 0 22px; max-width: 36em; }
+  .contact-card { display: block; }
+  .contact-email {
+    display: inline-block; max-width: 100%; text-align: center; text-decoration: none; word-break: break-all;
+    font: 600 1rem/1.3 "Inter", sans-serif; padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  .contact-email:hover, .contact-email:focus-visible { background: var(--accent); border-color: var(--accent); transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .22); }
+
+  footer { padding: 48px 0 40px; color: var(--ink-soft); font-size: .95rem; }
+  footer .links { display: flex; gap: 6px 22px; flex-wrap: wrap; margin-bottom: 14px; }
+  footer p { margin: 0 0 8px; }
+  footer strong { color: var(--ink); font-weight: 600; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes lift { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    header.hero > * { animation: lift .6s var(--ease) backwards; }
+    header.hero > :nth-child(2) { animation-delay: .07s; }
+    header.hero > :nth-child(3) { animation-delay: .14s; }
+    header.hero > :nth-child(4) { animation-delay: .21s; }
+    header.hero > :nth-child(5) { animation-delay: .28s; }
+    @supports (animation-timeline: view()) {
+      .trust, .highlights { animation: lift linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .row { opacity: 1; transform: none; transition: none; }
+    * { transition-duration: .01ms !important; }
+  }
+
+  @media (max-width: 960px) {
+    .row { gap: 36px; }
+    .trust ul { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    :root { --stage-pad: 22px; }
+    .row, .row:nth-of-type(even) { flex-direction: column; align-items: stretch; gap: 24px; }
+    .row-text { flex: none; }
+    .row-media { width: 100%; flex: none; }
+    .highlights { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    .wrap { --gutter: 18px; }
+    header.hero { padding: 28px 0 40px; }
+    .trust ul { grid-template-columns: 1fr; gap: 14px; }
+    .contact-email { font-size: .92rem; padding: 14px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top" aria-label="Site">
+    <a class="brand" href="../">Manideep's Crafty Apps<b>.</b></a>
+    <span class="label mono">Measure Lines</span>
+  </nav>
+
+  <header class="hero">
+    <img class="app-icon" src="assets/icons/measurelines.png" alt="Measure Lines app icon" width="128" height="128">
+    <div class="eyebrow"><span class="stamp"></span>Android screen ruler</div>
+    <h1>Measure anything on <span class="hl">your screen.</span></h1>
+    <p class="subtitle">A ruler for your phone's display. Use the full-screen rulers, or float a ruler over any other app. No ads, no internet access, nothing collected.</p>
+    <div class="cta">
+      <!-- The only place to change when the app is live: set PLAY_URL in the script at the bottom. -->
+      <a class="btn js-play" href="#" aria-disabled="true">Get it on Google Play &mdash; coming soon</a>
+      <p class="cta-note js-play-note">Android 8.0 and newer</p>
+    </div>
+  </header>
+
+  <aside class="trust" id="local-only" aria-labelledby="trust-title">
+    <h2 class="trust-title" id="trust-title">Why people <span class="hl">pick it</span></h2>
+    <ul>
+      <li><strong>No internet access</strong><span>The app can't go online at all.</span></li>
+      <li><strong>No ads, no tracking</strong><span>Nothing is collected or shared.</span></li>
+      <li><strong>Works over other apps</strong><span>Touches outside the ruler reach the app below.</span></li>
+      <li><strong>Calibrated to your phone</strong><span>Match it to a real ruler or a card.</span></li>
+    </ul>
+    <p>Read the <a href="privacy-policy.html">privacy policy</a>.</p>
+  </aside>
+
+  <div class="row" id="ruler-screen">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Two rulers, <span class="hl">ready the moment you open it</span></h2>
+      <p>The launch screen has a ruler along the top and one down the left edge. Touch either one and a cursor jumps to your finger and shows the reading.</p>
+      <ul>
+        <li>Both scales start at the corner where they meet</li>
+        <li>Tap a cursor to copy its reading</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Ruler screen</b><span>Screenshot coming soon</span></span><img src="assets/01-ruler-screen.png" alt="The ruler screen in the light theme. A ruler runs along the top and another down the left edge, each with a red cursor and a reading pill, and a shaded rectangle between them with an area pill" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="area">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Width, height and <span class="hl">area at once</span></h2>
+      <p>Guide lines from the two cursors cross on the screen, and a pill shows the area of the rectangle they mark out.</p>
+      <ul>
+        <li>Only the space between the corner and the cursors is shaded, never the rulers</li>
+        <li>Tap the area pill to copy it, or drag it to move both cursors</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Area</b><span>Screenshot coming soon</span></span><img src="assets/02-crosshair-area-dark.png" alt="The ruler screen in the dark theme with the amber ruler colour, showing the crosshair lines, the shaded rectangle and an area pill reading 18.39 square centimetres" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="controls">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Controls that stay <span class="hl">out of the way</span></h2>
+      <p>One small button under the ruler opens the controls and closes them again, so the screen stays clear for measuring.</p>
+      <ul>
+        <li>Units, show the ruler over apps, set scale, crosshair</li>
+        <li>Light or dark background, rotation lock and Settings</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Controls</b><span>Screenshot coming soon</span></span><img src="assets/03-controls.png" alt="The ruler screen with the controls panel open down the right side: a units button and icons for show over apps, set scale, crosshair, light or dark, rotation lock and settings" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="overlay">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Float a ruler over <span class="hl">any app</span></h2>
+      <p>Drag it, stretch it with two fingers and turn it to any angle. Touches outside the ruler go straight to the app underneath.</p>
+      <ul>
+        <li>The first finger you put down stays pinned while you stretch or turn</li>
+        <li>Double-tap the ruler to hide it</li>
+      </ul>
+      <p class="note">Some apps, such as Android's own Settings, hide overlays on purpose. Needs the &ldquo;Display over other apps&rdquo; permission.</p>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Over an app</b><span>Screenshot coming soon</span></span><img src="assets/04-overlay.png" alt="A yellow ruler floating over a web page, lying across a blue rectangle" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="cursor">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Read the number, <span class="hl">tap to copy</span></h2>
+      <p>Turn on the measurement cursor and the overlay ruler shows a live reading from its zero end. Tap the round handle to copy it.</p>
+      <ul>
+        <li>Shows a 45&deg; snap and the angle while you turn the ruler</li>
+        <li>Lock the ruler and every touch passes through it</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Cursor</b><span>Screenshot coming soon</span></span><img src="assets/05-cursor.png" alt="The floating ruler with its red cursor near the right end and a reading pill that says 3.04 cm" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="scale">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Measure maps and plans in <span class="hl">real distance</span></h2>
+      <p>Set a scale and every number reads in real-world units. Enter a map ratio such as 1:25000, or put the cursor on a known distance and type its length.</p>
+      <ul>
+        <li>Metres, kilometres, feet, miles and more</li>
+        <li>The ruler shows a small caption while a scale is on</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Scale</b><span>Screenshot coming soon</span></span><img src="assets/06-scale.png" alt="The map ratio dialog in Settings, with 1 to 25000 entered, metres chosen as the unit and the result 1 cm equals 250 m" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="settings">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Your units, <span class="hl">your look</span></h2>
+      <p>Pick centimetres, millimetres, inches, pixels or dp. Choose Light, Dark or follow your phone for the app.</p>
+      <ul>
+        <li>Switch the ruler on and lock it from Settings</li>
+        <li>Quick Settings tile to turn the overlay on from anywhere</li>
+      </ul>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Settings</b><span>Screenshot coming soon</span></span><img src="assets/07-settings.png" alt="The Settings screen with the App theme choices, the show ruler and lock switches, the units and the start of the Scale card" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <div class="row" id="look">
+    <div class="row-text">
+      <div class="row-bar"></div>
+      <h2>Six colours, <span class="hl">calibrated</span> to your screen</h2>
+      <p>Classic, Dark, Amber, High contrast, Blue or Green, with adjustable opacity for the overlay. Calibrate once against a real ruler or a bank card so centimetres are true.</p>
+    </div>
+    <div class="row-media">
+      <div class="shot"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg><b>Themes</b><span>Screenshot coming soon</span></span><img src="assets/08-themes-calibration.png" alt="The lower part of Settings with the six ruler colour swatches, the opacity slider, the Open calibration button, the tips and a Privacy Policy row" width="1080" height="2160" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.hidden=true"></div>
+    </div>
+  </div>
+
+  <section class="highlights" id="careful" aria-labelledby="careful-title">
+    <h2 class="highlights-title" id="careful-title">Private <span class="hl">by design</span></h2>
+    <div class="highlight-card">
+      <h3>No internet permission</h3>
+      <p>Measure Lines can't open a network connection, so nothing can leave your phone.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>No ads, no accounts</h3>
+      <p>No ads, analytics or sign-in. Settings stay in the app's private storage.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Copies only when you tap</h3>
+      <p>A reading goes to the clipboard only when you tap it. The app never reads your clipboard.</p>
+    </div>
+  </section>
+
+  <section class="not-yet" id="not-yet">
+    <h2>What it does <span class="hl">not do yet</span></h2>
+    <ul>
+      <li>No camera or AR measuring: it measures the screen, not the room around you.</li>
+      <li>Android only, and one overlay ruler at a time.</li>
+      <li>A rotated overlay ruler can catch touches in a small area at its corners that would otherwise reach the app below.</li>
+    </ul>
+    <p>Read the <a href="privacy-policy.html">privacy policy</a>.</p>
+  </section>
+
+  <div class="contact">
+    <h2>Still have a <span class="hl">question?</span></h2>
+    <p>If something is unclear or not working for you, I would like to hear about it directly.</p>
+    <div class="contact-card">
+      <a class="contact-email" href="mailto:ManideepsCraftyApps+measurelines@gmail.com">ManideepsCraftyApps+measurelines@gmail.com</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="features.html">Features</a>
+      <a href="mailto:ManideepsCraftyApps+measurelines@gmail.com">Email Support</a>
+      <a href="../">More from the developer</a>
+    </div>
+    <p><strong>Made by Manideep.</strong> Small apps, built carefully, one piece at a time.</p>
+    <p>Measure Lines &middot; Manideep's Crafty Apps. Google Play is a trademark of Google LLC.</p>
+  </footer>
+
+</div>
+
+<script>
+// ---- The one place to change when the app is published ------------------------------------
+// Paste the Google Play listing URL between the quotes (https://play.google.com/store/apps/details?id=com.manideep.measurelines).
+// While it is empty, the buttons stay a disabled "coming soon" badge.
+var PLAY_URL = "";
+// ---------------------------------------------------------------------------------------------
+(function () {
+  if (!PLAY_URL) return;
+  document.querySelectorAll(".js-play").forEach(function (a) {
+    a.href = PLAY_URL;
+    a.removeAttribute("aria-disabled");
+    a.textContent = "Get it on Google Play";
+  });
+})();
+
+// Rows fade/slide into place as they cross into view. Purely decorative: with reduced motion
+// (handled in CSS), no IntersectionObserver or no JavaScript, every row simply stays visible.
+(function () {
+  var rows = document.querySelectorAll(".row");
+  if (!("IntersectionObserver" in window)) {
+    rows.forEach(function (r) { r.classList.add("in-view"); });
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in-view"); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  rows.forEach(function (r) { observer.observe(r); });
+})();
+</script>
+
+</body>
+</html>
