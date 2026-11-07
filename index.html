@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Manideep's Crafty Apps — three small apps, one person, no catch</title>
-<meta name="description" content="Small, considered software by one person. Reko, Unbox Text and Native Creds — no bloat, no growth-hacking, honest pricing.">
+<title>Manideep's Crafty Apps — four small apps, one person, no catch</title>
+<meta name="description" content="Small, considered software by one person. Reko, Unbox Text, Native Creds and Measure Lines — no bloat, no growth-hacking, honest pricing.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#FAF7F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,6 +65,7 @@
   .trio a { display: block; text-decoration: none; transition: transform .25s var(--ease); }
   .trio a:nth-child(1) { transform: rotate(-4deg); }
   .trio a:nth-child(3) { transform: rotate(3deg); }
+  .trio a:nth-child(4) { transform: rotate(-2deg); }
   .trio a:hover, .trio a:focus-visible { transform: rotate(0) translateY(-8px) scale(1.05); }
   .trio img { display: block; width: 128px; height: 128px; border-radius: 29px; box-shadow: var(--shadow); }
   .trio span { display: block; margin-top: 14px; text-align: center; color: var(--ink-soft); }
@@ -74,6 +75,7 @@
   .stage.reko { background: #ffd9cc; }
   .stage.unbox { background: #d6e4ff; }
   .stage.creds { background: #d4f0dc; }
+  .stage.lines { background: #ffe9bf; }
   .stage-grid { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start; }
   .stage .big-icon { width: 176px; height: 176px; border-radius: 40px; box-shadow: var(--shadow); transition: transform .3s var(--ease); }
   .stage:hover .big-icon { transform: rotate(-3deg) scale(1.04); }
@@ -118,7 +120,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .trio a:nth-child(1), .trio a:nth-child(3) { transform: none; }
+    .trio a:nth-child(1), .trio a:nth-child(3), .trio a:nth-child(4) { transform: none; }
     * { transition-duration: .01ms !important; }
   }
   @media (max-width: 760px) {
@@ -143,12 +145,13 @@
   </nav>
 
   <header class="hero" id="top">
-    <h1>Three small apps. One person. <span class="hl">No catch.</span></h1>
+    <h1>Four small apps. One person. <span class="hl">No catch.</span></h1>
     <p class="lede">No bloat, no growth-hacking, no dark patterns. Each app does one job well, runs on your device, and costs what it honestly should. <strong>I make them one piece at a time.</strong></p>
     <div class="trio">
       <a href="#reko" aria-label="Reko"><img src="reko/assets/icons/reko.svg" width="128" height="128" alt=""><span class="mono">Reko</span></a>
       <a href="#unbox-text" aria-label="Unbox Text"><img src="unboxtext/assets/icons/unboxtext.png" width="128" height="128" alt=""><span class="mono">Unbox Text</span></a>
       <a href="#native-creds" aria-label="Native Creds"><img src="nativecreds/assets/icons/nativecreds.png" width="128" height="128" alt=""><span class="mono">Native Creds</span></a>
+      <a href="#measure-lines" aria-label="Measure Lines"><img src="measurelines/assets/icons/measurelines.png" width="128" height="128" alt=""><span class="mono">Measure Lines</span></a>
     </div>
   </header>
 
@@ -224,6 +227,30 @@
           <div class="more"><a class="swipe" href="https://www.youtube.com/watch?v=31pNfGhx5mI">Watch the video</a><a class="swipe" href="nativecreds/FAQs.html">FAQs</a><a class="swipe" href="nativecreds/privacy-policy.html">Privacy policy</a></div>
         </div>
         <img class="big-icon" src="nativecreds/assets/icons/nativecreds.png" width="176" height="176" alt="Native Creds app icon">
+      </div>
+    </article>
+
+    <article class="stage lines" id="measure-lines">
+      <div class="stage-grid">
+        <div>
+          <p class="status mono"><svg class="plat" role="img" aria-label="Android"><use href="#play"/></svg>Android · Coming soon</p>
+          <h2>Measure Lines</h2>
+          <p class="tagline">A ruler for your phone's display. Measure anything on your screen.</p>
+          <p class="pricing"><span class="hl">Free.</span> No ads, no internet access, nothing collected.</p>
+          <ul class="feats">
+            <li>Two full-screen rulers, with width, height and area at a glance</li>
+            <li>Float a ruler over any app, with touches passing through to the app below</li>
+            <li>Tap a reading to copy it; set a map scale such as 1:25000 for real distances</li>
+            <li>Centimetres, millimetres, inches, pixels or dp, calibrated against a real ruler or a bank card</li>
+            <li>Six colour themes with adjustable overlay opacity</li>
+          </ul>
+          <div class="actions">
+            <span class="btn soon" aria-disabled="true"><svg class="plat" aria-hidden="true"><use href="#play"/></svg>Google Play · soon</span>
+            <a class="swipe" href="measurelines/features.html">See everything it does</a>
+          </div>
+          <div class="more"><a class="swipe" href="measurelines/privacy-policy.html">Privacy policy</a></div>
+        </div>
+        <img class="big-icon" src="measurelines/assets/icons/measurelines.png" width="176" height="176" alt="Measure Lines app icon">
       </div>
     </article>
 
