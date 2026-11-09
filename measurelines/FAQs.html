@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measure Lines FAQs</title>
+<link rel="icon" type="image/png" href="assets/icons/measurelines.png">
+<meta name="description" content="Answers to common questions about Measure Lines, an on-screen ruler for Android: permissions, gestures, calibration, custom scale, privacy and troubleshooting.">
+<meta name="theme-color" content="#FAF7F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
+<style>
+  /* "Sticky Note" brand theme, same look as features.html and the FAQ pages of the other apps on this site.
+     Cream page, ink text, tomato accent, highlighter yellow; Measure Lines' stage colour is the amber tint.
+     Light theme only. Every answer is a <details> element, so the page reads fine with JavaScript
+     off; the script only adds search, topic filtering and expand-all on top. Tomato (#ff5a36) is for
+     shapes and hover states only, never for small text (about 3:1 on cream). */
+  :root {
+    color-scheme: light;
+    --cream: #faf7f0;
+    --ink: #1b1b1f;
+    --ink-soft: #55555d;
+    --accent: #ff5a36;
+    --hl: #ffe66d;
+    --stage: #ffe9bf;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --shadow: 0 13px 34px rgba(27, 27, 31, .16);
+    --mono-font: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--cream); color: var(--ink);
+    font: 400 18px/1.6 "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+    overflow-x: clip;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px 72px; }
+  .mono { font-family: var(--mono-font); font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* Highlighter swipe: the brand signature. .hl is the static marker behind one key word;
+     in-text links get the swipe-on-hover underline. */
+  .hl {
+    background: linear-gradient(var(--hl), var(--hl)) 0 82% / 100% .55em no-repeat;
+    padding: 0 .08em;
+  }
+  a { color: inherit; }
+  .faq-answer a, footer a {
+    text-decoration: none;
+    background: linear-gradient(var(--hl), var(--hl)) 0 100% / 0% 100% no-repeat;
+    border-bottom: 2px solid var(--ink);
+    transition: background-size .25s var(--ease);
+  }
+  .faq-answer a:hover, footer a:hover,
+  .faq-answer a:focus-visible, footer a:focus-visible { background-size: 100% 100%; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible {
+    outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px;
+  }
+
+  /* ---- Nav ---- */
+  nav.top { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; text-decoration: none; }
+  .brand b { color: var(--accent); }
+  nav.top .label { color: var(--ink-soft); }
+
+  /* ---- Header ---- */
+  header { padding: 40px 0 36px; }
+  .app-icon { display: block; width: 128px; height: 128px; border-radius: 29px; box-shadow: var(--shadow); margin: 0 0 32px; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-family: var(--mono-font); font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 18px; }
+  .eyebrow .stamp { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  h1 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: clamp(2.6rem, 7.4vw, 5rem); line-height: 1; letter-spacing: -.035em;
+    margin: 0 0 22px; max-width: 15ch; text-wrap: balance;
+  }
+  .subtitle { font-size: clamp(1.1rem, 2.2vw, 1.35rem); color: var(--ink-soft); margin: 0 0 16px; max-width: 36em; }
+  .updated { color: var(--ink-soft); margin: 0; }
+
+  h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(1.9rem, 4.4vw, 2.8rem); line-height: 1.04;
+    margin: 40px 0 14px; letter-spacing: -.03em; text-wrap: balance;
+  }
+  p { margin: 0 0 14px; }
+
+  /* ---- Search (needs JS; hidden without it) ---- */
+  html:not(.js) .js-only { display: none !important; }
+  .search-section { position: sticky; top: 0; background: var(--cream); z-index: 20; padding: 12px 0 4px; margin-bottom: 8px; }
+  .search-wrap { position: relative; padding-bottom: 6px; }
+  .search-box {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 2px solid var(--ink);
+    border-radius: 999px; padding: 12px 22px;
+  }
+  .search-box:focus-within { box-shadow: 0 0 0 3px var(--accent); }
+  .search-box svg { flex-shrink: 0; color: var(--ink); }
+  #faqSearch {
+    border: none; background: transparent; outline: none; min-width: 0;
+    font-size: 16px; font-family: "Inter", system-ui, sans-serif; color: var(--ink); width: 100%;
+  }
+  #faqSearch:focus-visible { box-shadow: none; }  /* the ring is drawn on .search-box (focus-within) instead */
+  #faqSearch::placeholder { color: var(--ink-soft); }
+  .search-clear { display: none; border: none; background: none; color: var(--ink-soft); cursor: pointer; padding: 2px; flex-shrink: 0; }
+  .search-clear.visible { display: flex; }
+  .search-clear:hover { color: var(--ink); }
+
+  .search-footer-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 8px; }
+  .filter-status { font-family: var(--mono-font); font-weight: 500; font-size: 12px; color: var(--ink-soft); margin: 0; }
+  .show-all-btn {
+    border: none; background: none; color: var(--ink); font-family: var(--mono-font); font-weight: 500;
+    font-size: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; padding: 4px 4px; margin-left: auto; white-space: nowrap;
+    border-bottom: 2px solid var(--ink); border-radius: 0;
+    background: linear-gradient(var(--hl), var(--hl)) 0 100% / 0% 100% no-repeat;
+    transition: background-size .25s var(--ease);
+  }
+  .show-all-btn:hover, .show-all-btn:focus-visible { background-size: 100% 100%; }
+
+  .search-dropdown {
+    display: none; position: absolute; top: calc(100% - 28px); left: 0; right: 0;
+    background: #fff; border: 2px solid var(--ink); border-radius: 24px;
+    box-shadow: var(--shadow); max-height: 340px; overflow-y: auto; z-index: 30; padding: 8px;
+  }
+  .search-dropdown.open { display: block; }
+  .dropdown-item {
+    display: block; width: 100%; text-align: left; border: none; background: none;
+    color: var(--ink); font-size: 15px; font-family: "Inter", system-ui, sans-serif; padding: 10px 14px;
+    border-radius: 14px; cursor: pointer; line-height: 1.4;
+  }
+  .dropdown-item small { display: block; font-family: var(--mono-font); font-weight: 500; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+  .dropdown-item:hover, .dropdown-item.active { background: var(--cream); }
+  .dropdown-item mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px; }
+  .dropdown-empty { padding: 14px 12px; color: var(--ink-soft); font-size: 14px; }
+  .dropdown-more { padding: 8px 12px 4px; color: var(--ink-soft); font-size: 12px; font-family: var(--mono-font); }
+
+  /* ---- Topic pills ---- */
+  .toc-label { font-family: var(--mono-font); font-weight: 500; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 10px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 28px; }
+  .toc-pill {
+    font-family: var(--mono-font); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+    color: var(--ink); border: 2px solid var(--ink); border-radius: 999px;
+    padding: 8px 16px; background: transparent; cursor: pointer;
+    transition: transform .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
+  }
+  .toc-pill:hover, .toc-pill:focus-visible { background: var(--hl); transform: translateY(-2px); }
+  .toc-pill.active { background: var(--ink); color: #fff; }
+
+  /* ---- Question list: each topic is an amber stage ---- */
+  .faq-group { background: var(--stage); border-radius: 32px; padding: clamp(24px, 4.5vw, 56px); margin: 0 0 28px; scroll-margin-top: 20px; }
+  .faq-group-heading {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(1.7rem, 3.6vw, 2.4rem); line-height: 1.05;
+    letter-spacing: -.03em; color: var(--ink); margin: 0 0 14px;
+  }
+  .faq-item { border-bottom: 1px solid rgba(27, 27, 31, .2); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item summary {
+    list-style: none; cursor: pointer; position: relative; border-radius: 12px;
+    font-size: 17px; font-weight: 500; line-height: 1.45; color: var(--ink); padding: 15px 38px 15px 6px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: ""; position: absolute; right: 12px; top: 50%; width: 8px; height: 8px;
+    border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink);
+    transform: translateY(-70%) rotate(45deg); transition: transform .2s var(--ease);
+  }
+  .faq-item[open] summary::after { transform: translateY(-30%) rotate(-135deg); border-color: var(--accent); }
+  .faq-item summary:hover { background: rgba(255, 255, 255, .5); }
+  .faq-item[open] summary { text-decoration: underline var(--accent) 3px; text-underline-offset: 5px; }
+  .faq-answer { color: var(--ink-soft); font-size: 16px; line-height: 1.7; padding: 0 6px 20px; max-width: 46em; }
+  .faq-answer p { margin: 0 0 12px; }
+  .faq-answer p:last-child, .faq-answer ul:last-child, .faq-answer ol:last-child { margin-bottom: 0; }
+  .faq-answer ul, .faq-answer ol { margin: 0 0 12px; padding-left: 22px; }
+  .faq-answer li { margin-bottom: 7px; }
+  .faq-answer li::marker { color: var(--ink); }
+  .faq-answer strong { color: var(--ink); font-weight: 600; }
+  .faq-answer code {
+    font-family: var(--mono-font); font-size: 0.88em; background: rgba(255, 255, 255, .65);
+    border-radius: 4px; padding: 1px 6px; color: var(--ink);
+  }
+  .faq-item.flash { animation: flash 1.6s ease; }
+  @keyframes flash { 0%, 55% { background: rgba(255, 230, 109, .7); } 100% { background: transparent; } }
+
+  .no-match { display: none; color: var(--ink-soft); font-size: 15px; padding: 8px 2px; }
+
+  /* ---- Contact + footer ---- */
+  .contact-card { margin-top: 0; }
+  .contact-card p { margin: 0 0 14px; font-size: 1.1rem; color: var(--ink-soft); max-width: 36em; }
+  .contact-card p:last-child { margin-bottom: 0; }
+  .contact-email {
+    display: inline-block; max-width: 100%; text-align: center; text-decoration: none; word-break: break-all;
+    font: 600 1rem/1.3 "Inter", sans-serif; padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  .contact-email:hover, .contact-email:focus-visible { background: var(--accent); border-color: var(--accent); transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .22); }
+
+  footer { padding: 48px 0 0; color: var(--ink-soft); font-size: .95rem; }
+  footer .links { display: flex; gap: 6px 22px; flex-wrap: wrap; margin-bottom: 14px; }
+  footer p { margin: 0 0 8px; }
+  footer strong { color: var(--ink); font-weight: 600; }
+
+  /* Motion: gentle fade-up on load and on scroll, only when the visitor has not asked for less */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes lift { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    @keyframes reveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    header > * { animation: lift .6s var(--ease) backwards; }
+    header > :nth-child(2) { animation-delay: .07s; }
+    header > :nth-child(3) { animation-delay: .14s; }
+    header > :nth-child(4) { animation-delay: .21s; }
+    header > :nth-child(5) { animation-delay: .28s; }
+    .faq-answer { animation: reveal .25s var(--ease); }
+    @supports (animation-timeline: view()) {
+      .faq-group { animation: lift linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition-duration: .01ms !important; }
+  }
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    .wrap { padding: 0 18px 56px; }
+    header { padding: 28px 0 28px; }
+    .faq-group { padding: 22px 16px; border-radius: 28px; }
+    .faq-item summary { font-size: 16.5px; }
+    .search-footer-row { flex-wrap: wrap; }
+    .search-box { padding: 11px 16px; }
+    .contact-email { font-size: .92rem; padding: 14px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top" aria-label="Site">
+    <a class="brand" href="../">Manideep's Crafty Apps<b>.</b></a>
+    <span class="label mono">Measure Lines</span>
+  </nav>
+
+  <header>
+    <img class="app-icon" src="assets/icons/measurelines.png" alt="Measure Lines app icon" width="128" height="128">
+    <div class="eyebrow"><span class="stamp"></span>Measure Lines FAQs</div>
+    <h1>Questions, <span class="hl">answered</span></h1>
+    <p class="subtitle">Short answers in plain words. Search, pick a topic, or just scroll.</p>
+    <p class="updated mono">Last updated: November 9, 2026</p>
+  </header>
+
+  <div class="search-section js-only">
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="faqSearch" placeholder="Search, e.g. &quot;calibrate&quot;" autocomplete="off" aria-label="Search the questions" role="combobox" aria-expanded="false" aria-controls="searchDropdown">
+        <button class="search-clear" id="searchClear" type="button" aria-label="Clear search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="search-dropdown" id="searchDropdown" role="listbox"></div>
+      <div class="search-footer-row">
+        <p class="filter-status" id="filterStatus" aria-live="polite"></p>
+        <button class="show-all-btn" id="expandBtn" type="button">Expand all answers</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="toc-label">Jump to a topic</p>
+  <nav class="toc" id="tocRow" aria-label="Topics">
+    <a class="toc-pill" href="#t-start" data-topic="Getting started">Getting started</a>
+    <a class="toc-pill" href="#t-use" data-topic="Using the ruler">Using the ruler</a>
+    <a class="toc-pill" href="#t-accurate" data-topic="Measuring accurately">Measuring accurately</a>
+    <a class="toc-pill" href="#t-aids" data-topic="Measuring aids">Measuring aids</a>
+    <a class="toc-pill" href="#t-look" data-topic="Colours &amp; layout">Colours &amp; layout</a>
+    <a class="toc-pill" href="#t-privacy" data-topic="Permissions &amp; privacy">Permissions &amp; privacy</a>
+    <a class="toc-pill" href="#t-help" data-topic="Troubleshooting">Troubleshooting</a>
+  </nav>
+
+  <p class="no-match" id="noMatch">Nothing here yet for that topic.</p>
+
+  <!-- ===================================================================== -->
+  <!-- Questions in the order a newcomer asks them. Keep every answer short: -->
+  <!-- answer first, plain words, no jargon. Facts come from the app's own   -->
+  <!-- documentation only.                                                   -->
+  <!-- ===================================================================== -->
+
+  <div class="faq-group" id="t-start" data-topic="Getting started">
+    <h3 class="faq-group-heading">Getting started</h3>
+
+    <details class="faq-item" id="what-is-measure-lines" data-topic="Getting started" data-keywords="about overview ruler screen on-screen app does what">
+      <summary>What does Measure Lines do?</summary>
+      <div class="faq-answer">
+        <p>It's a ruler for your phone's screen. You can float a transparent ruler over any other app, then drag, resize and turn it to measure what you see: a photo, a web page layout, a design mockup. Opening the app itself shows two rulers, one along the top and one down the left edge.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="requirements" data-topic="Getting started" data-keywords="android version 8.0 oreo requirements phone tablet supported compatible">
+      <summary>Which phones does it work on?</summary>
+      <div class="faq-answer">
+        <p>Any phone or tablet running Android 8.0 or newer.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="free-ads" data-topic="Getting started" data-keywords="free cost price paid purchase subscription ads advertising">
+      <summary>Is it free? Are there ads?</summary>
+      <div class="faq-answer">
+        <p>It's free, with no ads and no purchases.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="overlay-permission" data-topic="Getting started" data-keywords="display over other apps overlay permission grant allow draw on top system_alert_window restricted setting sideload apk">
+      <summary>Why does it need &ldquo;Display over other apps&rdquo;, and how do I turn it on?</summary>
+      <div class="faq-answer">
+        <p>That permission is the only way Android lets an app draw a ruler on top of other apps. Android also insists you switch it on yourself in a system screen, so the app can't do it for you. You can withdraw it at any time in Android's settings.</p>
+        <ol>
+          <li>Tap <strong>Show ruler over apps</strong> (the icon on the ruler screen, or the switch in Settings).</li>
+          <li>Tap <strong>Grant permission</strong>. Android opens a system screen.</li>
+          <li>Turn on <strong>Allow display over other apps</strong> for Measure Lines, then go back.</li>
+        </ol>
+        <p>If you installed from an APK file instead of Google Play, Android 13 and newer may say &ldquo;Restricted setting&rdquo;. Go to <strong>Settings &gt; Apps &gt; Measure Lines</strong>, tap the three-dot menu at the top right, choose <strong>Allow restricted settings</strong>, then try again. Installs from Google Play don't show this.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="notification" data-topic="Getting started" data-keywords="notification persistent foreground service ruler overlay is active shortcuts lock hide status bar">
+      <summary>Why is there a notification while the ruler is on?</summary>
+      <div class="faq-answer">
+        <p>Android requires a notification whenever an app keeps something running in the background. Measure Lines uses it to keep the ruler running reliably, and it shows only the app's own status, &ldquo;Ruler overlay is active&rdquo;. Tap it to open the app, or use its <strong>Lock ruler</strong> and <strong>Hide ruler</strong> buttons. It never shows ads.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="turn-on-off" data-topic="Getting started" data-keywords="turn on off show hide ruler double-tap toggle switch start stop">
+      <summary>How do I turn the ruler on and off?</summary>
+      <div class="faq-answer">
+        <p><strong>On:</strong> tap <strong>Show ruler over apps</strong> on the ruler screen, flip the switch at the top of Settings, or tap the <a class="answer-jump" href="#quick-tile">Quick Settings tile</a>.</p>
+        <p><strong>Off:</strong> double-tap the ruler, tap <strong>Hide ruler</strong> on its notification, or use the same icon, switch or tile again.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="quick-tile" data-topic="Getting started" data-keywords="quick settings tile ruler overlay pull down shade edit pencil add toggle shortcut">
+      <summary>How do I add the Quick Settings tile?</summary>
+      <div class="faq-answer">
+        <ol>
+          <li>Pull down your notification shade and open the tile editor (usually a pencil or edit icon).</li>
+          <li>Drag the <strong>Ruler Overlay</strong> tile into your active tiles.</li>
+        </ol>
+        <p>After that, one tap turns the ruler on or off from anywhere without opening the app. The tile and the in-app switch always stay in step. If the tile stops responding after the app hasn't been opened for a while, see <a class="answer-jump" href="#tile-does-nothing">the troubleshooting answer</a>.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="faq-group" id="t-use" data-topic="Using the ruler">
+    <h3 class="faq-group-heading">Using the ruler</h3>
+
+    <details class="faq-item" id="gestures" data-topic="Using the ruler" data-keywords="gestures drag move resize pinch rotate twist two fingers one finger pivot anchor first finger second finger turn stretch">
+      <summary>How do I move, resize and rotate the ruler?</summary>
+      <div class="faq-answer">
+        <ul>
+          <li><strong>One finger, drag:</strong> moves the ruler.</li>
+          <li><strong>Two fingers, pinch in or out:</strong> makes it shorter or longer. The markings update to stay accurate.</li>
+          <li><strong>Two fingers, twist:</strong> turns it to any angle.</li>
+        </ul>
+        <p>The first finger you put down is a fixed pivot: it stays pinned to the same spot on the ruler. The second finger drives the size and the angle. Touches outside the ruler go straight to the app underneath.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="size-limits" data-topic="Using the ruler" data-keywords="size limits minimum maximum smallest longest length thickness width dp pinch too small">
+      <summary>How long or short can the ruler be?</summary>
+      <div class="faq-answer">
+        <p>It can't be pinched shorter than 20% of your screen's width, or longer than the screen's longer side (plus a small overshoot). Its thickness starts at 48 dp and pinching can make it anywhere from 30 dp to 160 dp.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="resets-to-centre" data-topic="Using the ruler" data-keywords="reset centre center position remember last position default start fresh size rotation saved">
+      <summary>Why does the ruler start in the centre every time?</summary>
+      <div class="faq-answer">
+        <p>On purpose. Every time you turn it on, the ruler appears centred, unrotated, at a fixed size and unlocked, and it never remembers where you left it. That way it can't end up off-screen or shrunk to something you can't find or grab. Your settings (unit, colours, scale, calibration) are kept.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="lock-ruler" data-topic="Using the ruler" data-keywords="lock click-through touches pass through unlock locked cannot move ruler stuck not responding">
+      <summary>What is lock mode, and how do I unlock the ruler?</summary>
+      <div class="faq-answer">
+        <p>Locking keeps the ruler visible but sends every touch through it to the app below, so you can scroll, tap or draw underneath. While locked you can't drag, resize or hide the ruler by touch. If the ruler suddenly won't respond, it's probably locked.</p>
+        <ul>
+          <li><strong>Lock:</strong> tap <strong>Lock ruler</strong> on the notification, or switch on <strong>Lock ruler (touches pass through)</strong> in Settings (it's greyed out unless the ruler is showing).</li>
+          <li><strong>Unlock:</strong> tap <strong>Unlock ruler</strong> on the notification, or switch it off in Settings.</li>
+        </ul>
+        <p><strong>Hide ruler</strong> on the notification still turns it off completely. The ruler always starts unlocked, so you can't get stuck with one you can't move.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="ruler-screen" data-topic="Using the ruler" data-keywords="ruler screen launch screen two rulers top left crosshair area controls chevron cursor in-app">
+      <summary>What is the screen I see when I open the app?</summary>
+      <div class="faq-answer">
+        <p>Two fixed rulers, one along the top and one down the left edge. Touch either one and a cursor jumps to your finger and shows the reading. Tap a cursor to copy it. Thin guide lines from the cursors cross on the screen, and a pill shows the area of the rectangle they mark out (tap it to copy, or drag it to move both cursors).</p>
+        <p>The small arrow button at the right edge, just below the top ruler, opens the controls: units, show ruler over apps, set scale, crosshair, light or dark background, rotation lock and Settings.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="faq-group" id="t-accurate" data-topic="Measuring accurately">
+    <h3 class="faq-group-heading">Measuring accurately</h3>
+
+    <details class="faq-item" id="units" data-topic="Measuring accurately" data-keywords="units cm mm inch inches px dp pixels centimetres millimetres density-independent change unit">
+      <summary>Which units can I use?</summary>
+      <div class="faq-answer">
+        <p>Centimetres (cm), millimetres (mm), inches, pixels (px) and dp, the density-independent pixels Android layouts use. Change the unit from the Units menu on the ruler screen or in Settings, and a running ruler updates straight away.</p>
+        <p>cm, mm and inch are physical units and use your calibration. px and dp are measured straight from the screen, so calibration doesn't affect them.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="calibrate" data-topic="Measuring accurately" data-keywords="calibrate calibration accurate accuracy wrong off slightly real ruler credit card bank card 8.56 cm reset slider">
+      <summary>How do I calibrate the ruler, and why would I?</summary>
+      <div class="faq-answer">
+        <p>Phones don't always report their screen size accurately (it varies by manufacturer), so out of the box the markings are close but may be slightly off. Calibrating once fixes that for cm, mm and inch.</p>
+        <ol>
+          <li>In Settings, tap <strong>Open calibration</strong> (Calibrate for accuracy).</li>
+          <li>Hold a real ruler against the screen, or a bank, credit or ID card, which is exactly 8.56 cm (3.37 in) wide.</li>
+          <li>Drag the slider until the on-screen bar matches your reference exactly.</li>
+          <li>Tap <strong>Save calibration</strong>.</li>
+        </ol>
+        <p><strong>Reset to default</strong> on the same screen undoes it.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="real-objects" data-topic="Measuring accurately" data-keywords="camera ar measure real objects room furniture physical world augmented reality">
+      <summary>Can it measure real objects through the camera?</summary>
+      <div class="faq-answer">
+        <p>No. Measure Lines measures what's shown on your screen, not the room around you, and it doesn't use the camera. It does not read, capture or record the content of other apps or of your screen.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="faq-group" id="t-aids" data-topic="Measuring aids">
+    <h3 class="faq-group-heading">Measuring aids</h3>
+
+    <details class="faq-item" id="angle-snap" data-topic="Measuring aids" data-keywords="angle badge degrees snap 45 snapping straight horizontal vertical rotate turn off disable haptic vibration">
+      <summary>How do the angle badge and 45&deg; snapping work?</summary>
+      <div class="faq-answer">
+        <p>While you twist the ruler with two fingers, a small badge shows its angle in whole degrees (0&deg; is horizontal, increasing clockwise) and stays for about a second and a half after you let go. With snapping on, the ruler clicks into 0&deg;, 45&deg;, 90&deg;, 135&deg; and so on when you're within about 4&deg;, with a light vibration tick each time.</p>
+        <p>Both are on by default. To turn them off, open Settings &gt; <strong>Measuring aids</strong> and switch off <strong>Show angle while rotating</strong> and/or <strong>Snap to 45&deg; angles</strong>. A plain pinch to resize never snaps or nudges the angle.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="cursor-copy" data-topic="Measuring aids" data-keywords="measurement cursor reading copy clipboard tap handle red line live number">
+      <summary>What is the measurement cursor, and how do I copy a reading?</summary>
+      <div class="faq-answer">
+        <p>Switch on <strong>Measurement cursor</strong> in Settings &gt; Measuring aids (it's off by default). A thin red line with a round handle appears across the floating ruler, and a small pill shows the reading from the ruler's zero end in the current unit, for example <code>3.42 cm</code>.</p>
+        <ul>
+          <li><strong>Move it:</strong> drag near the line. It slides along the ruler only.</li>
+          <li><strong>Copy it:</strong> tap the round handle.</li>
+        </ul>
+        <p>The cursor starts mid-ruler each time the ruler is turned on. The two rulers on the launch screen always have cursors.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="custom-scale" data-topic="Measuring aids" data-keywords="custom scale map blueprint photo ratio 1:25000 scale bar real distance km metres known distance set scale factor label">
+      <summary>How do I measure a map or blueprint in real distance?</summary>
+      <div class="faq-answer">
+        <p>A custom scale multiplies every number the ruler shows, so the ruler reads in real-world distance. The tick marks stay where they are; only the numbers change.</p>
+        <p><strong>If you know the map ratio</strong> (say 1:25000): set the unit to cm, open the <strong>Scale</strong> card in Settings, switch on <strong>Use a custom scale</strong>, tap the <strong>Custom&hellip;</strong> chip, enter <code>25000</code> and choose metres. It previews <code>1 cm = 250 m</code>. After tapping OK, something that measures 4 cm on screen reads 1000 m.</p>
+        <p><strong>If the map has a scale bar</strong> (say it's 2 cm long and labelled 5 km): on the ruler screen, touch a ruler so its cursor sits at the end of the bar (measured from zero), tap <strong>Set scale</strong>, and enter <code>5</code> with the label <code>km</code>. Everything now reads in kilometres. If you zoom the map afterwards, set the scale again.</p>
+        <p>The ratio calculator needs a physical unit (cm, mm or inch). With px or dp, use Set scale instead. A small caption such as <code>&times;50 m</code> shows while a scale is on. Switch <strong>Use a custom scale</strong> off to go back to normal.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="faq-group" id="t-look" data-topic="Colours &amp; layout">
+    <h3 class="faq-group-heading">Colours &amp; layout</h3>
+
+    <details class="faq-item" id="themes-opacity" data-topic="Colours &amp; layout" data-keywords="colour color theme classic dark amber high contrast blue green opacity transparency see-through appearance app theme light">
+      <summary>Can I change the ruler's colour or make it more see-through?</summary>
+      <div class="faq-answer">
+        <p>Yes. In the <strong>Appearance</strong> card in Settings, pick one of six colour themes (Classic, Dark, Amber, High contrast, Blue or Green) and set the opacity from 30% to 100% (100% is the default). Opacity fades the ruler's body more than its markings, so the numbers stay readable. Changes show instantly on a running ruler.</p>
+        <p>The app's own Light, Dark or System look is a separate setting (<strong>App theme</strong>).</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="tablets-landscape" data-topic="Colours &amp; layout" data-keywords="tablet landscape rotate rotation lock orientation auto-rotate screen sideways long">
+      <summary>Does it work on tablets and in landscape?</summary>
+      <div class="faq-answer">
+        <p>It works on both phones and tablets. On the ruler screen, landscape is handy for longer lengths: the screen follows auto-rotate by default, and the rotation lock icon in the controls freezes the current orientation while you measure.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="faq-group" id="t-privacy" data-topic="Permissions &amp; privacy">
+    <h3 class="faq-group-heading">Permissions &amp; privacy</h3>
+
+    <details class="faq-item" id="data-internet" data-topic="Permissions &amp; privacy" data-keywords="data collect privacy internet offline online ads analytics tracking account permissions camera location storage contacts microphone">
+      <summary>Does it collect my data, need the internet or ask for lots of permissions?</summary>
+      <div class="faq-answer">
+        <p>It collects nothing and sends nothing. There's no account, no server, no ads, no analytics, and the app doesn't even have Android's internet permission, so it works fully offline and can't go online at all.</p>
+        <p>It asks only for <strong>Display over other apps</strong> (to draw the ruler), a foreground service (to keep it running) and notifications (Android requires one while it runs). It doesn't ask for storage, contacts, location, camera, microphone or accessibility access. See the <a href="privacy-policy.html">privacy policy</a> for the full detail.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="stored-on-device" data-topic="Permissions &amp; privacy" data-keywords="stored saved storage settings preferences backup delete uninstall clear data calibration position">
+      <summary>What does it save on my phone?</summary>
+      <div class="faq-answer">
+        <p>A few settings, kept in the app's private storage and never sent anywhere: your unit, colour theme and opacity, app theme, whether the cursor, crosshair, angle badge and snapping are on, your custom scale, your calibration number, and whether the ruler is currently on or locked. The ruler's position, size and rotation are not saved.</p>
+        <p>The app opts out of Android's automatic backup, so these aren't copied to your Google account or a new phone. Clearing the app's storage or uninstalling deletes everything.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="clipboard" data-topic="Permissions &amp; privacy" data-keywords="clipboard copy paste read tap handle reading privacy keyboard">
+      <summary>What does it do with my clipboard?</summary>
+      <div class="faq-answer">
+        <p>It writes to the clipboard only when you tap a cursor reading or the area pill, and what it copies is just that one measurement, such as &ldquo;3.42 cm&rdquo;. It never reads what's on your clipboard. While something is on the clipboard, other software on your phone, such as a keyboard or a clipboard-sync feature, may be able to see it.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="faq-group" id="t-help" data-topic="Troubleshooting">
+    <h3 class="faq-group-heading">Troubleshooting</h3>
+
+    <details class="faq-item" id="tile-does-nothing" data-topic="Troubleshooting" data-keywords="tile does nothing not working overlay will not start closed app vivo xiaomi redmi poco oppo oneplus realme samsung autostart battery background restrictions iqoo">
+      <summary>The tile or ruler does nothing after I haven't opened the app for a while</summary>
+      <div class="faq-answer">
+        <p>On Vivo, Xiaomi, Oppo, OnePlus and Samsung phones, the maker's own battery management can stop a background app from starting anything once it has been closed, even from the Quick Settings tile. If the tile works right after you've had the app open but silently does nothing later, this is almost always the cause. It's a one-time setting you turn on yourself, because the app can't request it:</p>
+        <ul>
+          <li><strong>Vivo / iQOO:</strong> open the <strong>i Manager</strong> app &gt; <strong>App manager</strong> &gt; <strong>Autostart</strong> and enable Measure Lines. Also check <strong>Settings &gt; Battery &gt; Background power consumption management</strong> and allow Measure Lines.</li>
+          <li><strong>Xiaomi / Redmi / POCO:</strong> <strong>Security</strong> app &gt; <strong>App management</strong> &gt; <strong>Permissions</strong> &gt; <strong>Autostart</strong> and enable Measure Lines.</li>
+          <li><strong>Oppo / OnePlus / Realme:</strong> <strong>Settings &gt; Battery &gt; App battery management</strong> (or <strong>Battery optimization</strong>), find Measure Lines and allow background activity or auto-launch.</li>
+          <li><strong>Samsung:</strong> <strong>Settings &gt; Apps &gt; Measure Lines &gt; Battery</strong> and choose <strong>Unrestricted</strong>. Also make sure it isn't listed under &ldquo;Put unused apps to sleep&rdquo; in <strong>Settings &gt; Battery and device care &gt; Background usage limits</strong>.</li>
+        </ul>
+        <p>Menu names vary a little between software versions.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="hidden-over-some-screens" data-topic="Troubleshooting" data-keywords="cannot see ruler hidden settings app secure system screen overlay blocked disappears banking password screens">
+      <summary>I can't see the ruler over some screens</summary>
+      <div class="faq-answer">
+        <p>Some apps and system screens hide overlays on purpose. Android's own Settings app is one example. That's Android's behaviour, not something Measure Lines can switch off.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="rotated-corners" data-topic="Troubleshooting" data-keywords="rotated corner corners touch area dead zone angle diagonal passes through catches touches">
+      <summary>Touches near the corners of a rotated ruler don't reach the app below</summary>
+      <div class="faq-answer">
+        <p>When the ruler is turned to an angle that isn't straight up or sideways, there's a very small area right at its corners where a touch can still land on the ruler instead of passing through. That comes from how Android handles touch regions for overlays in general. It shrinks to nothing as soon as the ruler is level again.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" id="report-bug" data-topic="Troubleshooting" data-keywords="report bug feedback support contact email problem help suggest feature request idea">
+      <summary>How do I report a bug or ask for a feature?</summary>
+      <div class="faq-answer">
+        <p>Email <a href="mailto:ManideepsCraftyApps+measurelines@gmail.com">ManideepsCraftyApps+measurelines@gmail.com</a>. For a bug, say what you did, what happened, and your phone model and Android version. Feature ideas are welcome too.</p>
+      </div>
+    </details>
+  </div>
+
+  <h2>Still <span class="hl">stuck?</span></h2>
+  <div class="contact-card">
+    <p>Found a bug, want a feature, or did not find your answer? I would like to hear from you:</p>
+    <p><a class="contact-email" href="mailto:ManideepsCraftyApps+measurelines@gmail.com">ManideepsCraftyApps+measurelines@gmail.com</a></p>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="FAQs.html">FAQs</a>
+      <a href="features.html">Features</a>
+      <a href="mailto:ManideepsCraftyApps+measurelines@gmail.com">Email Support</a>
+      <a href="../">More from the developer</a>
+    </div>
+    <p><strong>Made by Manideep.</strong> Small apps, built carefully, one piece at a time.</p>
+    <p>Measure Lines &middot; Manideep's Crafty Apps. Google Play is a trademark of Google LLC.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  root.classList.add('js');
+
+  var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item'));
+  var groups = Array.prototype.slice.call(document.querySelectorAll('.faq-group'));
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.toc-pill'));
+  var input = document.getElementById('faqSearch');
+  var clearBtn = document.getElementById('searchClear');
+  var dropdown = document.getElementById('searchDropdown');
+  var expandBtn = document.getElementById('expandBtn');
+  var statusEl = document.getElementById('filterStatus');
+  var noMatch = document.getElementById('noMatch');
+  var RESULT_LIMIT = 8;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Search index, built from the page itself so the questions live in one place only.
+  var index = items.map(function (el) {
+    var q = el.querySelector('summary').textContent.trim();
+    var answer = el.querySelector('.faq-answer').textContent;
+    return {
+      el: el, id: el.id, q: q, topic: el.getAttribute('data-topic') || '',
+      qLower: q.toLowerCase(),
+      hay: (q + ' ' + (el.getAttribute('data-keywords') || '') + ' ' + answer).toLowerCase().replace(/\s+/g, ' ')
+    };
+  });
+  var byId = {};
+  index.forEach(function (f) { byId[f.id] = f; });
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function highlight(text, terms) {
+    var lower = text.toLowerCase(), best = -1, len = 0;
+    terms.forEach(function (t) {
+      var i = lower.indexOf(t);
+      if (i !== -1 && (best === -1 || i < best)) { best = i; len = t.length; }
+    });
+    if (best === -1) return escapeHtml(text);
+    return escapeHtml(text.slice(0, best)) + '<mark>' + escapeHtml(text.slice(best, best + len)) + '</mark>' + escapeHtml(text.slice(best + len));
+  }
+
+  // ---- Topic filter ----
+  var currentTopic = null;
+  function topicName(el) { return el.getAttribute('data-topic'); }
+
+  function setFilter(topic) {
+    currentTopic = topic;
+    var shown = 0;
+    groups.forEach(function (g) {
+      var show = !topic || topicName(g) === topic;
+      g.hidden = !show;
+      if (show) shown += g.querySelectorAll('.faq-item').length;
+    });
+    pills.forEach(function (p) {
+      var on = !!topic && topicName(p) === topic;
+      p.classList.toggle('active', on);
+      p.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    statusEl.textContent = topic ? (topic + ' - ' + shown + (shown === 1 ? ' question' : ' questions') + ' (tap the topic again to show all)') : '';
+    noMatch.style.display = (topic && shown === 0) ? 'block' : 'none';
+    syncExpandLabel();
+  }
+
+  pills.forEach(function (pill) {
+    pill.setAttribute('aria-pressed', 'false');
+    pill.addEventListener('click', function (e) {
+      e.preventDefault();
+      var topic = topicName(pill);
+      closeDropdown();
+      setFilter(currentTopic === topic ? null : topic);
+      if (currentTopic) {
+        var firstVisible = document.querySelector('.faq-group:not([hidden])');
+        if (firstVisible) scrollToEl(firstVisible);
+      }
+    });
+  });
+
+  // ---- Expand / collapse ----
+  function visibleItems() {
+    return items.filter(function (el) { return !el.closest('[hidden]'); });
+  }
+  function syncExpandLabel() {
+    var vis = visibleItems();
+    var allOpen = vis.length > 0 && vis.every(function (el) { return el.open; });
+    expandBtn.textContent = allOpen ? 'Collapse all answers' : 'Expand all answers';
+  }
+  expandBtn.addEventListener('click', function () {
+    var vis = visibleItems();
+    var allOpen = vis.every(function (el) { return el.open; });
+    vis.forEach(function (el) { el.open = !allOpen; });
+    syncExpandLabel();
+  });
+  items.forEach(function (el) { el.addEventListener('toggle', syncExpandLabel); });
+
+  // ---- Jump to one question ----
+  function scrollToEl(el) {
+    el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+  function openItem(id, updateHash) {
+    var f = byId[id];
+    if (!f) return;
+    if (currentTopic && currentTopic !== f.topic) setFilter(null);
+    f.el.open = true;
+    f.el.classList.remove('flash');
+    void f.el.offsetWidth;
+    f.el.classList.add('flash');
+    window.setTimeout(function () { f.el.classList.remove('flash'); }, 1700);
+    requestAnimationFrame(function () { scrollToEl(f.el); });
+    if (updateHash && window.history && history.replaceState) history.replaceState(null, '', '#' + id);
+  }
+
+  // ---- Search dropdown ----
+  var activeIndex = -1;
+  var shownMatches = [];
+
+  function termsOf(value) {
+    return value.toLowerCase().split(/\s+/).filter(Boolean);
+  }
+  function findMatches(terms) {
+    var res = index.filter(function (f) {
+      return terms.every(function (t) { return f.hay.indexOf(t) !== -1; });
+    });
+    // Questions that match in their own title come first.
+    res.sort(function (a, b) {
+      var am = terms.every(function (t) { return a.qLower.indexOf(t) !== -1; }) ? 0 : 1;
+      var bm = terms.every(function (t) { return b.qLower.indexOf(t) !== -1; }) ? 0 : 1;
+      return am - bm;
+    });
+    return res;
+  }
+  function renderDropdown(matches, terms) {
+    activeIndex = -1;
+    if (matches.length === 0) {
+      shownMatches = [];
+      dropdown.innerHTML = '<div class="dropdown-empty">No matching questions. Try a different word, or email me below.</div>';
+      return;
+    }
+    shownMatches = matches.slice(0, RESULT_LIMIT);
+    var html = shownMatches.map(function (f, i) {
+      return '<button class="dropdown-item" role="option" data-id="' + f.id + '" data-i="' + i + '" type="button">' +
+        highlight(f.q, terms) + '<small>' + escapeHtml(f.topic) + '</small></button>';
+    }).join('');
+    if (matches.length > RESULT_LIMIT) {
+      html += '<div class="dropdown-more">' + (matches.length - RESULT_LIMIT) + ' more - keep typing to narrow it down</div>';
+    }
+    dropdown.innerHTML = html;
+  }
+  function openDropdown() {
+    var terms = termsOf(input.value);
+    if (!terms.length) { closeDropdown(); return; }
+    renderDropdown(findMatches(terms), terms);
+    dropdown.classList.add('open');
+    input.setAttribute('aria-expanded', 'true');
+  }
+  function closeDropdown() {
+    dropdown.classList.remove('open');
+    input.setAttribute('aria-expanded', 'false');
+    activeIndex = -1;
+  }
+  function setActive(i) {
+    var nodes = dropdown.querySelectorAll('.dropdown-item');
+    if (!nodes.length) return;
+    activeIndex = (i + nodes.length) % nodes.length;
+    Array.prototype.forEach.call(nodes, function (n, k) { n.classList.toggle('active', k === activeIndex); });
+    nodes[activeIndex].scrollIntoView({ block: 'nearest' });
+  }
+  function choose(id) {
+    closeDropdown();
+    input.value = '';
+    clearBtn.classList.remove('visible');
+    openItem(id, true);
+  }
+
+  input.addEventListener('input', function () {
+    clearBtn.classList.toggle('visible', input.value.length > 0);
+    openDropdown();
+  });
+  input.addEventListener('focus', function () { if (input.value.trim()) openDropdown(); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (!dropdown.classList.contains('open')) openDropdown(); setActive(activeIndex + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIndex - 1); }
+    else if (e.key === 'Enter') {
+      if (!shownMatches.length) return;
+      e.preventDefault();
+      choose(shownMatches[activeIndex >= 0 ? activeIndex : 0].id);
+    }
+  });
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    clearBtn.classList.remove('visible');
+    closeDropdown();
+    input.focus();
+  });
+  dropdown.addEventListener('click', function (e) {
+    var btn = e.target.closest('.dropdown-item');
+    if (btn) choose(btn.getAttribute('data-id'));
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.search-wrap')) closeDropdown();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDropdown();
+  });
+
+  // Links from one answer to another (and #question-id in the address bar) open that answer.
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a.answer-jump');
+    if (!link) return;
+    var id = (link.getAttribute('href') || '').replace(/^#/, '');
+    if (byId[id]) { e.preventDefault(); openItem(id, true); }
+  });
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+    if (byId[id]) openItem(id, false);
+  }
+  window.addEventListener('hashchange', openFromHash);
+  if (location.hash) openFromHash();
+
+  syncExpandLabel();
+})();
+</script>
+
+</body>
+</html>
