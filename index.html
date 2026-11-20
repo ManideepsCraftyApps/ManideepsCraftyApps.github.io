@@ -99,6 +99,7 @@
   .btn .plat { width: 22px; height: 22px; }
   .badge { display: inline-block; line-height: 0; border-radius: 8px; transition: transform .18s var(--ease), box-shadow .18s var(--ease); }
   .badge img { display: block; height: 52px; width: auto; }
+  .badge.play img { height: 66px; margin: -7px -9px; }
   .badge:hover, .badge:focus-visible { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 22px rgba(27, 27, 31, .25); }
   .more { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: .95rem; }
 
@@ -209,7 +210,7 @@
     <article class="stage creds" id="native-creds">
       <div class="stage-grid">
         <div>
-          <p class="status mono"><svg class="plat" role="img" aria-label="Android"><use href="#play"/></svg>Android · In closed testing</p>
+          <p class="status mono"><svg class="plat" role="img" aria-label="Android"><use href="#play"/></svg>Android · Available now</p>
           <h2>Native Creds</h2>
           <p class="tagline">A private password manager that keeps your vault in a file you own.</p>
           <p class="pricing"><span class="hl">Free.</span> No account, no server, no INTERNET permission.</p>
@@ -221,7 +222,7 @@
             <li>Import from Chrome, Bitwarden, Firefox and more</li>
           </ul>
           <div class="actions">
-            <span class="btn soon" aria-disabled="true"><svg class="plat" aria-hidden="true"><use href="#play"/></svg>Google Play · soon</span>
+            <a class="badge play" href="https://play.google.com/store/apps/details?id=com.nativecreds.android" target="_blank" rel="noopener noreferrer" aria-label="Get Native Creds on Google Play"><img src="nativecreds/assets/badges/google-play-badge.png" width="646" height="250" alt="Get it on Google Play"></a>
             <a class="swipe" href="nativecreds/features.html">See everything it does</a>
           </div>
           <div class="more"><a class="swipe" href="https://www.youtube.com/watch?v=31pNfGhx5mI">Watch the video</a><a class="swipe" href="nativecreds/FAQs.html">FAQs</a><a class="swipe" href="nativecreds/privacy-policy.html">Privacy policy</a></div>
